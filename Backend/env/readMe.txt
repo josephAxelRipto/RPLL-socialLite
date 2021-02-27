@@ -1,1 +1,0 @@
-jika didalam package socialLite tidak ada file.env maka copy dari folder ini lalu paste di folder socialLite
