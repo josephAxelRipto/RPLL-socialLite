@@ -14,11 +14,13 @@
 
 ---
 
-Collision was created by, and is maintained by **[Nuno Maduro](https://github.com/nunomaduro)**, and is a package designed to give you beautiful error reporting when interacting with your app through the command line.
+Collision was created by, and is maintained by **[Nuno Maduro](https://github.com/nunomaduro)**, and is a package
+designed to give you beautiful error reporting when interacting with your app through the command line.
 
 * It's included on **[Laravel](https://laravel.com)**, the most popular free, open-source PHP framework in the world.
 * Built on top of the **[Whoops](https://github.com/filp/whoops)** error handler.
-* Supports [Laravel](https://github.com/laravel/laravel), [Symfony](https://symfony.com), [PHPUnit](https://github.com/sebastianbergmann/phpunit), and many other frameworks.
+* Supports [Laravel](https://github.com/laravel/laravel), [Symfony](https://symfony.com)
+  , [PHPUnit](https://github.com/sebastianbergmann/phpunit), and many other frameworks.
 
 ## Installation & Usage
 
@@ -33,6 +35,7 @@ composer require nunomaduro/collision --dev
 ## Lumen adapter
 
 Configure the Collision service provider:
+
 ```php
 // bootstrap/app.php:
 $app->register(\NunoMaduro\Collision\Adapters\Laravel\CollisionServiceProvider::class);
@@ -59,11 +62,15 @@ You need to register the handler in your code:
 
 ## Contributing
 
-Thank you for considering to contribute to Collision. All the contribution guidelines are mentioned [here](CONTRIBUTING.md).
+Thank you for considering to contribute to Collision. All the contribution guidelines are
+mentioned [here](CONTRIBUTING.md).
 
-You can have a look at the [CHANGELOG](CHANGELOG.md) for constant updates & detailed information about the changes. You can also follow the twitter account for latest announcements or just come say hi!: [@enunomaduro](https://twitter.com/enunomaduro)
+You can have a look at the [CHANGELOG](CHANGELOG.md) for constant updates & detailed information about the changes. You
+can also follow the twitter account for latest announcements or just come say
+hi!: [@enunomaduro](https://twitter.com/enunomaduro)
 
 ## Support the development
+
 **Do you like this project? Support it by donating**
 
 - PayPal: [Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=66BYDWAT92N6L)

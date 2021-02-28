@@ -8,26 +8,25 @@ package org.socialLite.domain.entity;
  */
 public class Story {
 
-	private date datePost;
-	private int id;
-	private String image;
-	public Member m_Member;
+    private date datePost;
+    private int id;
+    private String image;
+    public Member m_Member;
 
-	public Story(){
+    public Story() {
 
-	}
+    }
 
-	public void finalize() throws Throwable {
+    public void finalize() throws Throwable {
 
-	}
+    }
 
-	/**
-	 * 
-	 * @param id
-	 * @param datePost
-	 */
-	public boolean removeStory(int id, date datePost){
-		return false;
-	}
+    /**
+     * @param id
+     * @param datePost
+     */
+    public boolean removeStory(int id, date datePost) {
+        return false;
+    }
 
 }

@@ -12,7 +12,8 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 ### Added
 
-* [#14](https://github.com/sebastianbergmann/type/issues/14): Support for `static` return type that is introduced in PHP 8
+* [#14](https://github.com/sebastianbergmann/type/issues/14): Support for `static` return type that is introduced in PHP
+  8
 
 ## [2.2.2] - 2020-09-28
 
@@ -87,18 +88,31 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 ## [1.0.0] - 2019-06-06
 
-* Initial release based on [code contributed by Michel Hartmann to PHPUnit](https://github.com/sebastianbergmann/phpunit/pull/3673)
+* Initial release based
+  on [code contributed by Michel Hartmann to PHPUnit](https://github.com/sebastianbergmann/phpunit/pull/3673)
 
 [2.3.1]: https://github.com/sebastianbergmann/type/compare/2.3.0...2.3.1
+
 [2.3.0]: https://github.com/sebastianbergmann/type/compare/2.2.2...2.3.0
+
 [2.2.2]: https://github.com/sebastianbergmann/type/compare/2.2.1...2.2.2
+
 [2.2.1]: https://github.com/sebastianbergmann/type/compare/2.2.0...2.2.1
+
 [2.2.0]: https://github.com/sebastianbergmann/type/compare/2.1.1...2.2.0
+
 [2.1.1]: https://github.com/sebastianbergmann/type/compare/2.1.0...2.1.1
+
 [2.1.0]: https://github.com/sebastianbergmann/type/compare/2.0.0...2.1.0
+
 [2.0.0]: https://github.com/sebastianbergmann/type/compare/1.1.3...2.0.0
+
 [1.1.3]: https://github.com/sebastianbergmann/type/compare/1.1.2...1.1.3
+
 [1.1.2]: https://github.com/sebastianbergmann/type/compare/1.1.1...1.1.2
+
 [1.1.1]: https://github.com/sebastianbergmann/type/compare/1.1.0...1.1.1
+
 [1.1.0]: https://github.com/sebastianbergmann/type/compare/1.0.0...1.1.0
+
 [1.0.0]: https://github.com/sebastianbergmann/type/compare/ff74aa41746bd8d10e931843ebf37d42da513ede...1.0.0

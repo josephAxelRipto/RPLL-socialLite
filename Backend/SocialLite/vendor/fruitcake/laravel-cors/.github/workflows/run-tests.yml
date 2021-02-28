@@ -8,7 +8,7 @@ on:
     branches:
       - "*"
   schedule:
-  - cron: '0 0 * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   php-tests:
@@ -19,9 +19,9 @@ jobs:
 
     strategy:
       matrix:
-        php: [7.4, 7.3, 7.2]
-        laravel: [^8, ^7, ^6]
-        dependency-version: [prefer-stable]
+        php: [ 7.4, 7.3, 7.2 ]
+        laravel: [ ^8, ^7, ^6 ]
+        dependency-version: [ prefer-stable ]
         exclude:
           - laravel: ^8
             php: 7.2
@@ -36,33 +36,33 @@ jobs:
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php }}
-        coverage: none
-        tools: composer:v2
-        
-    - name: Install dependencies
-      run: |
-        composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-        composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
 
-    - name: Update Dusk Chromedriver
-      run: vendor/bin/dusk-updater detect --auto-update
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+          composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress
 
-    - name: Execute Unit Tests
-      run: vendor/bin/phpunit
+      - name: Update Dusk Chromedriver
+        run: vendor/bin/dusk-updater detect --auto-update
 
-    - name: Upload Failed Screenshots
-      uses: actions/upload-artifact@v2-preview
-      if: failure()
-      with:
-        name: screenshots
-        path: tests/Browser/screenshots/*
+      - name: Execute Unit Tests
+        run: vendor/bin/phpunit
 
-    - name: Check PSR-12 Codestyle
-      run: vendor/bin/phpcs --standard=psr12 src/
+      - name: Upload Failed Screenshots
+        uses: actions/upload-artifact@v2-preview
+        if: failure()
+        with:
+          name: screenshots
+          path: tests/Browser/screenshots/*
+
+      - name: Check PSR-12 Codestyle
+        run: vendor/bin/phpcs --standard=psr12 src/
