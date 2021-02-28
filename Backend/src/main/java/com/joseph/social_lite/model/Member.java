@@ -3,6 +3,7 @@ package com.joseph.social_lite.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -14,7 +15,7 @@ public class Member {
     private long id;
 
     @Column(name = "birth")
-    private Date birth;
+    private LocalDate birth;
     @Column(name = "fullname")
     private String fullname;
     @Column(name = "member_join_date")

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Date;
 
 @RestController
@@ -39,7 +41,7 @@ public class RegisterController {
         registerMember.setPassword("test");
         Date joinDate = new Date();
         registerMember.setMemberJoinDate(joinDate);
-        Date birth = new Date();
+        LocalDate birth = LocalDate.of(1999, Month.SEPTEMBER,26);
         registerMember.setBirth(birth);
         registerMember.setFullname("test1");
         this.memberRepository.save(registerMember);
