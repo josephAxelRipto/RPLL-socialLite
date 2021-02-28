@@ -13,12 +13,9 @@ public class SocialLiteApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(SocialLiteApplication.class, args);
     }
-    @Autowired
-    private MemberRepository memberRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        RegisterController rc = new RegisterController();
-        rc.signUpToDB(memberRepository);
+
     }
 }

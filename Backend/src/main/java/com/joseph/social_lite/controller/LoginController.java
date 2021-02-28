@@ -16,7 +16,7 @@ public class LoginController {
     @Autowired
     private MemberRepository memberRepository;
 
-    @GetMapping("Members")
+    @GetMapping("Login")
     public List<Member> getUsers(){
         return this.memberRepository.findAll();
     }
