@@ -10,5 +10,4 @@
 | Fixed tickets | #... <!-- #-prefixed issue number(s), if any -->
 | License       | MIT
 
-
 <!-- Replace this comment by the description of your issue. -->

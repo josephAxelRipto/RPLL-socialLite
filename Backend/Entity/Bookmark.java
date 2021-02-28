@@ -8,24 +8,23 @@ package org.socialLite.domain.entity;
  */
 public class Bookmark {
 
-	private date dateBookmark;
-	private int id;
-	private int idPost;
+    private date dateBookmark;
+    private int id;
+    private int idPost;
 
-	public Bookmark(){
+    public Bookmark() {
 
-	}
+    }
 
-	public void finalize() throws Throwable {
+    public void finalize() throws Throwable {
 
-	}
+    }
 
-	/**
-	 * 
-	 * @param id
-	 */
-	public boolean deleteBookmark(int id){
-		return false;
-	}
+    /**
+     * @param id
+     */
+    public boolean deleteBookmark(int id) {
+        return false;
+    }
 
 }

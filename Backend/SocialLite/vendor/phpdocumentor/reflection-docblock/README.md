@@ -6,17 +6,17 @@
 [![Stable Version](https://img.shields.io/packagist/v/phpdocumentor/reflection-docblock.svg)](https://packagist.org/packages/phpdocumentor/reflection-docblock)
 [![Unstable Version](https://img.shields.io/packagist/vpre/phpdocumentor/reflection-docblock.svg)](https://packagist.org/packages/phpdocumentor/reflection-docblock)
 
-ReflectionDocBlock 
+ReflectionDocBlock
 ==================
 
 Introduction
 ------------
 
-The ReflectionDocBlock component of phpDocumentor provides a DocBlock parser
-that is 100% compatible with the [PHPDoc standard](http://phpdoc.org/docs/latest).
+The ReflectionDocBlock component of phpDocumentor provides a DocBlock parser that is 100% compatible with
+the [PHPDoc standard](http://phpdoc.org/docs/latest).
 
-With this component, a library can provide support for annotations via DocBlocks
-or otherwise retrieve information that is embedded in a DocBlock.
+With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that
+is embedded in a DocBlock.
 
 Installation
 ------------
@@ -28,17 +28,16 @@ composer require phpdocumentor/reflection-docblock
 Usage
 -----
 
-In order to parse the DocBlock one needs a DocBlockFactory that can be
-instantiated using its `createInstance` factory method like this:
+In order to parse the DocBlock one needs a DocBlockFactory that can be instantiated using its `createInstance` factory
+method like this:
 
 ```php
 $factory  = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
 ```
 
-Then we can use the `create` method of the factory to interpret the DocBlock.
-Please note that it is also possible to provide a class that has the
-`getDocComment()` method, such as an object of type `ReflectionClass`, the
-create method will read that if it exists.
+Then we can use the `create` method of the factory to interpret the DocBlock. Please note that it is also possible to
+provide a class that has the
+`getDocComment()` method, such as an object of type `ReflectionClass`, the create method will read that if it exists.
 
 ```php
 $docComment = <<<DOCCOMMENT

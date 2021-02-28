@@ -1,6 +1,7 @@
 # Change Log
 
 ## 1.4.2 (2020-08-11)
+
 * Fix array to string conversion in ConstantsPass (#1086)
 * Fixed nullable PHP 8.0 union types (#1088, #1089)
 * Fixed support for PHP 8.0 parent type (#1088, #1089)
@@ -21,6 +22,7 @@
 * Drops support for PHP < 7.3 and PHPUnit < 8 (#1059)
 
 ## 1.3.1 (2019-12-26)
+
 * Revert improved exception debugging due to BC breaks (#1032)
 
 ## 1.3.0 (2019-11-24)
@@ -88,10 +90,9 @@
 
 * Destructors (`__destruct`) are stubbed out where it makes sense
 * Allow passing a closure argument to `withArgs()` to validate multiple arguments at once.
-* `Mockery\Adapter\Phpunit\TestListener` has been rewritten because it
-  incorrectly marked some tests as risky. It will no longer verify mock
-  expectations but instead check that tests do that themselves. PHPUnit 6 is
-  required if you want to use this fail safe.
+* `Mockery\Adapter\Phpunit\TestListener` has been rewritten because it incorrectly marked some tests as risky. It will
+  no longer verify mock expectations but instead check that tests do that themselves. PHPUnit 6 is required if you want
+  to use this fail safe.
 * Removes SPL Class Loader
 * Removed object recorder feature
 * Bumped minimum PHP version to 5.6
@@ -104,12 +105,13 @@
 * Subset matcher matches recursively
 * BC BREAK - Spies return `null` by default from ignored (non-mocked) methods with nullable return type
 * Removed extracting getter methods of object instances
-* BC BREAK - Remove implicit regex matching when trying to match string arguments, introduce `\Mockery::pattern()` when regex matching is needed
+* BC BREAK - Remove implicit regex matching when trying to match string arguments, introduce `\Mockery::pattern()` when
+  regex matching is needed
 * Fix Mockery not getting closed in cases of failing test cases
 * Fix Mockery not setting properties on overloaded instance mocks
 * BC BREAK - Fix Mockery not trying default expectations if there is any concrete expectation
-* BC BREAK - Mockery's PHPUnit integration will mark a test as risky if it
-  thinks one it's exceptions has been swallowed in PHPUnit > 5.7.6. Use `$e->dismiss()` to dismiss.
+* BC BREAK - Mockery's PHPUnit integration will mark a test as risky if it thinks one it's exceptions has been swallowed
+  in PHPUnit > 5.7.6. Use `$e->dismiss()` to dismiss.
 
 ## 0.9.4 (XXXX-XX-XX)
 
@@ -125,15 +127,13 @@
 ## 0.9.3 (2014-12-22)
 
 * Added a basic spy implementation
-* Added `Mockery\Adapter\Phpunit\MockeryTestCase` for more reliable PHPUnit
-  integration
+* Added `Mockery\Adapter\Phpunit\MockeryTestCase` for more reliable PHPUnit integration
 
 ## 0.9.2 (2014-09-03)
 
-* Some workarounds for the serialisation problems created by changes to PHP in 5.5.13, 5.4.29,
-  5.6.
-* Demeter chains attempt to reuse doubles as they see fit, so for foo->bar and
-  foo->baz, we'll attempt to use the same foo
+* Some workarounds for the serialisation problems created by changes to PHP in 5.5.13, 5.4.29, 5.6.
+* Demeter chains attempt to reuse doubles as they see fit, so for foo->bar and foo->baz, we'll attempt to use the same
+  foo
 
 ## 0.9.1 (2014-05-02)
 
@@ -142,8 +142,8 @@
   `Mockery\Configuration::allowMockingNonExistentMethods(false)` with
   `Mockery\MockInterface::shouldAllowMockingMethod($methodName)`
 * Added andReturnSelf method: `$mock->shouldReceive("foo")->andReturnSelf()`
-* `shouldIgnoreMissing` now takes an optional value that will be return instead
-  of null, e.g. `$mock->shouldIgnoreMissing($mock)`
+* `shouldIgnoreMissing` now takes an optional value that will be return instead of null,
+  e.g. `$mock->shouldIgnoreMissing($mock)`
 
 ## 0.9.0 (2014-02-05)
 

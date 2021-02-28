@@ -7,8 +7,8 @@ Opis Closure
 
 Serializable closures
 ---------------------
-**Opis Closure** is a library that aims to overcome PHP's limitations regarding closure
-serialization by providing a wrapper that will make all closures serializable. 
+**Opis Closure** is a library that aims to overcome PHP's limitations regarding closure serialization by providing a
+wrapper that will make all closures serializable.
 
 **The library's key features:**
 
@@ -18,22 +18,22 @@ serialization by providing a wrapper that will make all closures serializable.
 - Works with any PHP version that has support for closures
 - Supports PHP 7 syntax
 - Handles all variables referenced/imported in `use()` and automatically wraps all referenced/imported closures for
-proper serialization
+  proper serialization
 - Handles recursive closures
 - Handles magic constants like `__FILE__`, `__DIR__`, `__LINE__`, `__NAMESPACE__`, `__CLASS__`,
-`__TRAIT__`, `__METHOD__` and `__FUNCTION__`.
+  `__TRAIT__`, `__METHOD__` and `__FUNCTION__`.
 - Automatically resolves all class names, function names and constant names used inside the closure
 - Track closure's residing source by using the `#trackme` directive
 - Simple and very fast parser
 - Any error or exception, that might occur when executing an unserialized closure, can be caught and treated properly
 - You can serialize/unserialize any closure unlimited times, even those previously unserialized
-(this is possible because `eval()` is not used for unserialization)
+  (this is possible because `eval()` is not used for unserialization)
 - Handles static closures
 - Supports cryptographically signed closures
 - Provides a reflector that can give you information about the serialized closure
 - Provides an analyzer for *SuperClosure* library
-- Automatically detects when the scope and/or the bound object of a closure needs to be serialized
-in order for the closure to work after deserialization
+- Automatically detects when the scope and/or the bound object of a closure needs to be serialized in order for the
+  closure to work after deserialization
 
 ## Documentation
 
@@ -49,8 +49,7 @@ The full documentation for this library can be found [here][documentation].
 
 ## Installation
 
-**Opis Closure** is available on [Packagist] and it can be installed from a 
-command line interface by using [Composer]. 
+**Opis Closure** is available on [Packagist] and it can be installed from a command line interface by using [Composer].
 
 ```bash
 composer require opis/closure
@@ -68,9 +67,9 @@ Or you could directly reference it into your `composer.json` file as a dependenc
 
 ### Migrating from 2.x
 
-If your project needs to support PHP 5.3 you can continue using the `2.x` version
-of **Opis Closure**. Otherwise, assuming you are not using one of the removed/refactored classes or features(see 
-[CHANGELOG]), migrating to version `3.x` is simply a matter of updating your `composer.json` file. 
+If your project needs to support PHP 5.3 you can continue using the `2.x` version of **Opis Closure**. Otherwise,
+assuming you are not using one of the removed/refactored classes or features(see
+[CHANGELOG]), migrating to version `3.x` is simply a matter of updating your `composer.json` file.
 
 ### Semantic versioning
 
@@ -78,15 +77,20 @@ of **Opis Closure**. Otherwise, assuming you are not using one of the removed/re
 
 ### Arbitrary object serialization
 
-We've added this feature in order to be able to support the serialization of a closure's bound object. 
-The implementation is far from being perfect, and it's really hard to make it work flawless. 
-We will try to improve this, but we can't guarantee anything. 
-So our advice regarding the `Opis\Closure\serialize|unserialize` functions is to use them with caution.
+We've added this feature in order to be able to support the serialization of a closure's bound object. The
+implementation is far from being perfect, and it's really hard to make it work flawless. We will try to improve this,
+but we can't guarantee anything. So our advice regarding the `Opis\Closure\serialize|unserialize` functions is to use
+them with caution.
 
 
 [documentation]: https://www.opis.io/closure "Opis Closure"
+
 [license]: http://opensource.org/licenses/MIT "MIT License"
+
 [Packagist]: https://packagist.org/packages/opis/closure "Packagist"
+
 [Composer]: https://getcomposer.org "Composer"
+
 [SemVer]: http://semver.org/ "Semantic versioning"
+
 [CHANGELOG]: https://github.com/opis/closure/blob/master/CHANGELOG.md "Changelog"

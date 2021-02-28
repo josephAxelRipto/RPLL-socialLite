@@ -8,34 +8,32 @@ package org.socialLite.domain.entity;
  */
 public class Comment {
 
-	private date dateComment;
-	private int id;
-	private String memberComment;
-	private String username;
+    private date dateComment;
+    private int id;
+    private String memberComment;
+    private String username;
 
-	public Comment(){
+    public Comment() {
 
-	}
+    }
 
-	public void finalize() throws Throwable {
+    public void finalize() throws Throwable {
 
-	}
+    }
 
-	/**
-	 * 
-	 * @param id
-	 */
-	public boolean deleteComment(int id){
-		return false;
-	}
+    /**
+     * @param id
+     */
+    public boolean deleteComment(int id) {
+        return false;
+    }
 
-	/**
-	 * 
-	 * @param id
-	 * @param newComment
-	 */
-	public boolean editComment(int id, String newComment){
-		return false;
-	}
+    /**
+     * @param id
+     * @param newComment
+     */
+    public boolean editComment(int id, String newComment) {
+        return false;
+    }
 
 }

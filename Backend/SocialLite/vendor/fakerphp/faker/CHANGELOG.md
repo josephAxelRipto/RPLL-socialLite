@@ -2,8 +2,8 @@
 
 ## 2020-12-18, v1.13.0
 
-Several fixes and new additions in this release. A lot of cleanup has been done
-on the codebase on both tests and consistency.
+Several fixes and new additions in this release. A lot of cleanup has been done on the codebase on both tests and
+consistency.
 
 - Feature/pl pl license plate (#62)
 - Fix greek phone numbers (#16)

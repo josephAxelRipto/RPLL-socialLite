@@ -8,23 +8,22 @@ package org.socialLite.domain.entity;
  */
 public class Like {
 
-	private int id;
-	private String username;
+    private int id;
+    private String username;
 
-	public Like(){
+    public Like() {
 
-	}
+    }
 
-	public void finalize() throws Throwable {
+    public void finalize() throws Throwable {
 
-	}
+    }
 
-	/**
-	 * 
-	 * @param id
-	 */
-	public int unlike(int id){
-		return 0;
-	}
+    /**
+     * @param id
+     */
+    public int unlike(int id) {
+        return 0;
+    }
 
 }

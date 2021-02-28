@@ -10,10 +10,13 @@
 | PHP version         | x.y.z
 
 ### Observed behaviour
+
 <!-- What does the code do? -->
 
 ### Expected behaviour
+
 <!-- What should the code do? -->
 
 ### Example
+
 <!-- Example to reproduce the issue. -->

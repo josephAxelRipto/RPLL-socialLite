@@ -30,14 +30,19 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 ### Fixed
 
-* Fixed [#29](https://github.com/sebastianbergmann/exporter/pull/29): Second parameter for `str_repeat()` must be an integer
+* Fixed [#29](https://github.com/sebastianbergmann/exporter/pull/29): Second parameter for `str_repeat()` must be an
+  integer
 
 ### Removed
 
 * Remove HHVM-specific code that is no longer needed
 
 [4.0.3]: https://github.com/sebastianbergmann/exporter/compare/4.0.2...4.0.3
+
 [4.0.2]: https://github.com/sebastianbergmann/exporter/compare/4.0.1...4.0.2
+
 [4.0.1]: https://github.com/sebastianbergmann/exporter/compare/4.0.0...4.0.1
+
 [4.0.0]: https://github.com/sebastianbergmann/exporter/compare/3.1.2...4.0.0
+
 [3.1.2]: https://github.com/sebastianbergmann/exporter/compare/3.1.1...3.1.2

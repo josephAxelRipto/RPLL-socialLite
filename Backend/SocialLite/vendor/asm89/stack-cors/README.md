@@ -1,12 +1,13 @@
 # Stack/Cors
 
-Library and middleware enabling cross-origin resource sharing for your
-http-{foundation,kernel} using application. It attempts to implement the
+Library and middleware enabling cross-origin resource sharing for your http-{foundation,kernel} using application. It
+attempts to implement the
 [W3C Recommendation] for cross-origin resource sharing.
 
 [W3C Recommendation]: http://www.w3.org/TR/cors/
 
-Build status: ![.github/workflows/run-tests.yml](https://github.com/asm89/stack-cors/workflows/.github/workflows/run-tests.yml/badge.svg)
+Build
+status: ![.github/workflows/run-tests.yml](https://github.com/asm89/stack-cors/workflows/.github/workflows/run-tests.yml/badge.svg)
 
 ## Installation
 
@@ -32,9 +33,11 @@ This package can be used as a library or as [stack middleware].
 
 The _allowedMethods_ and _allowedHeaders_ options are case-insensitive.
 
-You don't need to provide both _allowedOrigins_ and _allowedOriginsPatterns_. If one of the strings passed matches, it is considered a valid origin.
+You don't need to provide both _allowedOrigins_ and _allowedOriginsPatterns_. If one of the strings passed matches, it
+is considered a valid origin.
 
-If `array('*')` is provided to _allowedMethods_, _allowedOrigins_ or _allowedHeaders_ all methods / origins / headers are allowed.
+If `array('*')` is provided to _allowedMethods_, _allowedOrigins_ or _allowedHeaders_ all methods / origins / headers
+are allowed.
 
 ### Example: using the library
 

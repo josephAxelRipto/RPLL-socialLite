@@ -8,19 +8,19 @@ package org.socialLite.domain.entity;
  */
 public class DirectMessage {
 
-	private date dateMessage;
-	private String from;
-	private int id;
-	private String message;
-	private String to;
-	public Member m_Member;
+    private date dateMessage;
+    private String from;
+    private int id;
+    private String message;
+    private String to;
+    public Member m_Member;
 
-	public DirectMessage(){
+    public DirectMessage() {
 
-	}
+    }
 
-	public void finalize() throws Throwable {
+    public void finalize() throws Throwable {
 
-	}
+    }
 
 }

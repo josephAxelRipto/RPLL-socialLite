@@ -7,39 +7,32 @@ Webmozart Assert
 [![Latest Stable Version](https://poser.pugx.org/webmozart/assert/v/stable.svg)](https://packagist.org/packages/webmozart/assert)
 [![Total Downloads](https://poser.pugx.org/webmozart/assert/downloads.svg)](https://packagist.org/packages/webmozart/assert)
 
-This library contains efficient assertions to test the input and output of
-your methods. With these assertions, you can greatly reduce the amount of coding
-needed to write a safe implementation.
+This library contains efficient assertions to test the input and output of your methods. With these assertions, you can
+greatly reduce the amount of coding needed to write a safe implementation.
 
-All assertions in the [`Assert`] class throw an `\InvalidArgumentException` if
-they fail.
+All assertions in the [`Assert`] class throw an `\InvalidArgumentException` if they fail.
 
 FAQ
 ---
 
 **What's the difference to [beberlei/assert]?**
 
-This library is heavily inspired by Benjamin Eberlei's wonderful [assert package],
-but fixes a usability issue with error messages that can't be fixed there without
-breaking backwards compatibility.
+This library is heavily inspired by Benjamin Eberlei's wonderful [assert package], but fixes a usability issue with
+error messages that can't be fixed there without breaking backwards compatibility.
 
-This package features usable error messages by default. However, you can also
-easily write custom error messages:
+This package features usable error messages by default. However, you can also easily write custom error messages:
 
 ```
 Assert::string($path, 'The path is expected to be a string. Got: %s');
 ```
 
-In [beberlei/assert], the ordering of the `%s` placeholders is different for
-every assertion. This package, on the contrary, provides consistent placeholder
-ordering for all assertions:
+In [beberlei/assert], the ordering of the `%s` placeholders is different for every assertion. This package, on the
+contrary, provides consistent placeholder ordering for all assertions:
 
 * `%s`: The tested value as string, e.g. `"/foo/bar"`.
-* `%2$s`, `%3$s`, ...: Additional assertion-specific values, e.g. the
-  minimum/maximum length, allowed values, etc.
+* `%2$s`, `%3$s`, ...: Additional assertion-specific values, e.g. the minimum/maximum length, allowed values, etc.
 
-Check the source code of the assertions to find out details about the additional
-available placeholders.
+Check the source code of the assertions to find out details about the additional available placeholders.
 
 Installation
 ------------
@@ -137,8 +130,7 @@ Method                                          | Description
 
 ### String Assertions
 
-You should check that a value is a string with `Assert::string()` before making
-any of the following assertions.
+You should check that a value is a string with `Assert::string()` before making any of the following assertions.
 
 Method                                              | Description
 --------------------------------------------------- | -----------------------------------------------------------------
@@ -215,8 +207,7 @@ Method                                      | Description
 
 ### Collection Assertions
 
-All of the above assertions can be prefixed with `all*()` to test the contents
-of an array or a `\Traversable`:
+All of the above assertions can be prefixed with `all*()` to test the contents of an array or a `\Traversable`:
 
 ```php
 Assert::allIsInstanceOf($employees, 'Acme\Employee');
@@ -224,8 +215,7 @@ Assert::allIsInstanceOf($employees, 'Acme\Employee');
 
 ### Nullable Assertions
 
-All of the above assertions can be prefixed with `nullOr*()` to run the
-assertion only if it the value is not `null`:
+All of the above assertions can be prefixed with `nullOr*()` to run the assertion only if it the value is not `null`:
 
 ```php
 Assert::nullOrString($middleName, 'The middle name must be a string or null. Got: %s');
@@ -233,24 +223,26 @@ Assert::nullOrString($middleName, 'The middle name must be a string or null. Got
 
 ### Extending Assert
 
-The `Assert` class comes with a few methods, which can be overridden to change the class behaviour. You can also extend it to
-add your own assertions.
+The `Assert` class comes with a few methods, which can be overridden to change the class behaviour. You can also extend
+it to add your own assertions.
 
 #### Overriding methods
 
 Overriding the following methods in your assertion class allows you to change the behaviour of the assertions:
 
 * `public static function __callStatic($name, $arguments)`
-  * This method is used to 'create' the `nullOr` and `all` versions of the assertions.
+    * This method is used to 'create' the `nullOr` and `all` versions of the assertions.
 * `protected static function valueToString($value)`
-  * This method is used for error messages, to convert the value to a string value for displaying. You could use this for representing a value object with a `__toString` method for example.
+    * This method is used for error messages, to convert the value to a string value for displaying. You could use this
+      for representing a value object with a `__toString` method for example.
 * `protected static function typeToString($value)`
-  * This method is used for error messages, to convert the a value to a string representing its type.
+    * This method is used for error messages, to convert the a value to a string representing its type.
 * `protected static function strlen($value)`
-  * This method is used to calculate string length for relevant methods, using the `mb_strlen` if available and useful.
+    * This method is used to calculate string length for relevant methods, using the `mb_strlen` if available and
+      useful.
 * `protected static function reportInvalidArgument($message)`
-  * This method is called when an assertion fails, with the specified error message. Here you can throw your own exception, or log something.
-
+    * This method is called when an assertion fails, with the specified error message. Here you can throw your own
+      exception, or log something.
 
 Authors
 -------
@@ -272,12 +264,21 @@ License
 All contents of this package are licensed under the [MIT license].
 
 [beberlei/assert]: https://github.com/beberlei/assert
+
 [assert package]: https://github.com/beberlei/assert
+
 [Composer]: https://getcomposer.org
+
 [Bernhard Schussek]: https://webmozarts.com
+
 [The Community Contributors]: https://github.com/webmozart/assert/graphs/contributors
+
 [issue tracker]: https://github.com/webmozart/assert/issues
+
 [Git repository]: https://github.com/webmozart/assert
+
 [@webmozart]: https://twitter.com/webmozart
+
 [MIT license]: LICENSE
+
 [`Assert`]: src/Assert.php
