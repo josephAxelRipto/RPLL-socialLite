@@ -32,10 +32,6 @@ public class AuthService {
         return formatter.format(date);
     }
 
-    public long getIdMember() {
-        return idMember;
-    }
-
     public Optional<Member> getMemberById(){
         return this.memberRepository.findById(getIdMember());
     }

@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Date;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/")
 public class RegisterController {

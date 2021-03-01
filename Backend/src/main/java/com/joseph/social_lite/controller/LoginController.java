@@ -23,15 +23,9 @@ public class LoginController {
 
     @PostMapping("Login")
     public Optional<Member> login(@RequestBody final Member member){
+//        System.out.println(this.authService.idMember);
         this.authService.login(member.getUsername(), member.getPassword());
-<<<<<<< HEAD
-        System.out.println("luar" + this.authService.idMember);
-
-
-        return this.authService.getIdMember();
-=======
         return this.authService.getMemberById();
->>>>>>> joseph
     }
 
 }

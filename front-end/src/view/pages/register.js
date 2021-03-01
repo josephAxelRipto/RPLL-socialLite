@@ -39,7 +39,7 @@ class Register extends Component {
       };
 
       axios
-        .post("http:localhost:8080/api/SignUp" + dataUser)
+        .post("http::/localhost:8080/api/SignUp" + dataUser)
         .then((res) => {
           swal({
             title: "Sukses Sign Up",
