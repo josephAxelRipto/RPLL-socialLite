@@ -44,13 +44,20 @@ public class AuthService {
         this.memberRepository.save(member);
     }
 
+    public long getIdMember(){
+        return this.idMember;
+    }
+
     public Boolean login(String username, String password){
         Optional<Member> memberLogin = this.memberRepository.findMemberByUsernameAndPassword(username, password);
+
         if (memberLogin.isPresent()){
             this.idMember = memberLogin.get().getId();
+            System.out.println(this.idMember);
             return true;
         }else{
             this.idMember = 0;
+            System.out.println(this.idMember);
             throw new IllegalStateException("Uncorrect username or password");
         }
     }

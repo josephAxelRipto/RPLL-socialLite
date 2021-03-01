@@ -24,7 +24,10 @@ public class LoginController {
     public long login(@RequestBody final Member member){
 //        System.out.println(this.authService.idMember);
         this.authService.login(member.getUsername(), member.getPassword());
-        return this.authService.idMember;
+        System.out.println("luar" + this.authService.idMember);
+
+
+        return this.authService.getIdMember();
     }
 
 }
