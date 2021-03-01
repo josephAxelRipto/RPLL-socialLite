@@ -2,6 +2,7 @@ package com.joseph.social_lite.controller;
 
 import com.joseph.social_lite.model.Member;
 import com.joseph.social_lite.repository.MemberRepository;
+import com.joseph.social_lite.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +15,10 @@ import java.util.Date;
 public class RegisterController {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private AuthService authService;
 
     @PostMapping(value = "/SignUp")
     public void signUpToDB(@RequestBody final Member member){
-        this.memberRepository.save(member);
+        this.authService.signUp(member);
     }
 }

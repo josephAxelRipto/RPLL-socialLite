@@ -2,10 +2,9 @@ package com.joseph.social_lite.controller;
 
 import com.joseph.social_lite.model.Member;
 import com.joseph.social_lite.repository.MemberRepository;
+import com.joseph.social_lite.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,12 +13,16 @@ import java.util.List;
 public class LoginController {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private AuthService authService;
 
-    @GetMapping("Login")
+    @GetMapping("GetUsers")
     public List<Member> getUsers(){
-        return this.memberRepository.findAll();
+        return this.authService.getUsers();
     }
 
+    @PostMapping("Login")
+    public Boolean login(@RequestBody final Member member){
+        return this.authService.login(member.getUsername(), member.getPassword());
+    }
 
 }
