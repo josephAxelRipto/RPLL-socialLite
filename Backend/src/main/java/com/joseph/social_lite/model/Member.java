@@ -23,7 +23,7 @@ public class Member {
     private long id;
     private LocalDate birth;
     private String fullname;
-    private Date memberJoinDate;
+    private LocalDate memberJoinDate;
     private String password;
     private String username;
 //    private String image;

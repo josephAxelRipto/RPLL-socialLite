@@ -6,10 +6,13 @@ import com.joseph.social_lite.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -21,8 +24,8 @@ public class AuthService {
         return this.memberRepository.findAll();
     }
 
-    public Date currentDate(){
-        Date date = new Date();
+    public LocalDate currentDate(){
+        LocalDate date = LocalDate.now();
         return date;
     }
 
@@ -33,21 +36,39 @@ public class AuthService {
 
     public void signUp(Member member){
         member.setMemberJoinDate(currentDate());
+
+        Optional<Member> memberUsername = this.memberRepository.findMemberByUsername(member.getUsername());
+        if (memberUsername.isPresent()){
+            throw new IllegalStateException("Username is already exist");
+        }
         this.memberRepository.save(member);
     }
 
     public Boolean login(String username, String password){
-        List<Member> members = getUsers();
-        for (Member member: members) {
-            if(member.getUsername().equals(username) && member.getPassword().equals(password)){
-                this.idMember = member.getId();
-                return true;
-            }
+        Optional<Member> memberLogin = this.memberRepository.findMemberByUsernameAndPassword(username, password);
+        if (memberLogin.isPresent()){
+            this.idMember = memberLogin.get().getId();
+            return true;
+        }else{
+            this.idMember = 0;
+            throw new IllegalStateException("Uncorrect username or password");
         }
-        this.idMember = 0;
-        return false;
     }
-    public Boolean changePassword(String newPassword){
-        return false;
+
+    @Transactional
+    public void changePassword(Long memberId, String oldPassword, String newPassword, String reTypeNewPassword){
+        Member member = this.memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Member with id " + memberId + "does not exist"
+                ));
+        if (oldPassword != null &&
+                newPassword != null &&
+                reTypeNewPassword != null &&
+                oldPassword.equals(member.getPassword()) &&
+                newPassword.equals(reTypeNewPassword) &&
+                !oldPassword.equals(newPassword) &&
+                newPassword.length() > 8){
+            member.setPassword(newPassword);
+        }
     }
 }
