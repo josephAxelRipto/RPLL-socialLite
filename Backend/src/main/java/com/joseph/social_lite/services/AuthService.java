@@ -34,6 +34,10 @@ public class AuthService {
         return formatter.format(date);
     }
 
+    public long getIdMember() {
+        return idMember;
+    }
+
     public void signUp(Member member){
         member.setMemberJoinDate(currentDate());
 
