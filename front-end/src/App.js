@@ -1,14 +1,22 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-// import Login from "./view/component/login.js";
-import Register from "./view/component/register.js";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+} from "react-router-dom";
+import Login from "./view/pages/login.js";
+import Register from "./view/pages/register.js";
 
 function App() {
   return (
-      <div className="App">
-        {/* <Login /> */}
-        <Register />
-      </div>
+    <BrowserRouter>
+    <main>
+      <Switch>
+        <Route  path="/signup" component={Register} exact/>
+        <Route  path="/login" component={Login} exact/>
+      </Switch>
+    </main>
+</BrowserRouter>
 
   );
 }
