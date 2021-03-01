@@ -20,6 +20,9 @@ public class EditProfileController {
             @RequestParam() String oldPassword,
             @RequestParam() String newPassword,
             @RequestParam() String reTypeNewPassword
+//            @RequestBody String oldPassword,
+//            String newPassword,
+//            String reTypeNewPassword
     ){
         this.authService.changePassword(memberId, oldPassword, newPassword, reTypeNewPassword);
     }

@@ -26,6 +26,7 @@ public class Member {
     private LocalDate memberJoinDate;
     private String password;
     private String username;
+    private String gender;
 //    private String image;
 
 

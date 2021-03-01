@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/")
@@ -21,13 +22,16 @@ public class LoginController {
     }
 
     @PostMapping("Login")
-    public long login(@RequestBody final Member member){
-//        System.out.println(this.authService.idMember);
+    public Optional<Member> login(@RequestBody final Member member){
         this.authService.login(member.getUsername(), member.getPassword());
+<<<<<<< HEAD
         System.out.println("luar" + this.authService.idMember);
 
 
         return this.authService.getIdMember();
+=======
+        return this.authService.getMemberById();
+>>>>>>> joseph
     }
 
 }
