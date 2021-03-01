@@ -15,6 +15,7 @@ import java.util.List;
 public class AuthService {
     @Autowired
     private MemberRepository memberRepository;
+    public long idMember;
 
     public List<Member> getUsers(){
         return this.memberRepository.findAll();
@@ -39,9 +40,14 @@ public class AuthService {
         List<Member> members = getUsers();
         for (Member member: members) {
             if(member.getUsername().equals(username) && member.getPassword().equals(password)){
+                this.idMember = member.getId();
                 return true;
             }
         }
+        this.idMember = 0;
+        return false;
+    }
+    public Boolean changePassword(String newPassword){
         return false;
     }
 }

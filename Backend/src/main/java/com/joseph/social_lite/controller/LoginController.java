@@ -21,8 +21,10 @@ public class LoginController {
     }
 
     @PostMapping("Login")
-    public Boolean login(@RequestBody final Member member){
-        return this.authService.login(member.getUsername(), member.getPassword());
+    public long login(@RequestBody final Member member){
+//        System.out.println(this.authService.idMember);
+        this.authService.login(member.getUsername(), member.getPassword());
+        return this.authService.idMember;
     }
 
 }

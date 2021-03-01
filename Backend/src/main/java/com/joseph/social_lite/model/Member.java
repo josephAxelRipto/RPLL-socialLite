@@ -11,19 +11,22 @@ import java.util.Date;
 @Table(name = "members")
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "member_sequence",
+            sequenceName = "member_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "member_sequence"
+    )
     private long id;
-
-    @Column(name = "birth")
     private LocalDate birth;
-    @Column(name = "fullname")
     private String fullname;
-    @Column(name = "member_join_date")
     private Date memberJoinDate;
-    @Column(name = "password")
     private String password;
-    @Column(name = "username")
     private String username;
+//    private String image;
 
 
 
