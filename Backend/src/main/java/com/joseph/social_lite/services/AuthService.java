@@ -1,6 +1,5 @@
 package com.joseph.social_lite.services;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.joseph.social_lite.model.Member;
 import com.joseph.social_lite.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +16,7 @@ import java.util.Optional;
 public class AuthService {
     @Autowired
     private MemberRepository memberRepository;
-    public long idMember;
+    private long idMember;
 
     public List<Member> getUsers(){
         return this.memberRepository.findAll();
@@ -36,6 +34,10 @@ public class AuthService {
 
     public long getIdMember() {
         return idMember;
+    }
+
+    public Optional<Member> getMemberById(){
+        return this.memberRepository.findById(getIdMember());
     }
 
     public void signUp(Member member){
@@ -63,16 +65,26 @@ public class AuthService {
     public void changePassword(Long memberId, String oldPassword, String newPassword, String reTypeNewPassword){
         Member member = this.memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalStateException(
-                        "Member with id " + memberId + "does not exist"
+                        "Member with id " + memberId + " does not exist"
                 ));
+        System.out.println("oldPassword = " + oldPassword);
+        System.out.println("newPassword = " + newPassword);
+        System.out.println("reTypeNewPassword = " + reTypeNewPassword);
+        System.out.println("member.getPassword() = " + member.getPassword());
+
+        String password = member.getPassword().toString();
+        System.out.println("old pass == pass = " + oldPassword.equals(password));
         if (oldPassword != null &&
                 newPassword != null &&
                 reTypeNewPassword != null &&
-                oldPassword.equals(member.getPassword()) &&
+                oldPassword.equals(password) &&
                 newPassword.equals(reTypeNewPassword) &&
                 !oldPassword.equals(newPassword) &&
-                newPassword.length() > 8){
+                newPassword.length() >= 8){
             member.setPassword(newPassword);
+            System.out.println(member);
+        }else{
+            System.out.println("else " + member);
         }
     }
 }
