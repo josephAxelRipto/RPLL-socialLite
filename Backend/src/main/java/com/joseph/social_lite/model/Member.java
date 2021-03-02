@@ -13,16 +13,18 @@ public class Member {
     @Id
     @SequenceGenerator(
             name = "member_sequence",
-            sequenceName = "member_sequence",
+            sequenceName = "members_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "member_sequence"
+            generator = "members_id_seq"
     )
     private long id;
+    @Column(columnDefinition = "DATE")
     private LocalDate birth;
     private String fullname;
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDate memberJoinDate;
     private String password;
     private String username;
