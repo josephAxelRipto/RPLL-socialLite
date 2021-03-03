@@ -9,6 +9,11 @@ class Register extends Component {
   constructor(props) {
     super(props);
 
+    var today = new Date(),
+    
+    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+
     this.state = {
       data: [],
       firstname: "",
@@ -20,7 +25,7 @@ class Register extends Component {
       month: "May",
       year: "2000",
       confirmPass: "",
-      dateJoin: "",
+      dateJoin: date,
     };
   }
 
@@ -65,10 +70,11 @@ class Register extends Component {
       const dataUser = {
         id: count + 1,
         fullname: this.state.firstname + " " + this.state.lastname,
-        birth: this.state.day + "-" + this.state.month + "-" + this.state.year,
+        birth: this.state.year + "-" + this.state.month + "-" + this.state.day,
         gender: this.state.gender,
         username: this.state.username,
         password: this.state.password,
+        member_join_date: this.state.dateJoin 
       };
 
       axios
@@ -117,7 +123,6 @@ class Register extends Component {
   };
 
   render() {
-    console.log(this.state.data);
     const style_hr = {
       marginTop: "50px",
     };
