@@ -3,25 +3,33 @@ import { Form, Container, Row, Col, Button, center } from "react-bootstrap";
 import Logo from "../asset/logo.png";
 import axios from "axios";
 import swal from "sweetalert";
+import { URL_API } from "../utils/constant.js";
 
 class Register extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      data: [],
       firstname: "",
       lastname: "",
       gender: "",
       username: "",
       password: "",
-      day: "",
-      month: "",
-      year: "",
+      day: "1",
+      month: "May",
+      year: "2000",
       confirmPass: "",
       dateJoin: "",
     };
   }
 
+  componentDidMount() {
+    axios.get(URL_API + "api/GetUsers").then((res) => {
+      const data = res.data;
+      this.setState({ data });
+    });
+  }
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -30,20 +38,45 @@ class Register extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    
+
+    const { data } = this.state;
+    let count = 0;
+
+    data && data.map((datas) => count++);
+
+    this.setState({
+      data: [
+        ...this.state.data,
+        {
+          firstname: this.state.firstname,
+          lastname: this.state.lastname,
+          username: this.state.username,
+          password: this.state.password,
+          day: this.state.day,
+          month: this.state.month,
+          year: this.state.year,
+          confirmPass: this.state.confirmPass,
+          dateJoin: this.state.dateJoin,
+        },
+      ],
+    });
+
+    if (this.state.password === this.state.confirmPass) {
       const dataUser = {
+        id: count + 1,
         fullname: this.state.firstname + " " + this.state.lastname,
         birth: this.state.day + "-" + this.state.month + "-" + this.state.year,
+        gender: this.state.gender,
         username: this.state.username,
         password: this.state.password,
       };
 
       axios
-        .post("http::/localhost:8080/api/SignUp" + dataUser)
+        .post(URL_API + "api/SignUp", dataUser)
         .then((res) => {
           swal({
             title: "Sukses Sign Up",
-            text: "Sukses Sign Up " + dataUser.username,
+            text: "Sukses Sign Up " + this.state.username,
             icon: "success",
             button: false,
             timer: 1500,
@@ -51,7 +84,7 @@ class Register extends Component {
         })
         .catch((error) => {
           console.log("Error yaa ", error);
-          console.log("dataUser", dataUser)
+          console.log("dataUser", dataUser);
           swal({
             title: "Gagal Sign Up",
             text: "Gagal Sign Up ",
@@ -60,6 +93,15 @@ class Register extends Component {
             timer: 1500,
           });
         });
+    } else {
+      swal({
+        title: "Gagal Sign Up",
+        text: "Gagal Sign Up Masukan password dengan benar",
+        icon: "warning",
+        button: false,
+        timer: 1500,
+      });
+    }
 
     this.setState({
       firstname: "",
