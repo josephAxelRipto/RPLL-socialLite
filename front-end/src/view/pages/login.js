@@ -37,25 +37,23 @@ class Login extends Component {
   };
 
   render() {
-    const style_hr = {
-      marginTop: "130px",
-    };
-    const style_logo = {
-      marginTop: "20px",
-    };
-    const style_goBack = {
-      marginTop: "50px",
-      textDecoration: "none",
-      color: "black",
-    };
-    const style_text_login = {
-      marginLeft: "50px",
-      marginBottom: "30px",
-      marginTop: "30px",
-      font: "bebas-neueu",
-    };
-    const style_form = {
-      marginTop: "50px",
+    const style = {
+      hr: {
+        marginTop: "85px",
+      },
+      logo: {
+        marginTop: "20px",
+        width:"120px",
+        height:"100px"
+      },
+      goHome: {
+        marginTop: "50px",
+        textDecoration: "none",
+        fontSize: "18px"
+      },
+      form: {
+        marginTop: "50px",
+      }
     };
     return (
       <Container>
@@ -64,19 +62,17 @@ class Login extends Component {
             <img
               src={Logo}
               className="logo"
-              style={style_logo}
+              style={style.logo}
               alt="Logo"
-              width="50px"
-              height="50px"
             />
           </Col>
         </Row>
         <Row>
           <Col>
-            <h2 style={style_text_login}>Log In</h2>
+            <h2 className="justify-content-md-between">Log In</h2>
           </Col>
         </Row>
-        <Row className="justify-content-md-center" style={style_form}>
+        <Row className="justify-content-md-center" style={style.form}>
           <Col xs lg="6">
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="formGroupUsername">
@@ -86,6 +82,7 @@ class Login extends Component {
                   name="username"
                   value={this.state.username}
                   onChange={(event) => this.handleChange(event)}
+                  autoComplete= "off" required
                 />
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
@@ -95,6 +92,7 @@ class Login extends Component {
                   name="password"
                   value={this.state.password}
                   onChange={(event) => this.handleChange(event)}
+                  required
                 />
                 <Button variant="link">
                   <br /> Forgot Password? |{" "}
@@ -106,25 +104,23 @@ class Login extends Component {
             </Form>
           </Col>
         </Row>
-        <Row style={style_goBack}>
+        <Row style={style.goHome}>
           <Col>
             <center>
-              <Button variant="link">
-                <br /> &#60; Go Back{" "}
-              </Button>
+            <a href="/home">&#60; Go Home</a>
             </center>
           </Col>
         </Row>
         <footer>
           <Row>
             <Col xs lg="12">
-              <hr style={style_hr} />
+              <hr style={style.hr} />
             </Col>
           </Row>
           <Row>
             <Col>
               <center>
-                Don't have an account? <Button variant="link"> Sign Up </Button>{" "}
+                Don't have an account? <a href="/signup">sign up</a>
               </center>
             </Col>
           </Row>

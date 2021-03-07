@@ -10,9 +10,12 @@ class Register extends Component {
     super(props);
 
     var today = new Date(),
-    
-    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-
+      date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
 
     this.state = {
       data: [],
@@ -35,6 +38,7 @@ class Register extends Component {
       this.setState({ data });
     });
   }
+
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -74,7 +78,7 @@ class Register extends Component {
         gender: this.state.gender,
         username: this.state.username,
         password: this.state.password,
-        member_join_date: this.state.dateJoin 
+        member_join_date: this.state.dateJoin,
       };
 
       axios
@@ -87,6 +91,7 @@ class Register extends Component {
             button: false,
             timer: 1500,
           });
+          this.props.history.push("/home");
         })
         .catch((error) => {
           console.log("Error yaa ", error);
@@ -98,6 +103,7 @@ class Register extends Component {
             button: false,
             timer: 1500,
           });
+          this.props.history.push("/signup");
         });
     } else {
       swal({
@@ -107,6 +113,7 @@ class Register extends Component {
         button: false,
         timer: 1500,
       });
+      this.props.history.push("/signup");
     }
 
     this.setState({
@@ -115,152 +122,170 @@ class Register extends Component {
       username: "",
       password: "",
       day: "1",
-      month: "Mei",
+      month: "May",
       year: "2000",
       confirmPass: "",
       dateJoin: "",
     });
   };
 
+  createDay = () => {
+    let day = [];
+    for (let index = 1; index <= 31; index++) {
+      day.push(<option>{index}</option>);
+    }
+    return day;
+  };
+
+  createMonth = () => {
+    let month = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    let showMonth = [];
+    for (let index = 0; index < 12; index++) {
+      showMonth.push(<option>{month[index]}</option>);
+    }
+    return showMonth;
+  };
+
+  createYear = () => {
+    let year = [];
+    for (let index = 1980; index <= 2010; index++) {
+      year.push(<option>{index}</option>);
+    }
+    return year;
+  };
+
   render() {
-    const style_hr = {
-      marginTop: "50px",
-    };
-    const style_logo = {
-      marginTop: "20px",
+    const style = {
+      hr: {
+        marginTop: "50px",
+        height: "50px",
+      },
+      logo: {
+        marginTop: "20px",
+        width: "120px",
+        height: "100px",
+      },
+      radio_button: {
+        marginRight: "20px",
+      },
+      href_goHome: {
+        marginTop: "50px",
+        fontSize: "18px",
+        textDecoration: "underline black",
+      },
+      judul_SignUp: {
+        marginTop: "20px",
+        marginBottom: "20px",
+      },
     };
     return (
       <Container>
         <Row>
           <Col>
-            <img
-              src={Logo}
-              className="logo"
-              style={style_logo}
-              alt="Logo"
-              width="50px"
-              height="50px"
-            />
+            <img src={Logo} style={style.logo} alt="Logo" />
           </Col>
         </Row>
         <Row>
           <Col>
-            <h2 class="ml-5 mb-5 mt-5">Sign Up</h2>
+            <h2
+              className="justify-content-md-between"
+              style={style.judul_SignUp}
+            >
+              Sign Up
+            </h2>
           </Col>
         </Row>
-        <Row className="justify-content-md-center" class="mb-5">
+        <Row className="justify-content-md-center">
           <Col xs lg="6">
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="formGroupFirstname">
-                <Form.Label>Firstname</Form.Label>
+                <Form.Label>
+                  <b>Firstname</b>
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="firstname"
                   value={this.state.firstname}
                   onChange={(event) => this.handleChange(event)}
+                  autoComplete="off"
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="formGroupLastname">
-                <Form.Label>Lastname</Form.Label>
+                <Form.Label>
+                  <b>Lastname</b>
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="lastname"
                   value={this.state.lastname}
                   onChange={(event) => this.handleChange(event)}
+                  autoComplete="off"
+                  required
                 />
               </Form.Group>
-              <Form.Label>Date of Birth</Form.Label>
+              <Form.Label>
+                <b>Date of Birth</b>
+              </Form.Label>
               <Form.Row>
                 <Form.Group as={Col} controlId="day">
-                  <Form.Label>Day</Form.Label>
+                  <Form.Label>
+                    <b>Day</b>
+                  </Form.Label>
                   <Form.Control
                     as="select"
                     name="day"
                     value={this.state.day}
                     onChange={(event) => this.handleChange(event)}
                   >
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
-                    <option>15</option>
-                    <option>16</option>
-                    <option>17</option>
-                    <option>18</option>
-                    <option>19</option>
-                    <option>20</option>
-                    <option>21</option>
-                    <option>22</option>
-                    <option>23</option>
-                    <option>24</option>
-                    <option>25</option>
-                    <option>26</option>
-                    <option>27</option>
-                    <option>28</option>
-                    <option>29</option>
-                    <option>30</option>
-                    <option>31</option>
+                    {this.createDay()}
                   </Form.Control>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="month">
-                  <Form.Label>Month</Form.Label>
+                  <Form.Label>
+                    <b>Month</b>
+                  </Form.Label>
                   <Form.Control
                     as="select"
                     name="month"
                     value={this.state.month}
                     onChange={(event) => this.handleChange(event)}
                   >
-                    <option>January</option>
-                    <option>February</option>
-                    <option>March</option>
-                    <option>April</option>
-                    <option>May</option>
-                    <option>June</option>
-                    <option>July</option>
-                    <option>August</option>
-                    <option>September</option>
-                    <option>October</option>
-                    <option>November</option>
-                    <option>December</option>
+                    {this.createMonth()}
                   </Form.Control>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="year">
-                  <Form.Label>Year</Form.Label>
+                  <Form.Label>
+                    <b>Year</b>
+                  </Form.Label>
                   <Form.Control
                     as="select"
                     name="year"
                     value={this.state.year}
                     onChange={(event) => this.handleChange(event)}
                   >
-                    <option>1992</option>
-                    <option>1993</option>
-                    <option>1994</option>
-                    <option>1995</option>
-                    <option>1996</option>
-                    <option>1997</option>
-                    <option>1998</option>
-                    <option>1999</option>
-                    <option>2000</option>
-                    <option>2001</option>
-                    <option>2002</option>
-                    <option>2003</option>
-                    <option>2004</option>
+                    {this.createYear()}
                   </Form.Control>
                 </Form.Group>
               </Form.Row>
-              <Form.Label>Gender</Form.Label>
+              <Form.Label>
+                <b>Gender</b>
+              </Form.Label>
               <Form.Row className="justify-content-md-center">
                 <Form.Check
                   type="radio"
@@ -269,6 +294,7 @@ class Register extends Component {
                   value="male"
                   id="male"
                   onChange={(event) => this.handleChange(event)}
+                  style={style.radio_button}
                 />
                 <Form.Check
                   type="radio"
@@ -280,30 +306,40 @@ class Register extends Component {
                 />
               </Form.Row>
               <Form.Group controlId="formGroupUsername">
-                <Form.Label>Username</Form.Label>
+                <Form.Label>
+                  <b>Username</b>
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="username"
                   value={this.state.username}
                   onChange={(event) => this.handleChange(event)}
+                  autoComplete="off"
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
-                <Form.Label>Password</Form.Label>
+                <Form.Label>
+                  <b>Password</b>
+                </Form.Label>
                 <Form.Control
                   type="password"
                   name="password"
                   value={this.state.password}
                   onChange={(event) => this.handleChange(event)}
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="formGroupConfirmPass">
-                <Form.Label>Confirmation Password</Form.Label>
+                <Form.Label>
+                  <b>Confirmation Password</b>
+                </Form.Label>
                 <Form.Control
                   type="password"
                   name="confirmPass"
                   value={this.state.confirmPass}
                   onChange={(event) => this.handleChange(event)}
+                  required
                 />
               </Form.Group>
               <Button variant="secondary" type="submit" size="lg" block>
@@ -312,22 +348,25 @@ class Register extends Component {
             </Form>
           </Col>
         </Row>
-        <Row class="mt-5 md-5">
-          <Col class="mt-5">
+        <Row style={style.href_goHome}>
+          <Col>
             <center>
-              <Button variant="link">
-                <br /> &#60; Go Back{" "}
-              </Button>
+              <a href="/home">&#60; Go Home</a>
             </center>
           </Col>
         </Row>
-        <footer>
-          <Row>
-            <Col xs lg="12">
-              <hr style={style_hr} />
-            </Col>
-          </Row>
-        </footer>
+		<Row style={style.href_goHome}>
+          <Col>
+            <center>
+              <a href="/login">&#60; Back to Login</a>
+            </center>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs lg="12">
+            <hr style={style.hr} />
+          </Col>
+        </Row>
       </Container>
     );
   }
