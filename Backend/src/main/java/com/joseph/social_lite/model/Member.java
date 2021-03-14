@@ -1,6 +1,7 @@
 package com.joseph.social_lite.model;
 
 import lombok.Data;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,13 +22,18 @@ public class Member {
             generator = "members_id_seq"
     )
     private long id;
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate birth;
+    @Column(nullable = false)
     private String fullname;
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDate memberJoinDate;
+    private String bio;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String gender;
 //    private String image;
 
@@ -37,35 +43,35 @@ public class Member {
 
     }
 
-    /**
-     * @param username
-     */
-    public int countFollowers(String username) {
-            return 0;
-        }
-    /**
-    * @param username
-    */
-    public int countFollowing(String username) {
-        return 0;
-    }
-
-    /**
-     * @param username
-     * @param data
-     */
-    public boolean editProfile(String username, Member data) {
-        return false;
-    }
-
-    /**
-     * @param username
-     * @param password
-     */
-    public boolean logIn(String username, String password) {
-        return false;
-    }
-    public boolean logOut() {
-        return false;
-    }
+//    /**
+//     * @param username
+//     */
+//    public int countFollowers(String username) {
+//            return 0;
+//        }
+//    /**
+//    * @param username
+//    */
+//    public int countFollowing(String username) {
+//        return 0;
+//    }
+//
+//    /**
+//     * @param username
+//     * @param data
+//     */
+//    public boolean editProfile(String username, Member data) {
+//        return false;
+//    }
+//
+//    /**
+//     * @param username
+//     * @param password
+//     */
+//    public boolean logIn(String username, String password) {
+//        return false;
+//    }
+//    public boolean logOut() {
+//        return false;
+//    }
 }
