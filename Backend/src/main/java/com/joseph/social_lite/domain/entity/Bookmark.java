@@ -1,4 +1,4 @@
-package com.joseph.social_lite.model;
+package com.joseph.social_lite.domain.entity;
 
 import java.util.Date;
 

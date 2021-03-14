@@ -1,6 +1,6 @@
-package com.joseph.social_lite.repository;
+package com.joseph.social_lite.data.repository;
 
-import com.joseph.social_lite.model.Member;
+import com.joseph.social_lite.domain.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

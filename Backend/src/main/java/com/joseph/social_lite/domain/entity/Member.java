@@ -1,14 +1,14 @@
-package com.joseph.social_lite.model;
+package com.joseph.social_lite.domain.entity;
 
 import lombok.Data;
-import org.springframework.lang.NonNull;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "members")
 public class Member {
     @Id
@@ -34,44 +34,11 @@ public class Member {
     @Column(nullable = false)
     private String username;
     @Column(nullable = false)
+    private String email;
+    @Column(nullable = false)
+    private String phoneNumber;
+    @Column(nullable = false)
     private String gender;
-//    private String image;
+//    private String profileImage;
 
-
-
-    public Member() {
-
-    }
-
-//    /**
-//     * @param username
-//     */
-//    public int countFollowers(String username) {
-//            return 0;
-//        }
-//    /**
-//    * @param username
-//    */
-//    public int countFollowing(String username) {
-//        return 0;
-//    }
-//
-//    /**
-//     * @param username
-//     * @param data
-//     */
-//    public boolean editProfile(String username, Member data) {
-//        return false;
-//    }
-//
-//    /**
-//     * @param username
-//     * @param password
-//     */
-//    public boolean logIn(String username, String password) {
-//        return false;
-//    }
-//    public boolean logOut() {
-//        return false;
-//    }
 }

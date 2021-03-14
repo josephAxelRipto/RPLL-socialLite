@@ -1,4 +1,4 @@
-package com.joseph.social_lite.model;
+package com.joseph.social_lite.domain.entity;
 
 public class Post {
     private String caption;

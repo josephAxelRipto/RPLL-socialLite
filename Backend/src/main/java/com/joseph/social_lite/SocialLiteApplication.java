@@ -1,8 +1,5 @@
 package com.joseph.social_lite;
 
-import com.joseph.social_lite.controller.RegisterController;
-import com.joseph.social_lite.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
