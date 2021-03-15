@@ -154,7 +154,7 @@ class Register extends Component {
     ];
     let showMonth = [];
     for (let index = 0; index < 12; index++) {
-      showMonth.push(<option>{month[index]}</option>);
+      showMonth.push(<option value={index+1}>{month[index]}</option>);
     }
     return showMonth;
   };
