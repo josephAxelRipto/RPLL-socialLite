@@ -24,9 +24,12 @@ class Register extends Component {
       gender: "",
       username: "",
       password: "",
-      day: "1",
-      month: "May",
-      year: "2000",
+      phone_number: "",
+      email: "",
+      bio: "",
+      day: 1,
+      month: 5,
+      year: 2000,
       confirmPass: "",
       dateJoin: date,
     };
@@ -53,28 +56,14 @@ class Register extends Component {
 
     // data && data.map((datas) => count++);
 
-    this.setState({
-      data: [
-        ...this.state.data,
-        {
-          firstname: this.state.firstname,
-          lastname: this.state.lastname,
-          username: this.state.username,
-          password: this.state.password,
-          day: this.state.day,
-          month: this.state.month,
-          year: this.state.year,
-          confirmPass: this.state.confirmPass,
-          dateJoin: this.state.dateJoin,
-        },
-      ],
-    });
-
     if (this.state.password === this.state.confirmPass) {
       const dataUser = {
         fullname: this.state.firstname + " " + this.state.lastname,
         birth: this.state.year + "-" + this.state.month + "-" + this.state.day,
         gender: this.state.gender,
+        email: this.state.email,
+        bio: this.state.bio,
+        phone_number: this.state.phone_number,
         username: this.state.username,
         password: this.state.password,
         member_join_date: this.state.dateJoin,
@@ -120,8 +109,10 @@ class Register extends Component {
       lastname: "",
       username: "",
       password: "",
+      email: "",
+      phone_number: "",
       day: "1",
-      month: "May",
+      month: "05",
       year: "2000",
       confirmPass: "",
       dateJoin: "",
@@ -312,6 +303,32 @@ class Register extends Component {
                   type="text"
                   name="username"
                   value={this.state.username}
+                  onChange={(event) => this.handleChange(event)}
+                  autoComplete="off"
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formGroupEmail">
+                <Form.Label>
+                  <b>Email</b>
+                </Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={(event) => this.handleChange(event)}
+                  autoComplete="off"
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formGroupPhoneNumber">
+                <Form.Label>
+                  <b>Phone Number</b>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="phone_number"
+                  value={this.state.phone_number}
                   onChange={(event) => this.handleChange(event)}
                   autoComplete="off"
                   required
