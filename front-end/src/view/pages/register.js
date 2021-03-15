@@ -48,10 +48,10 @@ class Register extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { data } = this.state;
-    let count = 0;
+    // const { data } = this.state;
+    // let count = 0;
 
-    data && data.map((datas) => count++);
+    // data && data.map((datas) => count++);
 
     this.setState({
       data: [
@@ -72,7 +72,6 @@ class Register extends Component {
 
     if (this.state.password === this.state.confirmPass) {
       const dataUser = {
-        id: count + 1,
         fullname: this.state.firstname + " " + this.state.lastname,
         birth: this.state.year + "-" + this.state.month + "-" + this.state.day,
         gender: this.state.gender,
