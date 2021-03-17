@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Form, Container, Row, Col, Button, center } from "react-bootstrap";
+import { Form, Container, Row, Col, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Logo from "../asset/logo.png";
 import axios from "axios";
 import swal from "sweetalert";
@@ -144,7 +145,7 @@ class Register extends Component {
     ];
     let showMonth = [];
     for (let index = 0; index < 12; index++) {
-      showMonth.push(<option value={index+1}>{month[index]}</option>);
+      showMonth.push(<option value={index + 1}>{month[index]}</option>);
     }
     return showMonth;
   };
@@ -177,6 +178,7 @@ class Register extends Component {
         textDecoration: "underline black",
       },
       judul_SignUp: {
+        marginLeft: "30px",
         marginTop: "20px",
         marginBottom: "20px",
       },
@@ -188,14 +190,9 @@ class Register extends Component {
             <img src={Logo} style={style.logo} alt="Logo" />
           </Col>
         </Row>
-        <Row>
+        <Row className="justify-content-md-between" style={style.judul_SignUp}>
           <Col>
-            <h2
-              className="justify-content-md-between"
-              style={style.judul_SignUp}
-            >
-              Sign Up
-            </h2>
+            <h2>Sign Up</h2>
           </Col>
         </Row>
         <Row className="justify-content-md-center">
@@ -364,18 +361,22 @@ class Register extends Component {
             </Form>
           </Col>
         </Row>
-        <Row style={style.href_goHome}>
-          <Col>
-            <center>
-              <a href="/home">&#60; Go Home</a>
-            </center>
+        <Row className="justify-content-md-center" style={style.href_goHome}>
+          <Col xs lg="2">
+            <Link to="/home">
+              <Button variant="light" type="submit" size="lg">
+                &#60; Go Home
+              </Button>
+            </Link>
           </Col>
         </Row>
-		<Row style={style.href_goHome}>
-          <Col>
-            <center>
-              <a href="/login">&#60; Back to Login</a>
-            </center>
+        <Row className="justify-content-md-center" style={style.href_goHome}>
+          <Col xs lg="2">
+            <Link to="/login">
+              <Button variant="light" type="submit" size="lg">
+                &#60; LOGIN
+              </Button>
+            </Link>
           </Col>
         </Row>
         <Row>

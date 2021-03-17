@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Container, Row, Col, Button, center } from "react-bootstrap";
 import Logo from "../asset/logo.png";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -39,12 +40,12 @@ class Login extends Component {
   render() {
     const style = {
       hr: {
-        marginTop: "85px",
+        marginTop: "80px",
       },
       logo: {
         marginTop: "20px",
-        width:"120px",
-        height:"100px"
+        width: "120px",
+        height: "100px",
       },
       goHome: {
         marginTop: "50px",
@@ -53,6 +54,11 @@ class Login extends Component {
       },
       form: {
         marginTop: "50px",
+      },
+      login: {
+        marginLeft: "30px",
+        marginTop: "20px",
+        marginBottom: "20px",
       }
     };
     return (
@@ -69,7 +75,7 @@ class Login extends Component {
         </Row>
         <Row>
           <Col>
-            <h2 className="justify-content-md-between">Log In</h2>
+            <h2 className="justify-content-md-between" style={style.login}>Log In</h2>
           </Col>
         </Row>
         <Row className="justify-content-md-center" style={style.form}>
@@ -104,11 +110,17 @@ class Login extends Component {
             </Form>
           </Col>
         </Row>
-        <Row style={style.goHome}>
-          <Col>
-            <center>
-            <a href="/home">&#60; Go Home</a>
-            </center>
+        <Row className="justify-content-md-center" style={style.goHome}>
+          <Col xs lg="2">
+            <Link to="/home">
+              <Button
+                variant="light"
+                type="submit"
+                size="lg"
+              >
+                &#60; Go Home
+              </Button>
+            </Link>
           </Col>
         </Row>
         <footer>
