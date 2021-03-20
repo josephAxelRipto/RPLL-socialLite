@@ -48,7 +48,7 @@ const navbarComponent = () => {
     };
     return (
       <Navbar bg="light" expand="lg" style={style.navbar} fixed="top">
-          <Navbar.Brand href="/home" style={style.brand}>
+          <Navbar.Brand href="/" style={style.brand}>
             <img
               src={Logo}
               style={style.logo}

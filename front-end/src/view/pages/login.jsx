@@ -112,7 +112,7 @@ class Login extends Component {
         </Row>
         <Row className="justify-content-md-center" style={style.goHome}>
           <Col xs lg="2">
-            <Link to="/home">
+            <Link to="/">
               <Button
                 variant="light"
                 type="submit"
