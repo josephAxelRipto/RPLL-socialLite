@@ -45,12 +45,12 @@ class Register extends Component {
     if (this.state.password === this.state.confirmPass) {
       let zero = ""
 
-      if(this.state.month <= 9){
+      if(this.state.month <= 9 || this.state.day <=9){
         zero = "0"
       }
       const dataUser = {
         fullname: this.state.firstname + " " + this.state.lastname,
-        birth: this.state.year + "-" + zero+this.state.month  + "-" + this.state.day,
+        birth: this.state.year + "-" + zero+this.state.month  + "-" + zero+this.state.day,
         gender: this.state.gender,
         email: this.state.email,
         phoneNumber: this.state.phone_number,
