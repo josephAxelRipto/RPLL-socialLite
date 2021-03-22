@@ -5,10 +5,7 @@ import com.joseph.social_lite.data.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +19,13 @@ public class AuthServices {
         return this.memberRepository.findAll();
     }
 
-    public LocalDate currentDate(){
-        LocalDate date = LocalDate.now();
+    public LocalDateTime currentDate(){
+        LocalDateTime date = LocalDateTime.now();
         return date;
     }
 
-    public String dateFormater(Date date){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        return formatter.format(date);
-    }
-
     public Optional<Member> getMemberById(){
-        return this.memberRepository.findById(getIdMember());
+        return this.memberRepository.findById(this.getIdMember());
     }
 
     public void signUp(Member member){

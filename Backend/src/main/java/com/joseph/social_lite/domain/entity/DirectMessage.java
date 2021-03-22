@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -24,16 +24,16 @@ public class DirectMessage {
     )
     private long id;
     @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDate dateMessage;
+    private LocalDateTime dateMessage;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "username")
+    @JoinColumn(referencedColumnName = "id")
     private Member from;
 
     @Column(nullable = false)
     private String message;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "username")
+    @JoinColumn(referencedColumnName = "id")
     private Member to;
 }

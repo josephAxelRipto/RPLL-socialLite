@@ -23,7 +23,6 @@ public class LoginController {
 
     @PostMapping("Login")
     public Optional<Member> login(@RequestBody final Member member){
-//        System.out.println(this.authService.idMember);
         this.authServices.login(member.getUsername(), member.getPassword());
         return this.authServices.getMemberById();
     }

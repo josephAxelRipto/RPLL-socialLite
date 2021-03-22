@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -26,8 +27,8 @@ public class Member {
     private LocalDate birth;
     @Column(nullable = false)
     private String fullname;
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDate memberJoinDate;
+    @Column(name = "member_join_date",columnDefinition = "TIMESTAMP", nullable = false)
+    private LocalDateTime memberJoinDate;
     private String bio;
     @Column(nullable = false)
     private String password;
@@ -35,7 +36,7 @@ public class Member {
     private String username;
     @Column(nullable = false)
     private String email;
-    @Column(nullable = false)
+    @Column(name = "phone_number",nullable = false)
     private String phoneNumber;
     @Column(nullable = false)
     private String gender;

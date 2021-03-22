@@ -4,6 +4,9 @@ server:
     include-binding-errors: always
 
 spring:
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
   datasource:
     password: password
     url: jdbc:postgresql://localhost:5432/SocialLite
