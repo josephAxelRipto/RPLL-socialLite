@@ -10,14 +10,6 @@ class Register extends Component {
   constructor(props) {
     super(props);
 
-    var today = new Date(),
-      date =
-        today.getFullYear() +
-        "-" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getDate();
-
     this.state = {
       data: [],
       firstname: "",
@@ -27,12 +19,10 @@ class Register extends Component {
       password: "",
       phone_number: "",
       email: "",
-      bio: "",
       day: 1,
       month: 5,
       year: 2000,
-      confirmPass: "",
-      dateJoin: date,
+      confirmPass: ""
     };
   }
 
@@ -52,22 +42,20 @@ class Register extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    // const { data } = this.state;
-    // let count = 0;
-
-    // data && data.map((datas) => count++);
-
     if (this.state.password === this.state.confirmPass) {
+      let zero = ""
+
+      if(this.state.month <= 9 || this.state.day <=9){
+        zero = "0"
+      }
       const dataUser = {
         fullname: this.state.firstname + " " + this.state.lastname,
-        birth: this.state.year + "-" + this.state.month + "-" + this.state.day,
+        birth: this.state.year + "-" + zero+this.state.month  + "-" + zero+this.state.day,
         gender: this.state.gender,
         email: this.state.email,
-        bio: this.state.bio,
-        phone_number: this.state.phone_number,
+        phoneNumber: this.state.phone_number,
         username: this.state.username,
-        password: this.state.password,
-        member_join_date: this.state.dateJoin,
+        password: this.state.password
       };
 
       axios
@@ -80,7 +68,7 @@ class Register extends Component {
             button: false,
             timer: 1500,
           });
-          this.props.history.push("/home");
+          this.props.history.push("/");
         })
         .catch((error) => {
           console.log("Error yaa ", error);
@@ -363,7 +351,7 @@ class Register extends Component {
         </Row>
         <Row className="justify-content-md-center" style={style.href_goHome}>
           <Col xs lg="2">
-            <Link to="/home">
+            <Link to="/">
               <Button variant="light" type="submit" size="lg">
                 &#60; Go Home
               </Button>
