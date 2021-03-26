@@ -43,14 +43,20 @@ class Register extends Component {
     event.preventDefault();
 
     if (this.state.password === this.state.confirmPass) {
-      let zero = ""
+      let day = ""
+      let month = ""
 
-      if(this.state.month <= 9 || this.state.day <=9){
-        zero = "0"
+      if(this.state.month <= 9 && this.state.day <=9){
+        day = "0"
+        month = "0"
+      }else if(this.state.day <= 9){
+        day = "0"
+      }else if(this.state.month <= 9){
+        month = "0"
       }
       const dataUser = {
         fullname: this.state.firstname + " " + this.state.lastname,
-        birth: this.state.year + "-" + zero+this.state.month  + "-" + zero+this.state.day,
+        birth: this.state.year + "-" + month+this.state.month  + "-" + day+this.state.day,
         gender: this.state.gender,
         email: this.state.email,
         phoneNumber: this.state.phone_number,
@@ -68,6 +74,13 @@ class Register extends Component {
             button: false,
             timer: 1500,
           });
+          localStorage.setItem('fullname',dataUser.fullname)
+          localStorage.setItem('birth',dataUser.birth)
+          localStorage.setItem('bio', "")
+          localStorage.setItem('email', dataUser.email)
+          localStorage.setItem('username',dataUser.username)
+          localStorage.setItem('password',dataUser.password)
+          localStorage.setItem('phoneNumber',dataUser.phoneNumber)
           this.props.history.push("/");
         })
         .catch((error) => {

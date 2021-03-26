@@ -44,8 +44,9 @@ class Editprofil extends Component {
 
     return (
       <main>
-        <NavbarComponent />
         <Switch>
+        <NavbarComponent/>
+        </Switch>
           <Container>
             <Row>
               <Col>
@@ -159,7 +160,6 @@ class Editprofil extends Component {
               </Row>
             </footer>
           </Container>
-        </Switch>
       </main>
     );
   }

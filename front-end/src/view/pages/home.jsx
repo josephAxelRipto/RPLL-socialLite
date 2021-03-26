@@ -20,6 +20,7 @@ import Like from "../asset/favorite-24px.svg";
 import Bookmark from "../asset/bookmark_add-24px.svg";
 
 class Home extends Component {
+
   render() {
     const style = {
       logo_home: {
@@ -110,7 +111,7 @@ class Home extends Component {
     return (
       <main>
         <Switch>
-          <NavbarComponent />
+          <NavbarComponent/>
         </Switch>
         <Container>
           <Row>
@@ -171,7 +172,7 @@ class Home extends Component {
                 <b style={style.textStory}>New Story</b>
               </Row>
             </Col>
-
+            
             {/* disini buat masukin gambar postingan */}
             <Col style={style.column_tengah}>
               <Row style={style.jarakPerPostingan}>

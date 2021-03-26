@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Form, Container, Row, Col, Button, center } from "react-bootstrap";
 import Logo from "../asset/logo.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import swal from "sweetalert";
+import { URL_API } from "../utils/constant.js";
 
 class Login extends Component {
   constructor(props) {
@@ -22,15 +25,43 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      data: [
-        ...this.state.data,
-        {
-          username: this.state.username,
-          password: this.state.password,
-        },
-      ],
-    });
+
+    const dataLogin = {
+      username: this.state.username,
+      password: this.state.password
+    }
+
+    axios
+        .post(URL_API + "api/Login", dataLogin)
+        .then((res) => {
+          swal({
+            title: "Sukses Login",
+            text: "Sukses Login, Selamat datang " + res.data.fullname + "!!",
+            icon: "success",
+            button: false,
+            timer: 1500,
+          });
+          localStorage.setItem('fullname',res.data.fullname)
+          localStorage.setItem('birth',res.data.birth)
+          localStorage.setItem('bio',res.data.bio)
+          localStorage.setItem('email',res.data.email)
+          localStorage.setItem('username',res.data.username)
+          localStorage.setItem('password',res.data.password)
+          localStorage.setItem('phoneNumber',res.data.phoneNumber)
+          this.props.history.push("/");
+        }).catch((error) => {
+          console.log("Error yaa ", error);
+          console.log("dataUser", dataLogin);
+          swal({
+            title: "Gagal Login",
+            text: "Gagal Login ",
+            icon: "error",
+            button: false,
+            timer: 1500,
+          });
+          this.props.history.push("/login");
+        });
+
     this.setState({
       username: "",
       password: "",
@@ -132,7 +163,7 @@ class Login extends Component {
           <Row>
             <Col>
               <center>
-                Don't have an account? <a href="/signup">sign up</a>
+                Don't have an account? <a href="/signup" >sign up</a>
               </center>
             </Col>
           </Row>
