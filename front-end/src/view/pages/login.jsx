@@ -41,6 +41,7 @@ class Login extends Component {
             button: false,
             timer: 1500,
           });
+          localStorage.setItem('id',res.data.id)
           localStorage.setItem('fullname',res.data.fullname)
           localStorage.setItem('birth',res.data.birth)
           localStorage.setItem('bio',res.data.bio)

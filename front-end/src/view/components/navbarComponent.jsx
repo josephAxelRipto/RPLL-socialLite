@@ -5,6 +5,8 @@ import {
   Button,
   Navbar,
   Form,
+  Tooltip,
+  OverlayTrigger
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Logo from "../asset/logo.png";
@@ -20,6 +22,7 @@ class navbarComponent extends Component {
 
     this.state = {
       data: {
+        id: "",
         fullname: "",
         birth: "",
         bio: "",
@@ -28,12 +31,14 @@ class navbarComponent extends Component {
         password: "",
         phoneNumber: ""
       },
+      search: ""
     };
   }
 
   componentDidMount() {
     this.setState({
       data: {
+        id: localStorage.getItem('id'),
         fullname: localStorage.getItem('fullname'),
         birth: localStorage.getItem('birth'),
         bio: localStorage.getItem('bio'),
@@ -83,21 +88,27 @@ class navbarComponent extends Component {
       },
       upload: {
         width: "40px",
-        height:"40px",
+        height: "40px",
         marginRight: "20px"
       },
       DM: {
         width: "40px",
-        height:"40px",
-        marginRight:"20px"
+        height: "40px",
+        marginRight: "20px"
       },
       profile: {
         borderRadius: "70px",
         width: "40px",
-        height:"40px",
-        marginRight:"40px"
+        height: "40px",
+        marginRight: "40px"
       }
     };
+
+    const renderTooltip = (props) => (
+      <Tooltip id="button-tooltip" {...props}>
+        {this.state.data.fullname}
+      </Tooltip>
+    );
 
     let buttons;
 
@@ -119,11 +130,17 @@ class navbarComponent extends Component {
             />
           </Link>
           <Link to="/profile">
-            <img
-              src={Profile}
-              style={style.profile}
-              alt="direct profile"
-            />
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip}
+            >
+              <img
+                src={Profile}
+                style={style.profile}
+                alt="direct profile"
+              />
+            </OverlayTrigger>
           </Link>
           <Link to="/login" onClick={() => localStorage.clear()} className="nav-link" >Logout</Link>
         </InputGroup>

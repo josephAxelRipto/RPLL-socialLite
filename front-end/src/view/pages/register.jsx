@@ -69,11 +69,12 @@ class Register extends Component {
         .then((res) => {
           swal({
             title: "Sukses Sign Up",
-            text: "Sukses Sign Up " + this.state.username,
+            text: "Sukses Sign Up " + dataUser.fullname,
             icon: "success",
             button: false,
             timer: 1500,
           });
+          localStorage.setItem('id',res.data.id)
           localStorage.setItem('fullname',dataUser.fullname)
           localStorage.setItem('birth',dataUser.birth)
           localStorage.setItem('bio', "")
