@@ -30,7 +30,8 @@ class Home extends Component {
       },
       column_kiri: {
         marginTop: "150px",
-        marginRight: "90px"
+        marginRight: "90px",
+        fixed:"top"
       },
       tulisanHOME: {
         marginTop: "10px",
@@ -115,7 +116,7 @@ class Home extends Component {
         </Switch>
         <Container>
           <Row>
-            <Col xs={{ order: "first" }} style={style.column_kiri} fixed="top">
+            <Col xs={{ order: "first" }} style={style.column_kiri}>
               <Row>
                 <img src={Homelogo} alt="logo" style={style.logo_home}></img>
                 <h3 style={style.tulisanHOME}>HOME</h3>
