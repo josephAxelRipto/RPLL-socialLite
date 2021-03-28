@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch } from "react-router-dom";
+import { Switch, Link } from "react-router-dom";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import NavbarComponent from "../components/navbarComponent";
 
@@ -111,7 +111,7 @@ class Home extends Component {
     return (
       <main>
         <Switch>
-          <NavbarComponent/>
+          <NavbarComponent />
         </Switch>
         <Container>
           <Row>
@@ -161,18 +161,19 @@ class Home extends Component {
                 <p style={style.textStory}>Doplino Mira</p>
               </Row>
               <Row>
-                <Button variant="outline-light">
-                  <img
-                    src={AddStory}
-                    href="#"
-                    alt="story"
-                    style={style.storyIcon}
-                  ></img>
-                </Button>
+                <Link to="/story">
+                  <Button variant="outline-light">
+                    <img
+                      src={AddStory}
+                      alt="story"
+                      style={style.storyIcon}
+                    ></img>
+                  </Button>
+                </Link>
                 <b style={style.textStory}>New Story</b>
               </Row>
             </Col>
-            
+
             {/* disini buat masukin gambar postingan */}
             <Col style={style.column_tengah}>
               <Row style={style.jarakPerPostingan}>
