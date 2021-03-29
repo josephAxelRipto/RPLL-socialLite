@@ -7,6 +7,7 @@ import EditProfil from "./view/pages/editprofil";
 import { Component } from "react";
 import Newpost from "./view/pages/newpost";
 import newstory from "./view/pages/newstory";
+import EditPost from "./view/pages/editpost";
 class App extends Component {
   render() {
     return (
@@ -19,6 +20,7 @@ class App extends Component {
             <Route path="/editprofile" component={EditProfil} exact />
             <Route path="/upload" component={Newpost} exact />
             <Route path="/story" component={newstory} exact />
+            <Route path="/editpost" component={EditPost} exact />
           </Switch>
         </main>
       </BrowserRouter>
