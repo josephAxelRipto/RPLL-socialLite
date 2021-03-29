@@ -1,18 +1,23 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import 'react-image-crop/dist/ReactCrop.css';
 import Logo from "../asset/logo.png";
-// import PreviewPost from "../components/PreviewPost";
 import Dropzone from 'react-dropzone';
 import Profile from "../asset/model1.jpeg";
 import Upload from "../asset/file_upload.svg";
+
+
+const imageMaxSize = 1000000 //dalam bytes
+const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg, image/gif'
+const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => { return item.trim() })
 
 class newpost extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            imageFile: [],
-            caption: ""
+            imageFile: null,
+            caption: "",
         }
     }
 
@@ -22,11 +27,54 @@ class newpost extends Component {
         });
     };
 
-    onDrop(imageFile) {
-        this.setState({
-            imageFile: imageFile
-        })
-        console.log(imageFile)
+    verifyFile = (file) => {
+        if (file && file.length > 0) {
+            const currentFile = file[0]
+            const currentFileType = currentFile.type
+            const currentFileSize = currentFile.size
+            if (currentFileSize > imageMaxSize) {
+                alert('File terlalu besar: ' + currentFileSize)
+                return false
+            }
+
+            if (!acceptedFileTypesArray.includes(currentFileType)) {
+                alert('Cuma bisa insert Foto yah')
+                return false
+            }
+            return true
+        }
+    }
+
+    handelOnDrop = (files, rejectedFiles) => {
+        if (rejectedFiles && rejectedFiles.length > 0) {
+            this.verifyFile(rejectedFiles)
+        }
+
+        if (files && files.length > 0) {
+            const isVerified = this.verifyFile(files)
+            if (isVerified) {
+                //image64data
+                const currentFile = files[0]
+                const myFileItemReader = new FileReader()
+                myFileItemReader.addEventListener("load", () => {
+                    console.log(myFileItemReader.result)
+                    this.setState({
+                        imageFile: myFileItemReader.result
+                    })
+                }, false)
+
+                myFileItemReader.readAsDataURL(currentFile)
+            }
+        }
+    }
+
+    clear = (event) => {
+        event.preventDefault()
+        this.setState = {
+            imageFile: null
+        }
+        this.props.history.push("/upload")
+
     }
 
     render() {
@@ -73,9 +121,18 @@ class newpost extends Component {
             text: {
                 marginTop: "5px",
                 marginLeft: "5px"
+            },
+            previewImage: {
+                width: "450px",
+                height: "400px",
+                marginBottom: "100px"
+            },
+            text_area: {
+                marginRight: "-90px"
             }
 
         };
+        const imgSrc = this.state.imageFile
         return (
             <Container>
                 <Row>
@@ -104,23 +161,35 @@ class newpost extends Component {
                         </Link>
                     </Col>
                     <Col>
-                        {/* <Dropzone onDrop={this.onDrop.bind(this)} className="dropzone" activeClassName="active-dropzone" multiple={false}>
-                            <p>Taro image disini</p>
-                        </Dropzone>
-                        {this.state.imageFile.length > 0? <div>
-                            <p>uploading {this.state.imageFile.length} files....</p>
-                            <div>{this.state.imageFile.map((file) => <img src={file.preview} alt="preview"></img>)}</div>
-                            </div>: null} */}
-                        <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)} onChange={(event) => this.handleChange(event)}>
-                            {({ getRootProps, getInputProps }) => (
-                                <section>
-                                    <div {...getRootProps()}>
-                                        <input {...getInputProps()} />
-                                        <p>Drag 'n' drop some files here, or click to select files</p>
-                                    </div>
-                                </section>
-                            )}
-                        </Dropzone>
+                        {imgSrc != null ?
+                            <div>
+                                <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
+                                    {({ getRootProps, getInputProps }) => (
+                                        <section>
+                                            <div {...getRootProps()}>
+                                                <input {...getInputProps()} />
+                                                <b><p>Click or Drag new image here for change image!!!</p></b>
+                                            </div>
+                                        </section>
+                                    )}
+                                </Dropzone>
+                                <p>Preview Post</p>
+                                <img src={imgSrc} alt="preview" style={style.previewImage}></img>
+                            </div>
+
+                            :
+
+                            <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
+                                {({ getRootProps, getInputProps }) => (
+                                    <section>
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            <b><p>Click or Drag new image here !!!</p></b>
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>}
+
                     </Col>
                     <Col style={style.columnKanan}>
                         <Row>
@@ -134,12 +203,13 @@ class newpost extends Component {
                                     value={this.state.caption}
                                     onChange={(event) => this.handleChange(event)}
                                     placeholder="Write Caption"
+                                    style={style.text_area}
                                     required
                                 />
                                 <hr style={style.hr} />
                                 <Row>
-                                    <img src={Upload} alt="upload" style={style.iconUpload}/>
-                                <b><h5 style={style.text}>Upload Post</h5></b>
+                                    <img src={Upload} alt="upload" style={style.iconUpload} />
+                                    <b><h5 style={style.text}>Upload Post</h5></b>
                                 </Row>
                                 <Button
                                     variant="secondary"

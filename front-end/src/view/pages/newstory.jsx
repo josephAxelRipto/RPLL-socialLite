@@ -7,11 +7,16 @@ import LogoUpload from "../asset/file_upload.svg";
 // import PreviewPost from "../components/PreviewPost";
 import Dropzone from 'react-dropzone';
 
+
+const imageMaxSize = 1000000 //dalam bytes
+const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg, image/gif'
+const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => { return item.trim() })
+
 class newstory extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            imageFile: [],
+            imageFile: null,
             id: "",
             duration: ""
         }
@@ -29,11 +34,45 @@ class newstory extends Component {
         });
     };
 
-    onDrop(imageFile) {
-        this.setState({
-            imageFile: imageFile
-        })
-        console.log(imageFile)
+    verifyFile = (file) => {
+        if (file && file.length > 0) {
+            const currentFile = file[0]
+            const currentFileType = currentFile.type
+            const currentFileSize = currentFile.size
+            if (currentFileSize > imageMaxSize) {
+                alert('File terlalu besar: ' + currentFileSize)
+                return false
+            }
+
+            if (!acceptedFileTypesArray.includes(currentFileType)) {
+                alert('Cuma bisa insert Foto yah')
+                return false
+            }
+            return true
+        }
+    }
+
+    handelOnDrop = (files, rejectedFiles) => {
+        if (rejectedFiles && rejectedFiles.length > 0) {
+            this.verifyFile(rejectedFiles)
+        }
+
+        if (files && files.length > 0) {
+            const isVerified = this.verifyFile(files)
+            if (isVerified) {
+                //image64data
+                const currentFile = files[0]
+                const myFileItemReader = new FileReader()
+                myFileItemReader.addEventListener("load", () => {
+                    console.log(myFileItemReader.result)
+                    this.setState({
+                        imageFile: myFileItemReader.result
+                    })
+                }, false)
+
+                myFileItemReader.readAsDataURL(currentFile)
+            }
+        }
     }
 
     render() {
@@ -79,9 +118,15 @@ class newstory extends Component {
                 height: "40px",
                 marginBottom: "10px",
                 marginLeft: "15px"
-            }
+            },
+            previewImage: {
+                width: "450px",
+                height: "400px",
+                marginBottom: "100px"
+            },
 
         };
+        const imgSrc = this.state.imageFile
         return (
             <Container>
                 <Row>
@@ -110,23 +155,34 @@ class newstory extends Component {
                         </Link>
                     </Col>
                     <Col>
-                        {/* <Dropzone onDrop={this.onDrop.bind(this)} className="dropzone" activeClassName="active-dropzone" multiple={false}>
-                            <p>Taro image disini</p>
-                        </Dropzone>
-                        {this.state.imageFile.length > 0? <div>
-                            <p>uploading {this.state.imageFile.length} files....</p>
-                            <div>{this.state.imageFile.map((file) => <img src={file.preview} alt="preview"></img>)}</div>
-                            </div>: null} */}
-                        <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)} onChange={(event) => this.handleChange(event)}>
-                            {({ getRootProps, getInputProps }) => (
-                                <section>
-                                    <div {...getRootProps()}>
-                                        <input {...getInputProps()} />
-                                        <p>Drag 'n' drop some files here, or click to select files</p>
-                                    </div>
-                                </section>
-                            )}
-                        </Dropzone>
+                    {imgSrc != null ?
+                            <div>
+                                <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
+                                    {({ getRootProps, getInputProps }) => (
+                                        <section>
+                                            <div {...getRootProps()}>
+                                                <input {...getInputProps()} />
+                                                <b><p>Click or Drag new image here for change image!!!</p></b>
+                                            </div>
+                                        </section>
+                                    )}
+                                </Dropzone>
+                                <p>Preview Story</p>
+                                <img src={imgSrc} alt="preview" style={style.previewImage}></img>
+                            </div>
+
+                            :
+
+                            <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
+                                {({ getRootProps, getInputProps }) => (
+                                    <section>
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            <b><p>Click or Drag new image here !!!</p></b>
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>}
                     </Col>
                     <Col style={style.columnKanan}>
                         <Row>
