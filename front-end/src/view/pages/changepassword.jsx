@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Form, Container, Row, Col, Button } from "react-bootstrap";
 import { Switch } from "react-router-dom";
-import Photo1 from "../asset/model1.jpeg";
 import NavbarComponent from "../components/navbarComponent";
 
 class ChangePassword extends Component {

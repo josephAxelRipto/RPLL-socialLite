@@ -87,7 +87,7 @@ class EditPost extends Component {
                         </Link>
                     </Col>
                     <Col>
-                        <img src={Post} style={style.imagePost}></img>
+                        <img src={Post} alt ="post" style={style.imagePost}></img>
                     </Col>
                     <Col>
                         <Row>
