@@ -9,6 +9,7 @@ import Newpost from "./view/pages/newpost";
 import newstory from "./view/pages/newstory";
 import EditPost from "./view/pages/editpost";
 import ChangePassword from "./view/pages/changepassword";
+import Profile from "./view/pages/profile";
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
             <Route path="/story" component={newstory} exact />
             <Route path="/editpost" component={EditPost} exact />
             <Route path="/changepassword" component={ChangePassword} exact />
+            <Route path="/profile" component={Profile} exact />
           </Switch>
         </main>
       </BrowserRouter>
