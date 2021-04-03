@@ -1,5 +1,6 @@
 package com.joseph.social_lite.controller;
 
+import com.joseph.social_lite.data.dto.LoginDto;
 import com.joseph.social_lite.domain.entity.Member;
 import com.joseph.social_lite.application.services.AuthServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class LoginController {
     }
 
     @PostMapping("Login")
-    public Optional<Member> login(@RequestBody final Member member){
-        this.authServices.login(member.getUsername(), member.getPassword());
+    public Optional<Member> login(@RequestBody LoginDto loginDto){
+        this.authServices.login(loginDto.getUsername(), loginDto.getPassword());
         return this.authServices.getMemberById();
     }
 

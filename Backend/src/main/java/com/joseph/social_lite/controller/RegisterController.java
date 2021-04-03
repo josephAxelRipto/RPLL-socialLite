@@ -14,7 +14,7 @@ public class RegisterController {
     private AuthServices authServices;
 
     @PostMapping(value = "/SignUp")
-    public void signUpToDB(@RequestBody final Member member){
-        this.authServices.signUp(member);
+    public Member signUpToDB(@RequestBody final Member member){
+        return this.authServices.signUp(member);
     }
 }

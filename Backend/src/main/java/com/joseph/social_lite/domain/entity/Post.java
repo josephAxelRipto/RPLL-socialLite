@@ -1,22 +1,43 @@
 package com.joseph.social_lite.domain.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.apache.tomcat.jni.Local;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@Entity
+@NoArgsConstructor
 public class Post {
-    private String caption;
-    private int countComment;
-    private int countLike;
-    private int datePost;
+    @Id
+    @SequenceGenerator(
+            name = "post_sequence",
+            sequenceName = "post_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "post_id_seq"
+    )
     private int id;
+    @Column(nullable = false, columnDefinition = "text")
+//    @Lob
+    private String image;
+    private String filename;
+    @Column(nullable = false)
+    private String caption;
+    private int countComment = 0;
+    private int countLike = 0;
+    private LocalDateTime datePost;
+
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id")
+    private Member owner;
 //    private binary image;
-    public Like m_Like;
-    public Comment m_Comment;
-    public Member m_Member;
-    public Bookmark m_Bookmark;
-
-    public int deletePost(int id) {
-        return 0;
-    }
-
-    public int editCaption(int id, String newCaption) {
-        return 0;
-    }
+//    public Like m_Like;
+//    public Comment m_Comment;
+//    public Member m_Member;
+//    public Bookmark m_Bookmark;
 }

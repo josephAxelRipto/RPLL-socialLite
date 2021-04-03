@@ -28,7 +28,7 @@ public class AuthServices {
         return this.memberRepository.findById(this.getIdMember());
     }
 
-    public void signUp(Member member){
+    public Member signUp(Member member){
         member.setMemberJoinDate(currentDate());
 
         Optional<Member> memberUsername = this.memberRepository.findMemberByUsername(member.getUsername());
@@ -36,6 +36,7 @@ public class AuthServices {
             throw new IllegalStateException("Username is already exist");
         }
         this.memberRepository.save(member);
+        return member;
     }
 
     public long getIdMember(){
