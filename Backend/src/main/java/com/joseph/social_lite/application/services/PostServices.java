@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 public class PostServices {
@@ -51,5 +52,11 @@ public class PostServices {
         this.post.setDatePost(currentDate());
         this.post.setCaption(caption);
         postRepository.save(this.post);
+    }
+
+    public List<Post> getPost(long id){
+        member = new Member();
+        member = memberRepository.getOne(id);
+        return postRepository.findAllByOwnerOrderByDatePost(member);
     }
 }
