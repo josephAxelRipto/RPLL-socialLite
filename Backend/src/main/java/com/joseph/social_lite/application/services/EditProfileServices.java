@@ -4,8 +4,12 @@ import com.joseph.social_lite.data.repository.MemberRepository;
 import com.joseph.social_lite.domain.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.Base64;
 
 @Service
 public class EditProfileServices {
@@ -63,5 +67,25 @@ public class EditProfileServices {
             member.setPhoneNumber(phoneNumber);
         }
 
+    }
+
+    @Transactional
+    public void editPhotoProfile(Long memberId, MultipartFile file){
+        Member member = this.memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Member with id " + memberId + " does not exist"
+                ));
+
+        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+
+        if (filename.contains("..")){
+            System.out.println("not a valid file");
+        }
+
+        try {
+            member.setProfileImage(Base64.getEncoder().encodeToString(file.getBytes()));
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

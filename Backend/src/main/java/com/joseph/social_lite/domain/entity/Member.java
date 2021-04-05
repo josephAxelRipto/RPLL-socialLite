@@ -40,6 +40,7 @@ public class Member {
     private String phoneNumber;
     @Column(nullable = false)
     private String gender;
-//    private String profileImage;
+    @Column(columnDefinition = "text")
+    private String profileImage;
 
 }

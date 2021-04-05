@@ -5,6 +5,7 @@ import com.joseph.social_lite.data.dto.ChangePasswordDto;
 import com.joseph.social_lite.data.dto.EditProfileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -25,5 +26,10 @@ public class EditProfileController {
             @PathVariable("memberId") Long memberId,
             @RequestBody EditProfileDto editProfileDto){
         this.editProfileServices.editProfile(memberId, editProfileDto.getName(), editProfileDto.getUsername(), editProfileDto.getBio(), editProfileDto.getEmail(), editProfileDto.getPhoneNumber());
+    }
+
+    @PostMapping("/EditPhotoProfile/{memberId}")
+    public void editPhotoProfile(@PathVariable("memberId") Long memberId, @RequestParam("file") MultipartFile file){
+        this.editProfileServices.editPhotoProfile(memberId, file);
     }
 }

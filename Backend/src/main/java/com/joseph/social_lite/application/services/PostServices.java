@@ -1,6 +1,5 @@
 package com.joseph.social_lite.application.services;
 
-import com.joseph.social_lite.data.dto.PostDto;
 import com.joseph.social_lite.data.repository.MemberRepository;
 import com.joseph.social_lite.data.repository.PostRepository;
 import com.joseph.social_lite.domain.entity.Member;
