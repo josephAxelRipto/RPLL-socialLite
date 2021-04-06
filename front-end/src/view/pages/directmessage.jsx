@@ -1,178 +1,87 @@
-import React, { Component } from "react";
-import { Switch } from "react-router-dom";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
-import NavbarComponent from "../components/navbarComponent";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import ChatBubble from 'react-chat-bubble';
+import '../css/ChatBubbles.css';
 
-// import foto
-import DmLogo from "../asset/dmMessage.png";
-import Line from "../asset/line.png";
+class directmessage extends Component {
+  state = {
+    newMessage: '',
+  }
 
-// entar hapus
-import Model1 from "../asset/model1.jpeg";
-import Model2 from "../asset/model2.jpg";
-import Model3 from "../asset/model3.jpg";
+  getConversations(messages){
+    if(messages === undefined){
+      return;
+    }
 
+    const listItems = messages.map((message, index) => {
+      let bubbleClass = 'me';
+      let bubbleDirection = '';
 
-class DirrectMessage extends Component {
+      if(message.type === 0){
+        bubbleClass = 'you';
+        bubbleDirection = "bubble-direction-reverse";
+      }
+      return (
+              <div className={`bubble-container ${bubbleDirection}`} key={index}>
+                <img className={`img-circle`} src={message.image} alt="message"/>
+                <div className={`bubble ${bubbleClass}`}>{message.text}</div>
+              </div>
+          );
+    });
+    return listItems;
+  }
+
+  handleSubmit = e => {
+    e.preventDefault()
+
+    const {props: {onNewMessage}, state: {newMessage}} = this
+
+    if(onNewMessage && newMessage) {
+      onNewMessage(newMessage)
+    }
+
+    this.setState({
+      newMessage: '',
+    })
+  }
+
+  handleInputChange = e => this.setState({
+    newMessage: e.target.value,
+  })
 
   render() {
-    const style = {
-      logo_home: {
-        width: "50px",
-        height: "50px",
-        marginRight: "10px",
-        marginLeft: "30px",
-      },
-      garis_kiri:{
-        width : "250px",
-      },
-      garis_kanan:{
-        width : "500px",
-        height : "70px",
-        marginTop: "3px",
-      },
-      column_kiri: {
-        width : "30%",
-        marginTop: "150px",
-        marginRight: "90px"
-      },
-      tulisanHOME: {
-        marginTop: "10px",
-        marginLeft: "40px",
-      },
-      tulisanSocialStory: {
-        marginLeft: "15px",
-        marginTop: "0px",
-      },
-      storyIcon: {
-        borderRadius: "55px",
-        width: "50px",
-        height: "50px",
-        marginTop: "10px",
-      },
-      textStory: {
-        marginTop: "30px",
-        marginLeft: "12px",
-      },
-      column_tengah: {
-        marginTop: "140px",
-        marginRight:'100px',
-      },
-      iconDm : {
-        borderRadius: "55px",
-        width: "50px",
-        height: "50px",
-        marginTop: "10px",
-        marginLeft : "10px",
-      },
-      rectangleSender: {
-        width: '200px',
-        height: '25px',
-        borderRadius : '50px',
-        marginLeft : '20px', 
-        marginTop: "20px",
-        textAlign :'center',
-        borderColor : 'red',
-      },
-      rectangleReceiver: {
-        backgroundColor : 'lightgrey',
-        width: '200px',
-        height: '25px',
-        borderRadius : '50px',
-        marginLeft : '380px', 
-        marginTop: "20px",
-        textAlign :'center',
-      },
-    };
-    return (
-      <main>
-        <Switch>
-          <NavbarComponent/>
-        </Switch>
-        <Container>
-          <Row>
-            <Col xs={{ order: "first" }} style={style.column_kiri} fixed="top">
-              <Row>
-                <h3 style={style.tulisanHOME}>Chats</h3>
-                <img src={DmLogo} alt="logo" style={style.logo_home}></img>
-              </Row>
-              <Row style={style.tulisanSocialStory}>
-                <img src={Line} alt="logo" style={style.garis_kiri}></img>
-              </Row>
-              {/* disini buat masukin story */}
-              <Row>
-                <Button variant="outline-light">
-                  <img
-                    src={Model1}
-                    href="#"
-                    alt="story"
-                    style={style.storyIcon}
-                  ></img>
-                </Button>
-                <p style={style.textStory}>Jane Lopinaz</p>
-              </Row>
+    const {props: {messages}, state: {newMessage}} = this;
+    const chatList = this.getConversations(messages);
+    const style= {
+        margin:{
+            marginTop: "100px"
+        }
+    }
 
-              {/* ini story baru lagi */}
-              <Row>
-                <Button variant="outline-light">
-                  <img
-                    src={Model2}
-                    href="#"
-                    alt="story"
-                    style={style.storyIcon}
-                  ></img>
-                </Button>
-                <p style={style.textStory}>Lopi Sup</p>
-              </Row>
-              <Row>
-                <Button variant="outline-light">
-                  <img
-                    src={Model3}
-                    href="#"
-                    alt="story"
-                    style={style.storyIcon}
-                  ></img>
-                </Button>
-                <p style={style.textStory}>Doplino Mira</p>
-              </Row>
-            </Col>
-            
-            {/* disini buat masukin DM */}
-            <Col style={style.column_tengah}>
-              <Row>
-                <Button variant="outline-light">
-                    <img
-                      src={Model1}
-                      href="#"
-                      alt="story"
-                      style={style.storyIcon}
-                    ></img>
-                  </Button>
-                  <b style={style.textStory}>Jane Lopinaz</b>
-              </Row>
-              <Row style={style.tulisanSocialStory}>
-                <img src={Line} alt="logo" style={style.garis_kanan}></img>
-              </Row>
-              <Row>
-                <img src={Model1} href="#" alt="story" style={style.iconDm}></img>
-                <p style={style.rectangleSender}>Holla Como Estass</p>
-              </Row>
-              <Row>
-                <p style={style.rectangleReceiver}>Holla Como Estass</p>
-              </Row>
-              <Row style={{marginTop:"250px",marginLeft:"10px"}}>
-                <form>
-                  <label>
-                    <input type="text" name="name" />
-                  </label>
-                  <input type="submit" value="Submit" />
-                </form>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </main>
+    return (
+      <div className="chats" style={style.margin}>
+        <div className="chat-list">
+          {chatList}
+        </div>
+         <form
+          className="new-message"
+          onSubmit={this.handleSubmit}
+         >
+          <input
+            value={newMessage}
+            placeholder="Write a new message"
+            onChange={this.handleInputChange}
+            className="new-message-input"
+          />
+        </form>
+      </div>
     );
   }
 }
-export default DirrectMessage;
+
+ChatBubble.propTypes = {
+  messages: PropTypes.array.isRequired,
+  onNewMessage: PropTypes.func.isRequired,
+};
+
+export default directmessage;

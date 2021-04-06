@@ -13,8 +13,7 @@ import Logo from "../asset/logo.png";
 import Search from "../asset/search-24px.svg";
 import Upload from "../asset/upload.svg";
 import DM from "../asset/directMessage.svg";
-
-import Profile from "../asset/model1.jpeg";
+import Profile from "../asset/account.svg"
 
 class navbarComponent extends Component {
   constructor(props) {
@@ -29,7 +28,8 @@ class navbarComponent extends Component {
         email: "",
         username: "",
         password: "",
-        phoneNumber: ""
+        phoneNumber: "",
+        profileImage: "",
       },
       search: ""
     };
@@ -46,6 +46,7 @@ class navbarComponent extends Component {
         username: localStorage.getItem('username'),
         password: localStorage.getItem('password'),
         phoneNumber: localStorage.getItem('phoneNumber'),
+        profileImage: localStorage.getItem('profileImage')
       }
     })
   }
@@ -111,6 +112,25 @@ class navbarComponent extends Component {
     );
 
     let buttons;
+    let imageProfile;
+
+    if (this.state.data.profileImage !== "null") {
+      imageProfile = (
+        <img
+          src={this.state.data.profileImage}
+          style={style.profile}
+          alt="direct profile"
+        />
+      )
+    } else {
+      imageProfile = (
+        <img
+          src={Profile}
+          style={style.profile}
+          alt="direct default"
+        />
+      )
+    }
 
     if (this.state.data.username !== null) {
       buttons = (
@@ -135,14 +155,9 @@ class navbarComponent extends Component {
               delay={{ show: 250, hide: 400 }}
               overlay={renderTooltip}
             >
-              <img
-                src={Profile}
-                style={style.profile}
-                alt="direct profile"
-              />
+              {imageProfile}
             </OverlayTrigger>
           </Link>
-          <Link to="/login" onClick={() => localStorage.clear()} className="nav-link" >Logout</Link>
         </InputGroup>
       )
     } else {

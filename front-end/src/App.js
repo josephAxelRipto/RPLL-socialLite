@@ -8,8 +8,8 @@ import { Component } from "react";
 import Newpost from "./view/pages/newpost";
 import newstory from "./view/pages/newstory";
 import EditPost from "./view/pages/editpost";
-import ChangePassword from "./view/pages/changepassword";
 import Profile from "./view/pages/profile";
+import DirrectMessage from "./view/pages/directmessage";
 
 class App extends Component {
   render() {
@@ -24,8 +24,8 @@ class App extends Component {
             <Route path="/upload" component={Newpost} exact />
             <Route path="/story" component={newstory} exact />
             <Route path="/editpost" component={EditPost} exact />
-            <Route path="/changepassword" component={ChangePassword} exact />
             <Route path="/profile" component={Profile} exact />
+            <Route path="/directmessage" component={DirrectMessage} exact />
           </Switch>
         </main>
       </BrowserRouter>

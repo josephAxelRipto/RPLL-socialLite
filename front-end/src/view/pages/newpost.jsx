@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { Link, withRouter } from "react-router-dom";
 import 'react-image-crop/dist/ReactCrop.css';
 import Logo from "../asset/logo.png";
 import Dropzone from 'react-dropzone';
-import Profile from "../asset/model1.jpeg";
 import Upload from "../asset/file_upload.svg";
+import axios from "axios";
+import swal from "sweetalert";
+import { URL_API } from "../utils/constant";
 
 
 const imageMaxSize = 1000000 //dalam bytes
@@ -16,9 +18,17 @@ class newpost extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            id: "",
             imageFile: null,
             caption: "",
+            previewFile: null
         }
+    }
+
+    componentDidMount = () => {
+        this.setState({
+            id: localStorage.getItem('id')
+        })
     }
 
     handleChange = (event) => {
@@ -46,6 +56,7 @@ class newpost extends Component {
     }
 
     handelOnDrop = (files, rejectedFiles) => {
+        console.log(files)
         if (rejectedFiles && rejectedFiles.length > 0) {
             this.verifyFile(rejectedFiles)
         }
@@ -57,9 +68,9 @@ class newpost extends Component {
                 const currentFile = files[0]
                 const myFileItemReader = new FileReader()
                 myFileItemReader.addEventListener("load", () => {
-                    console.log(myFileItemReader.result)
                     this.setState({
-                        imageFile: myFileItemReader.result
+                        imageFile: currentFile,
+                        previewFile: myFileItemReader.result
                     })
                 }, false)
 
@@ -68,13 +79,48 @@ class newpost extends Component {
         }
     }
 
-    clear = (event) => {
-        event.preventDefault()
-        this.setState = {
-            imageFile: null
-        }
-        this.props.history.push("/upload")
+    handleSubmit = (event) => {
+        event.preventDefault();
 
+        var id = this.state.id
+        var bodyFormData = new FormData();
+        bodyFormData.append('caption', this.state.caption);
+        bodyFormData.append('file',this.state.imageFile);
+        
+        axios({
+            method: "post",
+            url: URL_API+`api/post/${id}`,
+            data: bodyFormData,
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+            .then((res) => {
+              //handle success
+              swal({
+                title: "Post",
+                text: "Success Upload New Post!!! ",
+                icon: "success",
+                button: false,
+                timer: 2500,
+              })
+              this.props.history.push("/");
+            })
+            .catch((error) => {
+              //handle error
+              swal({
+                title: "Post",
+                text: "Failed Upload New Post ",
+                icon: "error",
+                button: false,
+                timer: 2500,
+              })
+              this.props.history.push("/upload");
+            });
+        
+        this.setState({
+            imageFile: null,
+            caption: "",
+            previewFile: null
+        })
     }
 
     render() {
@@ -102,7 +148,6 @@ class newpost extends Component {
             },
             columnKanan: {
                 marginTop: "50px",
-                marginLeft: "40px"
             },
             uploadButton: {
                 width: "200px",
@@ -129,104 +174,125 @@ class newpost extends Component {
             },
             text_area: {
                 marginRight: "-90px"
+            },
+            margin: {
+                marginTop: "100px"
             }
 
         };
-        const imgSrc = this.state.imageFile
-        return (
-            <Container>
-                <Row>
-                    <Col>
-                        <Link to="/">
-                            <img src={Logo} className="logo" style={style.logo} alt="Logo" />
-                        </Link>
-                    </Col>
-                    <Col>
-                        <b><h2 style={style.judul}>New Post</h2></b>
-                    </Col>
-                </Row>
-                <hr style={style.hr} />
-                <Row style={style.body}>
-                    <Col>
-                        <h3>CREATE YOUR POST</h3>
-                        <Link to="/">
-                            <Button
-                                variant="light"
-                                type="submit"
-                                size="lg"
-                                style={style.buttonGoBack}
-                            >
-                                &#60; Go Home
-              </Button>
-                        </Link>
-                    </Col>
-                    <Col>
-                        {imgSrc != null ?
-                            <div>
+        
+        let body
+
+        if (this.state.id !== null) {
+            body = (
+                <Container>
+                    <Row>
+                        <Col>
+                            <Link to="/">
+                                <img src={Logo} className="logo" style={style.logo} alt="Logo" />
+                            </Link>
+                        </Col>
+                        <Col>
+                            <b><h2 style={style.judul}>New Post</h2></b>
+                        </Col>
+                    </Row>
+                    <hr style={style.hr} />
+                    <Row style={style.body}>
+                        <Col sm>
+                            <h3>CREATE YOUR POST</h3>
+                            <Link to="/">
+                                <Button
+                                    variant="light"
+                                    type="submit"
+                                    size="lg"
+                                    style={style.buttonGoBack}
+                                >
+                                    &#60; Go Home
+                            </Button>
+                            </Link>
+                        </Col>
+                        <Col sm>
+                            {this.state.previewFile != null ?
+                                <div>
+                                    <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
+                                        {({ getRootProps, getInputProps }) => (
+                                            <section>
+                                                <div {...getRootProps()}>
+                                                    <input {...getInputProps()} />
+                                                    <b><p>Click or Drag new image here for change image!!!</p></b>
+                                                </div>
+                                            </section>
+                                        )}
+                                    </Dropzone>
+                                    <p>Preview Post</p>
+                                    <img src={this.state.previewFile} alt="preview" style={style.previewImage}></img>
+                                </div>
+
+                                :
+
                                 <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
                                     {({ getRootProps, getInputProps }) => (
                                         <section>
                                             <div {...getRootProps()}>
                                                 <input {...getInputProps()} />
-                                                <b><p>Click or Drag new image here for change image!!!</p></b>
+                                                <b><p>Click or Drag new image here !!!</p></b>
                                             </div>
                                         </section>
                                     )}
-                                </Dropzone>
-                                <p>Preview Post</p>
-                                <img src={imgSrc} alt="preview" style={style.previewImage}></img>
-                            </div>
+                                </Dropzone>}
 
-                            :
-
-                            <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
-                                {({ getRootProps, getInputProps }) => (
-                                    <section>
-                                        <div {...getRootProps()}>
-                                            <input {...getInputProps()} />
-                                            <b><p>Click or Drag new image here !!!</p></b>
-                                        </div>
-                                    </section>
-                                )}
-                            </Dropzone>}
-
-                    </Col>
-                    <Col style={style.columnKanan}>
-                        <Row>
-                            <img src={Profile} alt="profile" style={style.profile}>
-                            </img>
-                            <Form>
-                                <Form.Control
-                                    name="caption"
-                                    as="textarea"
-                                    rows={3}
-                                    value={this.state.caption}
-                                    onChange={(event) => this.handleChange(event)}
-                                    placeholder="Write Caption"
-                                    style={style.text_area}
-                                    required
-                                />
-                                <hr style={style.hr} />
-                                <Row>
-                                    <img src={Upload} alt="upload" style={style.iconUpload} />
-                                    <b><h5 style={style.text}>Upload Post</h5></b>
-                                </Row>
-                                <Button
-                                    variant="secondary"
-                                    type="submit"
-                                    size="lg"
-                                    style={style.uploadButton}
-                                    block
-                                    rounded
-                                >
-                                    Upload
+                        </Col>
+                        <Col sm style={style.columnKanan}>
+                            <Row>
+                                <img src={localStorage.getItem('profileImage')} alt="profile" style={style.profile}>
+                                </img>
+                                <Form onSubmit={this.handleSubmit}>
+                                    <Form.Control
+                                        name="caption"
+                                        as="textarea"
+                                        rows={3}
+                                        value={this.state.caption}
+                                        onChange={(event) => this.handleChange(event)}
+                                        placeholder="Write Caption"
+                                        style={style.text_area}
+                                        required
+                                    />
+                                    <hr style={style.hr} />
+                                    <Row>
+                                        <img src={Upload} alt="upload" style={style.iconUpload} />
+                                        <b><h5 style={style.text}>Upload Post</h5></b>
+                                    </Row>
+                                    <Button
+                                        variant="secondary"
+                                        type="submit"
+                                        size="lg"
+                                        style={style.uploadButton}
+                                        block
+                                        rounded
+                                    >
+                                        Upload
                                 </Button>
-                            </Form>
-                        </Row>
-                    </Col>
-                </Row>
-            </Container>
+                                </Form>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Container>
+            )
+        }else{
+            body = (
+                <Col className="justify-content-md-center" style={style.margin}>
+                    <h2>Access Denied !!</h2>
+                    <Alert key="1" variant="danger">
+                        Kamu masih menjadi user{' '} <Alert.Link href="/signup">klik disini</Alert.Link> untuk signUp atau dapat kembali ke beranda{' '} <Alert.Link href="/">klik disini</Alert.Link>
+                    </Alert>
+                </Col>
+            )
+        }
+        return (
+            <div>
+                {body}
+            </div>
         );
     }
 }
-export default newpost;
+export default withRouter(newpost);

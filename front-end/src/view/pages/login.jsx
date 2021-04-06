@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Form, Container, Row, Col, Button, center } from "react-bootstrap";
+import { Form, Container, Row, Col, Button, Alert } from "react-bootstrap";
 import Logo from "../asset/logo.png";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
 import { URL_API } from "../utils/constant.js";
@@ -39,7 +39,7 @@ class Login extends Component {
             text: "Sukses Login, Selamat datang " + res.data.fullname + "!!",
             icon: "success",
             button: false,
-            timer: 1500,
+            timer: 2500,
           });
           localStorage.setItem('id',res.data.id)
           localStorage.setItem('fullname',res.data.fullname)
@@ -49,16 +49,16 @@ class Login extends Component {
           localStorage.setItem('username',res.data.username)
           localStorage.setItem('password',res.data.password)
           localStorage.setItem('phoneNumber',res.data.phoneNumber)
+          localStorage.setItem('profileImage',`data:image/jpeg;base64,${res.data.profileImage}`)
           this.props.history.push("/");
         }).catch((error) => {
-          console.log("Error yaa ", error);
-          console.log("dataUser", dataLogin);
+          const errorMessage = JSON.parse(error.request.response)
           swal({
             title: "Gagal Login",
-            text: "Gagal Login ",
+            text: "Gagal Login "+errorMessage.message,
             icon: "error",
             button: false,
-            timer: 1500,
+            timer: 2500,
           });
           this.props.history.push("/login");
         });
@@ -91,10 +91,17 @@ class Login extends Component {
         marginLeft: "30px",
         marginTop: "20px",
         marginBottom: "20px",
+      },
+      margin: {
+        marginTop: "150px"
       }
     };
-    return (
-      <Container>
+
+    let bodyLogin;
+
+    if(localStorage.getItem('username') === null){
+      bodyLogin = (
+        <Container>
         <Row>
           <Col>
             <img
@@ -170,7 +177,23 @@ class Login extends Component {
           </Row>
         </footer>
       </Container>
+      )
+    }else{
+      bodyLogin = (
+        <Col className="justify-content-md-center" style={style.margin}>
+          <h2>Kamu Sudah Login !!!</h2>
+          <Alert key="2" variant="success">
+            Silahkan kembali ke beranda{' '} <Alert.Link href="/">klik disini</Alert.Link>
+          </Alert>
+        </Col>
+      )
+    }
+
+    return (
+      <div>
+        {bodyLogin}
+      </div>
     );
   }
 }
-export default Login;
+export default withRouter(Login);

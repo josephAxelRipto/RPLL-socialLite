@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Form, Container, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Form, Container, Row, Col, Button, Alert } from "react-bootstrap";
+import { Link, withRouter } from "react-router-dom";
 import Logo from "../asset/logo.png";
 import axios from "axios";
 import swal from "sweetalert";
@@ -24,13 +24,6 @@ class Register extends Component {
       year: 2000,
       confirmPass: ""
     };
-  }
-
-  componentDidMount() {
-    axios.get(URL_API + "api/GetUsers").then((res) => {
-      const data = res.data;
-      this.setState({ data });
-    });
   }
 
   handleChange = (event) => {
@@ -72,27 +65,27 @@ class Register extends Component {
             text: "Sukses Sign Up " + dataUser.fullname,
             icon: "success",
             button: false,
-            timer: 1500,
+            timer: 2500,
           });
           localStorage.setItem('id',res.data.id)
-          localStorage.setItem('fullname',dataUser.fullname)
-          localStorage.setItem('birth',dataUser.birth)
-          localStorage.setItem('bio', "")
-          localStorage.setItem('email', dataUser.email)
-          localStorage.setItem('username',dataUser.username)
-          localStorage.setItem('password',dataUser.password)
-          localStorage.setItem('phoneNumber',dataUser.phoneNumber)
+          localStorage.setItem('fullname',res.data.fullname)
+          localStorage.setItem('birth',res.data.birth)
+          localStorage.setItem('bio', res.data.bio)
+          localStorage.setItem('email', res.data.email)
+          localStorage.setItem('username',res.data.username)
+          localStorage.setItem('password',res.data.password)
+          localStorage.setItem('phoneNumber',res.data.phoneNumber)
+          localStorage.setItem('profileImage',`data:image/jpeg;base64,${res.data.profileImage}`)
           this.props.history.push("/");
         })
         .catch((error) => {
-          console.log("Error yaa ", error);
-          console.log("dataUser", dataUser);
+          const errorMessage = JSON.parse(error.request.response)
           swal({
             title: "Gagal Sign Up",
-            text: "Gagal Sign Up ",
+            text: "Gagal Sign Up, "+ errorMessage.message,
             icon: "warning",
             button: false,
-            timer: 1500,
+            timer: 2500,
           });
           this.props.history.push("/signup");
         });
@@ -102,7 +95,7 @@ class Register extends Component {
         text: "Gagal Sign Up Masukan password dengan benar",
         icon: "warning",
         button: false,
-        timer: 1500,
+        timer: 2500,
       });
       this.props.history.push("/signup");
     }
@@ -185,8 +178,12 @@ class Register extends Component {
         marginBottom: "20px",
       },
     };
-    return (
-      <Container>
+
+    let body;
+
+    if(localStorage.getItem('username') === null){
+      body = (
+        <Container>
         <Row>
           <Col>
             <img src={Logo} style={style.logo} alt="Logo" />
@@ -387,7 +384,23 @@ class Register extends Component {
           </Col>
         </Row>
       </Container>
+      )
+    }else{
+      body = (
+        <Col className="justify-content-md-center" style={style.margin}>
+          <h2>Kamu Sudah Login !!!</h2>
+          <Alert key="1" variant="success">
+            Silahkan kembali ke beranda <Alert.Link href="/">klik disini</Alert.Link>
+          </Alert>
+        </Col>
+      )
+    }
+
+    return (
+      <div>
+        {body}
+      </div>
     );
   }
 }
-export default Register;
+export default withRouter(Register);

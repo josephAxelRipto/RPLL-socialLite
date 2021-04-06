@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Logo from "../asset/logo.png";
 import Setting from "../asset/settings.svg";
@@ -94,14 +94,13 @@ class newstory extends Component {
             },
             columnKanan: {
                 marginTop: "50px",
-                marginLeft: "40px"
             },
             uploadButton: {
                 width: "200px",
                 marginTop: "40px"
             },
             buttonGoBack: {
-                marginTop: "350px",
+                marginTop: "300px",
                 marginLeft: "40px"
             },
             Icon: {
@@ -124,102 +123,124 @@ class newstory extends Component {
                 height: "400px",
                 marginBottom: "100px"
             },
+            margin: {
+                marginTop: "150px"
+            }
 
         };
+
         const imgSrc = this.state.imageFile
-        return (
-            <Container>
-                <Row>
-                    <Col>
-                        <Link to="/">
-                            <img src={Logo} className="logo" style={style.logo} alt="Logo" />
-                        </Link>
-                    </Col>
-                    <Col>
-                        <b><h2 style={style.judul}>New Story</h2></b>
-                    </Col>
-                </Row>
-                <hr style={style.hr} />
-                <Row style={style.body}>
-                    <Col>
-                        <h3>CREATE YOUR <br />STORY</h3>
-                        <Link to="/">
-                            <Button
-                                variant="light"
-                                type="submit"
-                                size="lg"
-                                style={style.buttonGoBack}
-                            >
-                                &#60; Go Home
-              </Button>
-                        </Link>
-                    </Col>
-                    <Col>
-                    {imgSrc != null ?
-                            <div>
+        let body;
+
+        if (this.state.id !== null) {
+            body = (
+                <Container>
+                    <Row>
+                        <Col>
+                            <Link to="/">
+                                <img src={Logo} className="logo" style={style.logo} alt="Logo" />
+                            </Link>
+                        </Col>
+                        <Col>
+                            <b><h2 style={style.judul}>New Story</h2></b>
+                        </Col>
+                    </Row>
+                    <hr style={style.hr} />
+                    <Row style={style.body}>
+                        <Col sm>
+                            <h3>CREATE YOUR <br />STORY</h3>
+                            <Link to="/">
+                                <Button
+                                    variant="light"
+                                    type="submit"
+                                    size="lg"
+                                    style={style.buttonGoBack}
+                                >
+                                    &#60; Go Home
+                            </Button>
+                            </Link>
+                        </Col>
+                        <Col sm>
+                            {imgSrc != null ?
+                                <div>
+                                    <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
+                                        {({ getRootProps, getInputProps }) => (
+                                            <section>
+                                                <div {...getRootProps()}>
+                                                    <input {...getInputProps()} />
+                                                    <b><p>Click or Drag new image here for change image!!!</p></b>
+                                                </div>
+                                            </section>
+                                        )}
+                                    </Dropzone>
+                                    <p>Preview Story</p>
+                                    <img src={imgSrc} alt="preview" style={style.previewImage}></img>
+                                </div>
+
+                                :
+
                                 <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
                                     {({ getRootProps, getInputProps }) => (
                                         <section>
                                             <div {...getRootProps()}>
                                                 <input {...getInputProps()} />
-                                                <b><p>Click or Drag new image here for change image!!!</p></b>
+                                                <b><p>Click or Drag new image here !!!</p></b>
                                             </div>
                                         </section>
                                     )}
-                                </Dropzone>
-                                <p>Preview Story</p>
-                                <img src={imgSrc} alt="preview" style={style.previewImage}></img>
-                            </div>
-
-                            :
-
-                            <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
-                                {({ getRootProps, getInputProps }) => (
-                                    <section>
-                                        <div {...getRootProps()}>
-                                            <input {...getInputProps()} />
-                                            <b><p>Click or Drag new image here !!!</p></b>
-                                        </div>
-                                    </section>
-                                )}
-                            </Dropzone>}
-                    </Col>
-                    <Col style={style.columnKanan}>
-                        <Row>
-                            <img src={Setting} alt="setting" style={style.Icon} />
-                            <h5 style={style.text}>Setting</h5>
-                        </Row>
-                        <Row>
-                            <Form>
-                                <Form.Control
-                                    name="duration"
-                                    type="number"
-                                    autoComplete="off"
-                                    value={this.state.caption}
-                                    onChange={(event) => this.handleChange(event)}
-                                    placeholder="duration"
-                                    required
-                                />
-                                <hr style={style.hr} />
-                                <Row>
-                                    <img src={LogoUpload} style={style.iconUpload} alt="upload" />
-                                    <b><h5 style={style.text}>Upload Story</h5></b>
-                                </Row>
-                                <Button
-                                    variant="secondary"
-                                    type="submit"
-                                    size="lg"
-                                    style={style.uploadButton}
-                                    block
-                                    rounded
-                                >
-                                    Upload
+                                </Dropzone>}
+                        </Col>
+                        <Col sm style={style.columnKanan}>
+                            <Row>
+                                <img src={Setting} alt="setting" style={style.Icon} />
+                                <h5 style={style.text}>Setting</h5>
+                            </Row>
+                            <Row>
+                                <Form>
+                                    <Form.Control
+                                        name="duration"
+                                        type="number"
+                                        autoComplete="off"
+                                        value={this.state.caption}
+                                        onChange={(event) => this.handleChange(event)}
+                                        placeholder="duration"
+                                        required
+                                    />
+                                    <hr style={style.hr} />
+                                    <Row>
+                                        <img src={LogoUpload} style={style.iconUpload} alt="upload" />
+                                        <b><h5 style={style.text}>Upload Story</h5></b>
+                                    </Row>
+                                    <Button
+                                        variant="secondary"
+                                        type="submit"
+                                        size="lg"
+                                        style={style.uploadButton}
+                                        block
+                                        rounded
+                                    >
+                                        Upload
                                 </Button>
-                            </Form>
-                        </Row>
-                    </Col>
-                </Row>
-            </Container>
+                                </Form>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Container>
+            )
+        } else {
+            body = (
+                <Col className="justify-content-md-center" style={style.margin}>
+                    <h2>Access Denied !!</h2>
+                    <Alert key="1" variant="danger">
+                        Kamu masih menjadi user{' '} <Alert.Link href="/signup">klik disini</Alert.Link> untuk signUp atau dapat kembali ke beranda{' '} <Alert.Link href="/">klik disini</Alert.Link>
+                    </Alert>
+                </Col>
+            )
+        }
+        return (
+            <div>
+                {body}
+            </div>
         );
     }
 }
