@@ -114,7 +114,7 @@ class navbarComponent extends Component {
     let buttons;
     let imageProfile;
 
-    if (this.state.data.profileImage !== "null") {
+    if (this.state.data.profileImage !== `data:image/jpeg;base64,null`) {
       imageProfile = (
         <img
           src={this.state.data.profileImage}

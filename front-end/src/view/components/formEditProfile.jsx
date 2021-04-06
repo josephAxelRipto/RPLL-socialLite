@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
-import Photo from "../asset/account.svg";
+import Profile from "../asset/account.svg";
 import axios from 'axios';
 import { URL_API } from '../utils/constant';
 import swal from "sweetalert";
@@ -115,25 +115,15 @@ class formEditProfile extends Component {
             }
         }
 
-        let profile;
+        let imageProfile;
 
-        if (this.state.profileImage !== "null") {
-            profile = (
-                <img
-                    src={this.state.profileImage}
-                    className="PhotoProfile"
-                    style={style_photo}
-                    alt="PhotoProfile"
-                />
+        if (localStorage.getItem('profileImage') === `data:image/jpeg;base64,null`) {
+            imageProfile = (
+                <img src={Profile} alt="profileDefault" style={style_photo}></img>
             )
         } else {
-            profile = (
-                <img
-                    src={Photo}
-                    className="PhotoDefault"
-                    style={style_photo}
-                    alt="PhotoDefault"
-                />
+            imageProfile = (
+                <img src={localStorage.getItem('profileImage')} alt="profile" style={style_photo}></img>
             )
         }
 
@@ -141,7 +131,7 @@ class formEditProfile extends Component {
             <div>
                 <Row className="justify-content-md-center" class="mb-5">
                     <Col md={{ span: 3, offset: 3 }}>
-                        {profile}
+                        {imageProfile}
                     </Col>
                     <Col>
                         <h3 style={user_name}> {this.state.fullname} </h3>

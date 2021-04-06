@@ -8,6 +8,7 @@ import Upload from "../asset/file_upload.svg";
 import axios from "axios";
 import swal from "sweetalert";
 import { URL_API } from "../utils/constant";
+import Profile from "../asset/account.svg";
 
 
 const imageMaxSize = 1000000 //dalam bytes
@@ -85,43 +86,44 @@ class newpost extends Component {
         var id = this.state.id
         var bodyFormData = new FormData();
         bodyFormData.append('caption', this.state.caption);
-        bodyFormData.append('file',this.state.imageFile);
-        
+        bodyFormData.append('file', this.state.imageFile);
+
         axios({
             method: "post",
-            url: URL_API+`api/post/${id}`,
+            url: URL_API + `api/post/${id}`,
             data: bodyFormData,
             headers: { "Content-Type": "multipart/form-data" },
-          })
+        })
             .then((res) => {
-              //handle success
-              swal({
-                title: "Post",
-                text: "Success Upload New Post!!! ",
-                icon: "success",
-                button: false,
-                timer: 2500,
-              })
-              this.props.history.push("/");
+                //handle success
+                swal({
+                    title: "Post",
+                    text: "Success Upload New Post!!! ",
+                    icon: "success",
+                    button: false,
+                    timer: 2500,
+                })
+                this.props.history.push("/");
             })
             .catch((error) => {
-              //handle error
-              swal({
-                title: "Post",
-                text: "Failed Upload New Post ",
-                icon: "error",
-                button: false,
-                timer: 2500,
-              })
-              this.props.history.push("/upload");
+                //handle error
+                swal({
+                    title: "Post",
+                    text: "Failed Upload New Post ",
+                    icon: "error",
+                    button: false,
+                    timer: 2500,
+                })
+                this.props.history.push("/upload");
             });
-        
+
         this.setState({
             imageFile: null,
             caption: "",
             previewFile: null
         })
     }
+
 
     render() {
         const style = {
@@ -180,8 +182,19 @@ class newpost extends Component {
             }
 
         };
-        
-        let body
+
+        let body;
+        let imageProfile;
+
+        if (localStorage.getItem('profileImage') === `data:image/jpeg;base64,null`) {
+            imageProfile = (
+                <img src={Profile} alt="profileDefault" style={style.profile}></img>
+            )
+        } else {
+            imageProfile = (
+                <img src={localStorage.getItem('profileImage')} alt="profile" style={style.profile}></img>
+            )
+        }
 
         if (this.state.id !== null) {
             body = (
@@ -244,8 +257,7 @@ class newpost extends Component {
                         </Col>
                         <Col sm style={style.columnKanan}>
                             <Row>
-                                <img src={localStorage.getItem('profileImage')} alt="profile" style={style.profile}>
-                                </img>
+                                {imageProfile}
                                 <Form onSubmit={this.handleSubmit}>
                                     <Form.Control
                                         name="caption"
@@ -278,7 +290,7 @@ class newpost extends Component {
                     </Row>
                 </Container>
             )
-        }else{
+        } else {
             body = (
                 <Col className="justify-content-md-center" style={style.margin}>
                     <h2>Access Denied !!</h2>

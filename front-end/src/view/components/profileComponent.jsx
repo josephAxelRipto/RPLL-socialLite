@@ -58,7 +58,8 @@ class profileComponent extends Component {
                 email: "",
                 username: "",
                 password: "",
-                phoneNumber: ""
+                phoneNumber: "",
+                profileImage: null,
             },
             value: 0,
             dataPhoto: []
@@ -76,7 +77,8 @@ class profileComponent extends Component {
                 email: localStorage.getItem('email'),
                 username: localStorage.getItem('username'),
                 password: localStorage.getItem('password'),
-                phoneNumber: localStorage.getItem('phoneNumber')
+                phoneNumber: localStorage.getItem('phoneNumber'),
+                profileImage: localStorage.getItem('profileImage')
             }
         })
 
@@ -153,7 +155,7 @@ class profileComponent extends Component {
         }
 
 
-        if (this.state.data.profileImage !== null) {
+        if (this.state.data.profileImage !== `data:image/jpeg;base64,null`) {
             imageProfile = (
                 <img
                     src={localStorage.getItem('profileImage')}
@@ -168,7 +170,7 @@ class profileComponent extends Component {
                     src={Profile}
                     className="PhotoDefault"
                     style={style.icon}
-                    alt="PhotoProfile"
+                    alt="PhotoDefault"
                 />
             )
         }
