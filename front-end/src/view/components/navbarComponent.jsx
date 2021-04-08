@@ -8,7 +8,7 @@ import {
   Tooltip,
   OverlayTrigger
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Logo from "../asset/logo.png";
 import Search from "../asset/search-24px.svg";
 import Upload from "../asset/upload.svg";
@@ -49,6 +49,16 @@ class navbarComponent extends Component {
         profileImage: localStorage.getItem('profileImage')
       }
     })
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  handleSubmit = () => {
+    this.props.history.push(`/profile/${this.state.search}`)
   }
 
   render() {
@@ -203,16 +213,17 @@ class navbarComponent extends Component {
             style={style.groupFromSearch}
             xs lg="6"
           >
-            <Form inline>
+            <Form onSubmit={this.handleSubmit} inline>
               <FormControl
                 type="text"
                 placeholder="Search"
                 name="search"
                 style={style.formSearch}
                 autoComplete="off"
+                onChange={(event) => this.handleChange(event)}
               />
               <InputGroup.Prepend>
-                <Button variant="black">
+                <Button variant="black" type="submit">
                   <img
                     src={Search}
                     alt="search"
@@ -228,4 +239,4 @@ class navbarComponent extends Component {
     );
   }
 }
-export default navbarComponent;
+export default withRouter(navbarComponent);

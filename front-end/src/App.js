@@ -10,6 +10,7 @@ import newstory from "./view/pages/newstory";
 import EditPost from "./view/pages/editpost";
 import Profile from "./view/pages/profile";
 import DirrectMessage from "./view/pages/directmessage";
+import SearchAccount from "./view/pages/searchaccount";
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
             <Route path="/editpost" component={EditPost} exact />
             <Route path="/profile" component={Profile} exact />
             <Route path="/directmessage" component={DirrectMessage} exact />
+            <Route path="/profile/:username" component={SearchAccount} exact />
           </Switch>
         </main>
       </BrowserRouter>

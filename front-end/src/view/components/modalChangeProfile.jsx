@@ -48,7 +48,7 @@ function ModalChangeProfile(props) {
 
     const handelOnDrop = (files, rejectedFiles) => {
         if (rejectedFiles && rejectedFiles.length > 0) {
-            this.verifyFile(rejectedFiles)
+            verifyFile(rejectedFiles)
         }
 
         if (files && files.length > 0) {
@@ -71,7 +71,7 @@ function ModalChangeProfile(props) {
 
     if (previewFile !== null) {
         preview = (
-            <img src={previewFile} alt="preview" style={style.ukuranImage} />
+            <center><img src={previewFile} alt="preview" style={style.ukuranImage} /></center>
         )
     } else {
         preview = (

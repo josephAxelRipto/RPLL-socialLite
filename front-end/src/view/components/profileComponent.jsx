@@ -87,6 +87,7 @@ class profileComponent extends Component {
         })
 
     }
+    
     render() {
         const style = {
             icon: {
@@ -131,6 +132,11 @@ class profileComponent extends Component {
         let image;
         let imageProfile;
         let bio;
+        let countPost=0;
+
+        this.state.dataPhoto.map(photo => {
+            countPost += 1
+        })
 
         if(this.state.data.bio !== "null"){
             bio = (
@@ -214,7 +220,7 @@ class profileComponent extends Component {
                             <p>100 Like</p>
                         </Col>
                         <Col>
-                            <p>3 Post</p>
+                            <p>{countPost} Post</p>
                         </Col>
                     </Row>
                     <Row style={style.bio}>
