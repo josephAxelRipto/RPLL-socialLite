@@ -16,10 +16,10 @@ function searchaccount(props) {
         <Container>
             <NavbarComponent/>
             <Row style={style.margin}>
-                <Col>
+                <Col sm="3">
                     <StoryComponent/>
                 </Col>
-                <Col>
+                <Col sm="8">
                     <SearchAccountComponent/>
                 </Col>
             </Row>
