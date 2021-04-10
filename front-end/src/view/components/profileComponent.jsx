@@ -134,9 +134,9 @@ class profileComponent extends Component {
         let bio;
         let countPost=0;
 
-        this.state.dataPhoto.map(photo => {
+        this.state.dataPhoto.map(photo => (
             countPost += 1
-        })
+        ))
 
         if(this.state.data.bio !== "null"){
             bio = (
