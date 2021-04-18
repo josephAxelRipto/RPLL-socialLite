@@ -21,7 +21,7 @@ public class Post {
             strategy = GenerationType.SEQUENCE,
             generator = "post_id_seq"
     )
-    private int id;
+    private long id;
     @Column(nullable = false, columnDefinition = "text")
 //    @Lob
     private String image;
@@ -30,6 +30,8 @@ public class Post {
     private String caption;
     private int countComment = 0;
     private int countLike = 0;
+
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime datePost;
 
     @OneToOne

@@ -1,18 +1,39 @@
 package com.joseph.social_lite.domain.entity;
 
-import java.util.Date;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@Entity
+@NoArgsConstructor
 public class Comment {
-    private Date dateComment;
-    private int id;
-    private String memberComment;
-    private String username;
+    @Id
+    @SequenceGenerator(
+            name = "comment_sequence",
+            sequenceName = "comment_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "comment_id_seq"
+    )
+    private long id;
 
-    public boolean deleteComment(int id) {
-        return false;
-    }
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    private LocalDateTime dateComment;
 
-    public boolean editComment(int id, String newComment) {
-        return false;
-    }
+    @Column(nullable = false)
+    private String comment;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    private Member from;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    private Post commentedPost;
+
 }

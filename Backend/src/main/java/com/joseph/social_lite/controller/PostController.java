@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -22,6 +23,11 @@ public class PostController {
 
     @GetMapping("getPost/{id}")
     public List<Post> getPost(@PathVariable("id") Long id){
-        return postServices.getPost(id);
+        return postServices.getPostByIdMember(id);
+    }
+
+    @GetMapping("getPostForUser")
+    public ArrayList<Post>getPostForUser(){
+        return postServices.getPostForUser();
     }
 }
