@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @NoArgsConstructor
+@Table(name = "like_post")
 public class Like {
     @Id
     @SequenceGenerator(

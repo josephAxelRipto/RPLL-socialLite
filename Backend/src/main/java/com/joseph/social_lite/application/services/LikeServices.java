@@ -76,7 +76,7 @@ public class LikeServices {
         post = postRepository.getOne(idPost);
 
         likeObject = new Like();
-        likeObject = likeRepository.getFirstByFromAndLikedPost(member, post);
+        likeObject = likeRepository.getFirstByFromAndLikedPostAndStatus(member, post, true);
         likeObject.setStatus(false);
     }
 }

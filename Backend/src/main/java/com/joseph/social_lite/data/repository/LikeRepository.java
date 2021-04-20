@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface LikeRepository extends JpaRepository<Like, Long> {
     List<Like> findAllByFromAndStatus(Member from, Boolean status);
-    Like getFirstByFromAndLikedPost(Member from, Post post);
+    Like getFirstByFromAndLikedPostAndStatus(Member from, Post post, Boolean status);
 }
