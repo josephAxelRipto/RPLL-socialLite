@@ -50,7 +50,7 @@ public class LikeServices {
         likeObject.setFrom(member);
         likeObject.setStatus(true);
         likeObject.setLikedPost(post);
-        postServices.updatePostLikeCount(idPost);
+        postServices.updatePostCommentCountOrLikeCount(idPost, true, postServices.LIKE);
         System.out.println("Like =>" + likeObject);
         likeRepository.save(likeObject);
     }
@@ -76,7 +76,8 @@ public class LikeServices {
         post = postRepository.getOne(idPost);
 
         likeObject = new Like();
-        likeObject = likeRepository.getFirstByFromAndLikedPostAndStatus(member, post, true);
+        likeObject = likeRepository.getFirstByFromAndLikedPostAndStatus(member, post, true  );
         likeObject.setStatus(false);
+        postServices.updatePostCommentCountOrLikeCount(idPost, false, postServices.LIKE);
     }
 }

@@ -30,4 +30,9 @@ public class PostController {
     public ArrayList<Post>getPostForUser(){
         return postServices.getPostForUser();
     }
+
+    @PostMapping("editCaption/{id}")
+    public void editCaption(@PathVariable("id") Long id, String caption){
+        postServices.editCaption(id, caption);
+    }
 }

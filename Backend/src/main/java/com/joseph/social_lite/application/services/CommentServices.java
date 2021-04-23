@@ -49,7 +49,7 @@ public class CommentServices {
         commentObject.setDateComment(currentDate());
         commentObject.setFrom(member);
         commentObject.setCommentedPost(post);
-        postServices.updatePostCommentCount(idPost);
+        postServices.updatePostCommentCountOrLikeCount(idPost, true, postServices.COMMENT);
         System.out.println(commentObject);
         commentRepository.save(commentObject);
     }

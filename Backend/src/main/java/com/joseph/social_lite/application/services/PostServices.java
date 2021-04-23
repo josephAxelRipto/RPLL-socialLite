@@ -25,6 +25,8 @@ public class PostServices {
     private Post post;
     private Post tempPost;
     private Member member;
+    public final int COMMENT = 0;
+    public final int LIKE = 1;
 
     public LocalDateTime currentDate(){
         LocalDateTime date = LocalDateTime.now();
@@ -80,21 +82,32 @@ public class PostServices {
     }
 
     @Transactional
-    public void updatePostCommentCount(long id){
-        post = this.postRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException(
-                    "post with id " + id + " does not exist"
-                ));
-        post.setCountComment(post.getCountComment() + 1);
-
-    }
-    @Transactional
-    public void updatePostLikeCount(long id){
+    public void editCaption(long id, String caption){
         post = this.postRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(
                         "post with id " + id + " does not exist"
                 ));
-        post.setCountLike(post.getCountLike() + 1);
+        post.setCaption(caption);
+    }
 
+    @Transactional
+    public void updatePostCommentCountOrLikeCount(long id, boolean add, int type) {
+        post = this.postRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException(
+                        "post with id " + id + " does not exist"
+                ));
+        if(type == 0){
+            if (add) {
+                post.setCountComment(post.getCountComment() + 1);
+            } else {
+                post.setCountComment(post.getCountComment() - 1);
+            }
+        }else{
+            if (add) {
+                post.setCountLike(post.getCountLike() + 1);
+            } else {
+                post.setCountLike(post.getCountLike() - 1);
+            }
+        }
     }
 }
