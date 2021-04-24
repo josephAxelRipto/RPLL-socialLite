@@ -11,5 +11,5 @@ import java.util.ArrayList;
 @Repository
 public interface BookmarkRepository  extends JpaRepository<Bookmark, Long> {
     ArrayList<Bookmark> findAllByMember(Member member);
-    Bookmark getFirstByMemberAndBookmarkPost(Member member, Post post);
+    Bookmark getFirstByMemberAndBookmarkPostAndStatus(Member member, Post post, Boolean status);
 }

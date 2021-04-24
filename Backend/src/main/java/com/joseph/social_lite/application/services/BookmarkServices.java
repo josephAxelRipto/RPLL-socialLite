@@ -55,7 +55,7 @@ public class BookmarkServices {
         post = postRepository.getOne(idPost);
 
         bookmark = new Bookmark();
-        bookmark = bookmarkRepository.getFirstByMemberAndBookmarkPost(member, post);
+        bookmark = bookmarkRepository.getFirstByMemberAndBookmarkPostAndStatus(member, post, true);
         bookmark.setStatus(false);
     }
 
