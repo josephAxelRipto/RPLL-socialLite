@@ -23,6 +23,7 @@ public class Bookmark {
     private long id;
 
     private LocalDateTime dateBookmark;
+    private Boolean status;
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class AddBookmarkDto {
+public class AddAndDeleteBookmarkDto {
     @JsonProperty("idPost")
     private long idPost;
     @JsonProperty("idMember")

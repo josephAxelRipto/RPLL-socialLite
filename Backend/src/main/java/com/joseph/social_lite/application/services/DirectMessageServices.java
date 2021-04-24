@@ -36,7 +36,7 @@ public class DirectMessageServices {
 
         this.from = memberRepository.getOne(from);
         this.to = memberRepository.getOne(to);
-        return directMessageRepository.findDirectMessagesByFromAndToOrderByDateMessage(this.from, this.to);
+        return directMessageRepository.findDirectMessages(this.from, this.to, this.to, this.from);
     }
 
     public void sendMessage(DirectMessageDto directMessageDto){

@@ -9,6 +9,7 @@ import com.joseph.social_lite.domain.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -41,7 +42,21 @@ public class BookmarkServices {
         bookmark.setDateBookmark(currentDate());
         bookmark.setBookmarkPost(post);
         bookmark.setMember(member);
+        bookmark.setStatus(true);
         bookmarkRepository.save(bookmark);
+    }
+
+    @Transactional
+    public void removeBookmark(long idMember, long idPost){
+        member = new Member();
+        member = memberRepository.getOne(idMember);
+
+        post = new Post();
+        post = postRepository.getOne(idPost);
+
+        bookmark = new Bookmark();
+        bookmark = bookmarkRepository.getFirstByMemberAndBookmarkPost(member, post);
+        bookmark.setStatus(false);
     }
 
     public ArrayList<Post> getBookmarkedPost(long idMember){
@@ -52,9 +67,10 @@ public class BookmarkServices {
         ArrayList<Post> listPost = new ArrayList<>();
 
         for(Bookmark bm : listBookmark){
-            listPost.add(bm.getBookmarkPost());
+            if (bm.getStatus()){
+                listPost.add(bm.getBookmarkPost());
+            }
         }
-
         return listPost;
     }
 }

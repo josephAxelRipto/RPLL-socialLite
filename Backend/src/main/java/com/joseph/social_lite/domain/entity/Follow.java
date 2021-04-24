@@ -21,6 +21,7 @@ public class Follow {
             generator = "post_id_seq"
     )
     private int id;
+    private boolean status;
     @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime dateFollow;
 
@@ -32,5 +33,5 @@ public class Follow {
     @JoinColumn(referencedColumnName = "id")
     private Member following;
 
-    private boolean status;
+
 }
