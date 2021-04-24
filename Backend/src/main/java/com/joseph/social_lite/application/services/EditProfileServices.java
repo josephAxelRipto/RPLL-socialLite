@@ -37,8 +37,6 @@ public class EditProfileServices {
             throw new IllegalStateException("Retype new password doesn't match");
         }else if(oldPassword.equals(newPassword)){
             throw new IllegalStateException("the old password and the new password are the same");
-        }else if(newPassword.length() < 8){
-            throw new IllegalStateException("New password must be more than 8 character");
         }else{
             member.setPassword(newPassword);
         }

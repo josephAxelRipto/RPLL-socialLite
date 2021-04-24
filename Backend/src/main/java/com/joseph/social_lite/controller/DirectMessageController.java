@@ -22,8 +22,6 @@ public class DirectMessageController {
 
     @GetMapping("findAllDirectMessage/{from}/{to}")
     public List<DirectMessage> getDirectMessageByFromAndTo(@PathVariable("from") Long from,@PathVariable("to") Long to){
-        System.out.println("from: " + from);
-        System.out.println("to: " + to);
         return this.directMessageServices.findAllDirectMessageByFromAndTo(from, to);
     }
     @PostMapping("directMessage")

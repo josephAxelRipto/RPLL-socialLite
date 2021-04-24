@@ -5,6 +5,7 @@ import com.joseph.social_lite.data.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,8 @@ public class AuthServices {
     @Autowired
     private MemberRepository memberRepository;
     private long idMember;
+    private String email;
+    private String username;
 
     public List<Member> getUsers(){
         return this.memberRepository.findAll();
@@ -56,6 +59,28 @@ public class AuthServices {
             throw new IllegalStateException("Uncorrect username or password");
         }
     }
+    public Boolean checkMemberByUsernameAndEmail(String username, String email){
+        this.email = email;
+        this.username = username;
+        if(memberRepository.findMemberByUsernameAndEmail(username, email) == null){
+            throw new IllegalStateException("Email not found");
+        }else{
+            return true;
+        }
+    }
 
+    @Transactional
+    public void forgetPassword(String newPassword, String reTypeNewPassword){
+        Member member = memberRepository.findMemberByUsernameAndEmail(this.username, this.email);
 
+        if(newPassword == null){
+            throw new IllegalStateException("New password is required");
+        }else if(reTypeNewPassword == null) {
+            throw new IllegalStateException("Retype new password is required");
+        }else if(!newPassword.equals(reTypeNewPassword)){
+            throw new IllegalStateException("NewPassword is not the same as retypeNewPassword");
+        }else{
+            member.setPassword(newPassword);
+        }
+    }
 }
