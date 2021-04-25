@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Row, Col, Button, Alert } from "react-bootstrap";
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -10,6 +10,9 @@ import Box from '@material-ui/core/Box';
 import axios from 'axios'
 import { URL_API } from '../utils/constant';
 import Profile from '../asset/account.svg';
+import ModalComment from '../components/modalComment';
+// import EditPost from '../pages/editpost';
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -62,7 +65,16 @@ class profileComponent extends Component {
                 profileImage: null,
             },
             value: 0,
-            dataPhoto: []
+            dataPhoto: [],
+            show: false,
+            commnet: "",
+            dataComment: [],
+            postImage: null,
+            id: "",
+            page: "profile",
+            dataBookmark: [],
+            dataFollowing: [],
+            dataFollowers: []
         };
     }
 
@@ -86,8 +98,68 @@ class profileComponent extends Component {
             this.setState({ dataPhoto: res.data })
         })
 
+        axios.get(URL_API + `api/GetBookmarkedPost/${localStorage.getItem('id')}`).then((res) => {
+            this.setState({ dataBookmark: res.data })
+        })
+
+        axios.get(URL_API + `api/GetFollower/${localStorage.getItem('id')}`).then((res) => {
+            this.setState({ dataFollowers: res.data })
+        })
+
+        axios.get(URL_API+ `api/GetFollowing/${localStorage.getItem('id')}`).then((res) => {
+            this.setState({ dataFollowing: res.data })
+        })
+
     }
-    
+
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        });
+    };
+
+    handleClose = () => this.setState({ show: false, postImage: null, dataComment: [], dataModal: [] })
+    handleShow = () => this.setState({ show: true })
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+
+        axios.post(URL_API + `api/CommentPost/${this.state.id}/${localStorage.getItem('id')}?comment=${this.state.comment}`).then((res) => {
+            axios.get(URL_API + `api/GetCommentForPost/${this.state.id}`).then((res) => {
+                this.setState({ dataComment: res.data, postImage: this.state.postImage, show: true, id: this.state.id, comment: "" })
+            })
+        })
+
+    }
+
+    modal = (data) => {
+        axios.get(URL_API + `api/GetCommentForPost/${data.id}`).then((res) => {
+            this.setState({ dataComment: res.data, postImage: data.image, show: true, id: data.id })
+        })
+    }
+
+    modalBookmark = (data) => {
+        axios.get(URL_API + `api/GetCommentForPost/${data.id}`).then((res) => {
+            this.setState({ dataComment: res.data, postImage: data.image, show: true, id: data.id, page: 'bookmark' })
+        })
+    }
+
+    edit = () => {
+        this.props.history.push(`/editpost/${this.state.id}`)
+    }
+
+    removeBookmark = () => {
+        const data = {
+            idPost: this.state.id,
+            idMember: localStorage.getItem('id')
+          }
+          axios.post(URL_API + `api/RemoveBookmark`, data).then((res) => {
+            axios.get(URL_API + `api/GetBookmarkedPost/${localStorage.getItem('id')}`).then((res) => {
+              this.setState({ dataBookmark: res.data, show: false, postImage: null, dataComment: [], dataModal: [] })
+            })
+          })
+    }
+
     render() {
         const style = {
             icon: {
@@ -114,8 +186,9 @@ class profileComponent extends Component {
             post: {
                 width: "200px",
                 height: "300px",
-                marginRight: "20px",
                 marginBottom: "10px"
+            },
+            edit: {
             }
 
         };
@@ -131,27 +204,60 @@ class profileComponent extends Component {
         let body;
         let image;
         let imageProfile;
+        let bookmark;
         let bio;
-        let countPost=0;
+        let countPost = 0;
+        let countLike = 0;
+        let countFollowing = 0;
+        let countFollower = 0;
+
+        this.state.dataFollowers.map(follower => (
+            countFollower += 1
+        ))
+
+        this.state.dataFollowing.map(following => (
+            countFollowing += 1
+        ))
 
         this.state.dataPhoto.map(photo => (
             countPost += 1
         ))
 
-        if(this.state.data.bio !== "null"){
+        this.state.dataPhoto.map(photo => (
+            countLike += photo.countLike
+        ))
+
+        if (this.state.data.bio !== "null") {
             bio = (
                 <p>{this.state.data.bio}</p>
             )
-        }else{
+        } else {
             bio = (
                 <p>---</p>
             )
         }
 
+        if (this.state.dataBookmark !== null) {
+            bookmark = (
+                this.state.dataBookmark.map((data) =>
+                    <Button variant="outline-light" onClick={() => this.modalBookmark(data)} >
+                        <img src={`data:image/jpeg;base64,${data.image}`} alt="post" style={style.post} />
+                    </Button>
+                )
+            )
+        } else {
+            bookmark = (
+                <center><p className="text-muted">Nothing's show Bookmark</p></center>
+            )
+        }
+
+
         if (this.state.dataPhoto !== null) {
             image = (
                 this.state.dataPhoto.map((data) =>
-                    <img src={`data:image/jpeg;base64,${data.image}`} alt="post" style={style.post} />
+                    <Button variant="outline-light" onClick={() => this.modal(data)} >
+                        <img src={`data:image/jpeg;base64,${data.image}`} alt="post" style={style.post} />
+                    </Button>
                 )
             );
         } else {
@@ -211,13 +317,13 @@ class profileComponent extends Component {
                     </Row>
                     <Row style={style.follow}>
                         <Col>
-                            <p>10K Following</p>
+                            <p>{countFollowing} Following</p>
                         </Col>
                         <Col>
-                            <p>10K Follower</p>
+                            <p>{countFollower} Follower</p>
                         </Col>
                         <Col>
-                            <p>100 Like</p>
+                            <p>{countLike} Like</p>
                         </Col>
                         <Col>
                             <p>{countPost} Post</p>
@@ -241,9 +347,22 @@ class profileComponent extends Component {
                                 {image}
                             </TabPanel>
                             <TabPanel value={this.state.value} index={1}>
-                                <center><p className="text-muted">Nothing's show</p></center>
+                                {bookmark}
                             </TabPanel>
                         </Paper>
+                        <ModalComment
+                            show={this.state.show}
+                            profile={this.state.data.profileImage}
+                            image={this.state.postImage}
+                            comment={this.state.dataComment}
+                            value={this.state.comment}
+                            post={this.state.id}
+                            page={this.state.page}
+                            removeBookmark={this.removeBookmark}
+                            showEdit={this.edit}
+                            onHide={this.handleClose}
+                            handleSubmit={this.handleSubmit}
+                            handleChange={this.handleChange} />
                     </div>
                 </div>
             )
@@ -265,4 +384,4 @@ class profileComponent extends Component {
         )
     }
 }
-export default profileComponent;
+export default withRouter(profileComponent);

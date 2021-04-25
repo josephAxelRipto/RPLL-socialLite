@@ -11,6 +11,7 @@ import EditPost from "./view/pages/editpost";
 import Profile from "./view/pages/profile";
 import DirrectMessage from "./view/pages/directmessage";
 import SearchAccount from "./view/pages/searchaccount";
+import ForgotPassword from "./view/pages/forgotpassword";
 
 class App extends Component {
   render() {
@@ -24,10 +25,11 @@ class App extends Component {
             <Route path="/editprofile" component={EditProfil} exact />
             <Route path="/upload" component={Newpost} exact />
             <Route path="/story" component={newstory} exact />
-            <Route path="/editpost" component={EditPost} exact />
+            <Route path="/editpost/:id" component={EditPost} exact />
             <Route path="/profile" component={Profile} exact />
             <Route path="/directmessage" component={DirrectMessage} exact />
             <Route path="/profile/:username" component={SearchAccount} exact />
+            <Route path="/forgotpassword" component={ForgotPassword} exact/>
           </Switch>
         </main>
       </BrowserRouter>
