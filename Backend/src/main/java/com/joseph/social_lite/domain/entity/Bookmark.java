@@ -22,6 +22,7 @@ public class Bookmark {
     )
     private long id;
 
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime dateBookmark;
     private Boolean status;
 

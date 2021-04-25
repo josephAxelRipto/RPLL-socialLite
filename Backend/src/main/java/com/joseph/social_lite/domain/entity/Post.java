@@ -2,7 +2,6 @@ package com.joseph.social_lite.domain.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,9 +36,4 @@ public class Post {
     @OneToOne
     @JoinColumn(referencedColumnName = "id")
     private Member owner;
-//    private binary image;
-//    public Like m_Like;
-//    public Comment m_Comment;
-//    public Member m_Member;
-//    public Bookmark m_Bookmark;
 }

@@ -22,6 +22,9 @@ public class PostServices {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private FollowServices followServices;
+
     private Post post;
     private Post tempPost;
     private Member member;
@@ -57,7 +60,7 @@ public class PostServices {
         postRepository.save(this.post);
     }
 
-    public List<Post> getPostByIdMember(long id){
+    public ArrayList<Post> getPostByIdMember(long id){
         member = new Member();
         member = memberRepository.getOne(id);
         return postRepository.findAllByOwnerOrderByDatePost(member);
@@ -109,5 +112,17 @@ public class PostServices {
                 post.setCountLike(post.getCountLike() - 1);
             }
         }
+    }
+
+    public ArrayList<Post> getPostForMember(long idMember) {
+        ArrayList<Member> listFollowing = followServices.getFollowing(idMember);
+        ArrayList<Post> listPost = new ArrayList<>();
+        if(listFollowing == null){
+            return getPostForUser();
+        }
+        for(Member member: listFollowing){
+            listPost.addAll(postRepository.findAllByOwnerOrderByDatePost(member));
+        }
+        return listPost;
     }
 }
