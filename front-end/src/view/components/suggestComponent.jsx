@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from "react-router-dom";
 import Sticky from 'react-sticky-el';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,6 +12,18 @@ import Model5 from "../asset/model5.jpg";
 import Model6 from "../asset/model6.jpg";
 import Model7 from "../asset/model7.jfif";
 class suggestComponent extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+        };
+    }
+
+    search = (username) => {
+        this.props.history.push(`/profile/${username}`)
+    }
+
     render() {
         const style = {
             storyIcon: {
@@ -47,7 +60,7 @@ class suggestComponent extends Component {
                 <Sticky>
                     <p className="text-muted">SUGGESTED ACCOUNT</p>
                     <List dense className={useStyles.root}>
-                        <ListItem key="1" button style={style.margin}>
+                        <ListItem key="1" button style={style.margin} onClick={() => this.search("sep")}>
                             <ListItemAvatar>
                                 <Avatar
                                     alt="story"
@@ -85,4 +98,4 @@ class suggestComponent extends Component {
         )
     }
 }
-export default suggestComponent;
+export default withRouter(suggestComponent);

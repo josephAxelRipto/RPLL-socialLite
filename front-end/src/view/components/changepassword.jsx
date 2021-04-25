@@ -40,13 +40,13 @@ class ChangePassword extends Component {
         button: false,
         timer: 2500,
       });
-      localStorage.setItem('password',this.state.newPassword)
+      localStorage.setItem('password', this.state.newPassword)
       this.props.history.push("/profile");
     }).catch((error) => {
       const errorMessage = JSON.parse(error.request.response)
       swal({
         title: "Failed Update Password",
-        text: "Failed Update Password, "+ errorMessage.message,
+        text: "Failed Update Password, " + errorMessage.message,
         icon: "error",
         button: true,
         timer: 3500,
@@ -57,10 +57,10 @@ class ChangePassword extends Component {
         reTypePassword: ""
       })
     })
-    
+
   }
 
-  
+
   render() {
     const submit_button = {
       width: "250px",
@@ -110,7 +110,7 @@ class ChangePassword extends Component {
                     <b>Old Password</b>
                   </Form.Label>
                   <Col sm={14}>
-                    <Form.Control name="password" type="password" defaultValue={this.state.password} onChange={(event) => this.handleChange(event)} placeholder="Current Password" />
+                    <Form.Control name="password" type="password" value={this.state.password} onChange={(event) => this.handleChange(event)} placeholder="Current Password" />
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -122,7 +122,7 @@ class ChangePassword extends Component {
                     <b>New Password</b>
                   </Form.Label>
                   <Col sm={14}>
-                    <Form.Control name="newPassword" type="password" defaultValue={this.state.newPassword} onChange={(event) => this.handleChange(event)} placeholder="Insert New Password" />
+                    <Form.Control name="newPassword" type="password" value={this.state.newPassword} onChange={(event) => this.handleChange(event)} placeholder="Insert New Password" />
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -134,7 +134,7 @@ class ChangePassword extends Component {
                     <b>Retype New Password</b>
                   </Form.Label>
                   <Col sm={14}>
-                    <Form.Control name="reTypePassword" type="password" defaultValue={this.state.reTypePassword} onChange={(event) => this.handleChange(event)} placeholder="Insert Retype Password" />
+                    <Form.Control name="reTypePassword" type="password" value={this.state.reTypePassword} onChange={(event) => this.handleChange(event)} placeholder="Insert Retype Password" />
                   </Col>
                 </Form.Group>
                 <Button

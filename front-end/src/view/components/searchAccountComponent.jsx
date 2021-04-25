@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Row, Col, Button } from 'react-bootstrap'
+import { Row, Col, Button, Alert } from 'react-bootstrap'
 import { URL_API } from '../utils/constant';
 import { withRouter } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
@@ -50,19 +50,75 @@ function SearchAccountComponent(props) {
     const [dataUser, setData] = useState([])
     const [dataPhoto, setDataPhoto] = useState([])
     const [value, setValue] = useState(0)
+    const [src, setSrc] = useState(null)
+    const [foundAccount, setFoundAccount] = useState(false)
+    const [dataFollowing, setDataFollowing] = useState([])
+    const [dataFollower, setDataFollower] = useState([])
+    const [followMember, setFollowMember] = useState([])
 
-    useEffect(function getData() {
-        axios.get(URL_API + `api/?search=username:${username}`).then(res => {
-            setData(res.data)
-        })
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get(URL_API + `api/?search=username:${username}`)
+                setData(response.data)
 
-        dataUser.map((data) => (
-            axios.get(URL_API + `api/getPost/${data.id}`).then((res) => {
-                setDataPhoto(res.data)
+                axios.get(URL_API + `api/getPost/${response.data[0].id}`).then((res) => {
+                    setDataPhoto(res.data)
+                })
+
+                axios.get(URL_API + `api/GetFollowing/${response.data[0].id}`).then((res) => {
+                    setDataFollowing(res.data)
+                })
+
+                axios.get(URL_API + `api/GetFollower/${response.data[0].id}`).then((res) => {
+                    setDataFollower(res.data)
+                })
+
+                axios.get(URL_API + `api/GetFollowing/${localStorage.getItem('id')}`).then((res) => {
+                    setFollowMember(res.data)
+                })
+
+                setSrc(response.data[0].profileImage ? `data:image/jpeg;base64,${response.data[0].profileImage}` : Profile)
+                setFoundAccount(true)
+            } catch (error) {
+
+            }
+        }
+        fetchData();
+
+    }, [username]);
+
+    const follow = (id) => {
+        axios.post(URL_API +`api/follow/${localStorage.getItem('id')}/${id}`).then((res) => {
+            axios.get(URL_API + `api/GetFollowing/${id}`).then((res) => {
+                setDataFollowing(res.data)
             })
-        ))
 
-    }, [username, dataUser]);
+            axios.get(URL_API + `api/GetFollower/${id}`).then((res) => {
+                setDataFollower(res.data)
+            })
+
+            axios.get(URL_API + `api/GetFollowing/${localStorage.getItem('id')}`).then((res) => {
+                setFollowMember(res.data)
+            })
+        })
+    }
+
+    const unfollow = (id) => {
+        axios.post(URL_API +`api/Unfollow/${localStorage.getItem('id')}/${id}`).then((res) => {
+            axios.get(URL_API + `api/GetFollowing/${id}`).then((res) => {
+                setDataFollowing(res.data)
+            })
+
+            axios.get(URL_API + `api/GetFollower/${id}`).then((res) => {
+                setDataFollower(res.data)
+            })
+
+            axios.get(URL_API + `api/GetFollowing/${localStorage.getItem('id')}`).then((res) => {
+                setFollowMember(res.data)
+            })
+        })
+    }
 
     const style = {
         icon: {
@@ -90,10 +146,26 @@ function SearchAccountComponent(props) {
         }
     }
 
+    let countFollower = 0
+    let countFollowing = 0
     let countPost = 0;
+    let countLike = 0
+    let body;
+
+    dataFollower.map((follower) => (
+        countFollower += 1
+    ))
+
+    dataFollowing.map((following) => (
+        countFollowing += 1
+    ))
 
     dataPhoto.map((photo) => (
         countPost += 1
+    ))
+
+    dataPhoto.map((photo) => (
+        countLike += photo.countLike
     ))
 
     const useStyles = theme => ({
@@ -106,79 +178,83 @@ function SearchAccountComponent(props) {
 
     const change = (event, newValue) => setValue({ value: newValue })
 
-    let photoProfile;
-
-    photoProfile = dataUser.map(data => {
-        data.imageProfile !== null ?
-            <img src={`data:image/jpeg;base64,${data.profileImage}`} alt="photoProfile" style={style.icon}></img>
-
-            :
-            <img
-                src={Profile}
-                className="PhotoDefault"
-                style={style.icon}
-                alt="PhotoDefault"
-            />
-    });
+    if (foundAccount) {
+        body = (
+            <div>
+                {dataUser.map(data => (
+                    <div>
+                        <Row>
+                            <Col xs={3}>
+                                <img src={src} alt="photoProfile" style={style.icon}></img>
+                            </Col>
+                            <Col xs={5}>
+                                <h3>{data.fullname}</h3>
+                                <p>@{data.username}</p>
+                            </Col>
+                            <Col xs={4}>
+                                <Row>
+                                    {followMember.find(f => f.id === data.id)
+                                        ? <Button variant="secondary" style={style.button_follow} size="sm" onClick={() => unfollow(data.id)}>
+                                            Unfollow
+                                        </Button>
+                                        : <Button variant="secondary" style={style.button_follow} size="sm" onClick={() => follow(data.id)}>
+                                            Follow
+                                        </Button>}
+                                </Row>
+                            </Col>
+                        </Row>
+                        <Row style={style.follow}>
+                            <Col>
+                                <p>{countFollowing} Following</p>
+                            </Col>
+                            <Col>
+                                <p>{countFollower} Follower</p>
+                            </Col>
+                            <Col>
+                                <p>{countLike} Like</p>
+                            </Col>
+                            <Col>
+                                <p>{countPost} Post</p>
+                            </Col>
+                        </Row>
+                        <Row style={style.bio}>
+                            {data.bio}
+                        </Row>
+                    </div>
+                ))}
+                <div className={useStyles.root}>
+                    <Paper position="fixed" color="default">
+                        <Tabs value={value}
+                            onChange={change}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            centered
+                        >
+                            <Tab label="Profile" {...a11yProps(0)} disabled></Tab>
+                        </Tabs>
+                        <TabPanel value={value} index={0}>
+                            {dataPhoto.map((photo) =>
+                                <img src={`data:image/jpeg;base64,${photo.image}`} alt="post" style={style.post}></img>
+                            )}
+                        </TabPanel>
+                    </Paper>
+                </div>
+            </div>
+        )
+    } else {
+        body = (
+            <Col className="justify-content-md-center" style={style.margin}>
+                <h2>Account Not Found</h2>
+                <Alert key="1" variant="danger">
+                    User Not Found!! <Alert.Link href="/">Back to home...</Alert.Link>
+                </Alert>
+            </Col>
+        )
+    }
 
     return (
         <div>
-            {dataUser.map(data => (
-                <div>
-                    <Row>
-                        <Col xs={3}>
-                            {photoProfile}
-                        </Col>
-                        <Col xs={5}>
-                            <h3>{data.fullname}</h3>
-                            <p>@{data.username}</p>
-                        </Col>
-                        <Col xs={4}>
-                            <Row>
-                                <Button variant="secondary" style={style.button_follow} size="sm" onClick={() => localStorage.clear()}>
-                                    Follow
-                            </Button>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row style={style.follow}>
-                        <Col>
-                            <p>10K Following</p>
-                        </Col>
-                        <Col>
-                            <p>10K Follower</p>
-                        </Col>
-                        <Col>
-                            <p>100 Like</p>
-                        </Col>
-                        <Col>
-                            <p>{countPost} Post</p>
-                        </Col>
-                    </Row>
-                    <Row style={style.bio}>
-                        {data.bio}
-                    </Row>
-                </div>
-            ))}
-            <div className={useStyles.root}>
-                <Paper position="fixed" color="default">
-                    <Tabs value={value}
-                        onChange={change}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        centered
-                    >
-                        <Tab label="Profile" {...a11yProps(0)} disabled></Tab>
-                    </Tabs>
-                    <TabPanel value={value} index={0}>
-                        {dataPhoto.map((photo) =>
-                            <img src={`data:image/jpeg;base64,${photo.image}`} alt="post" style={style.post}></img>
-                        )}
-                    </TabPanel>
-                </Paper>
-            </div>
-
-
+            {body}
         </div>
     )
 }

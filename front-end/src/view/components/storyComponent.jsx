@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import Homelogo from "../asset/home-24px.svg";
 import AddStory from "../asset/add_circle-24px.svg";
 import { Row } from "react-bootstrap";
@@ -13,11 +13,26 @@ import Avatar from '@material-ui/core/Avatar';
 import Model1 from "../asset/model1.jpeg";
 import Model2 from "../asset/model2.jpg";
 import Model3 from "../asset/model3.jpg";
+import ViewStoryComponent from './viewStoryComponent';
 
 class storyComponent extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            id: "",
+            show: false
+        };
+    }
+
     click = () => {
         console.log("click");
+    }
+
+    handleClose = () => this.setState({ show: false, id: "" })
+    handleShow = () => {
+        this.setState({ show: true, id: localStorage.getItem('id') }, () => {setTimeout(this.handleClose, 3000)});
     }
 
     render() {
@@ -81,7 +96,7 @@ class storyComponent extends Component {
                         <Row style={style.tulisanSocialStory}>
                             <p className="text-muted">SOCIAL STORY</p>
                         </Row>
-                        <ListItem key="1" button style={style.margin}>
+                        <ListItem key="1" button style={style.margin} onClick={this.handleShow}>
                             <ListItemAvatar>
                                 <Avatar
                                     alt="story"
@@ -89,6 +104,7 @@ class storyComponent extends Component {
                             </ListItemAvatar>
                             <ListItemText primary={'Jane Lopinaz'} />
                         </ListItem>
+                        <ViewStoryComponent show={this.state.show} onHide={this.handleClose} id={this.state.id} image={Model1}/>
                         <ListItem key="2" button style={style.margin}>
                             <ListItemAvatar>
                                 <Avatar
@@ -122,4 +138,4 @@ class storyComponent extends Component {
     }
 }
 
-export default storyComponent;
+export default withRouter(storyComponent);
