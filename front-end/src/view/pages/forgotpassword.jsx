@@ -27,12 +27,7 @@ class forgotpassword extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const check_data = {
-      username: this.state.username,
-      email: this.state.email
-    }
-
-    axios.get(URL_API + "api/CheckMemberByEmail", check_data).then((res) => {
+    axios.get(`${URL_API}api/CheckMemberByEmail?username=${this.state.username}&email=${this.state.email}`).then((res) => {
       this.setState({ show: true })
     }).catch((error) => {
       const errorMessage = JSON.parse(error.request.response)

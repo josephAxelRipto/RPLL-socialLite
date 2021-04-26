@@ -16,6 +16,7 @@ class Home extends Component {
     };
   }
 
+
   componentDidMount = () => {
     this.setState({
       id: localStorage.getItem('id')

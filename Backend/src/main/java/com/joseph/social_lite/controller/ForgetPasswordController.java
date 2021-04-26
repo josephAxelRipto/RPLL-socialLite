@@ -15,8 +15,8 @@ public class ForgetPasswordController {
     private AuthServices authServices;
 
     @GetMapping("CheckMemberByEmail")
-    public Boolean checkMemberByUsernameAndEmail(@RequestBody CheckMemberByUsernameAndEmailDto checkMemberByUsernameAndEmailDto){
-        return authServices.checkMemberByUsernameAndEmail(checkMemberByUsernameAndEmailDto.getUsername(), checkMemberByUsernameAndEmailDto.getEmail());
+    public Boolean checkMemberByUsernameAndEmail(@RequestParam String username, @RequestParam String email){
+        return authServices.checkMemberByUsernameAndEmail(username, email);
     }
 
     @PostMapping("ForgetPassword")

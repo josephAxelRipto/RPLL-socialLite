@@ -25,7 +25,7 @@ public class StoryController {
         return storyServices.findStoryByMember(idMember);
     }
 
-    @PostMapping("RemoveStory")
+    @DeleteMapping("RemoveStory")
     public void removeStory(){
         storyServices.removeStory();
     }

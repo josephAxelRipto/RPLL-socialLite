@@ -61,27 +61,29 @@ public class StoryServices {
 
     public void removeStory(){
         ArrayList<Story> listStory = storyRepository.findAllByStatus(true);
-        for(Story story: listStory){
-            LocalDateTime datePost = story.getDatePost();
-            long tempMinDuration = 0;
-            long tempDayDuration = (int)(story.getDuration() / 1440);
-            tempMinDuration = story.getDuration() % 1440;
-            long tempHourDuration = (int)(tempMinDuration / 60);
-            tempMinDuration = tempMinDuration % 60;
+        if(listStory != null){
+            for(Story story: listStory) {
+                LocalDateTime datePost = story.getDatePost();
+                long tempMinDuration = 0;
+                long tempDayDuration = (int) (story.getDuration() / 1440);
+                tempMinDuration = story.getDuration() % 1440;
+                long tempHourDuration = (int) (tempMinDuration / 60);
+                tempMinDuration = tempMinDuration % 60;
 
-            if(tempDayDuration >= 2 && tempHourDuration >= 0 && tempMinDuration >= 0){
-                tempDayDuration = 2;
-                tempHourDuration = 0;
-                tempMinDuration = 0;
-            }
-            datePost = datePost.plusDays(tempDayDuration);
-            datePost = datePost.plusHours(tempHourDuration);
-            datePost = datePost.plusMinutes(tempMinDuration);
+                if (tempDayDuration >= 2 && tempHourDuration >= 0 && tempMinDuration >= 0) {
+                    tempDayDuration = 2;
+                    tempHourDuration = 0;
+                    tempMinDuration = 0;
+                }
+                datePost = datePost.plusDays(tempDayDuration);
+                datePost = datePost.plusHours(tempHourDuration);
+                datePost = datePost.plusMinutes(tempMinDuration);
 
-            if(datePost.isBefore(currentDate())){
-                storyRepository.deleteById(story.getId());
+                if (datePost.isBefore(currentDate())) {
+                    storyRepository.deleteById(story.getId());
+                }
+                System.out.println(datePost);
             }
-            System.out.println(datePost);
         }
     }
 }
