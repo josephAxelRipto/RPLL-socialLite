@@ -31,7 +31,7 @@ class postComponent extends Component {
   }
 
   componentDidMount = () => {
-    axios.get(URL_API + `api/getPostForUser`).then((res) => {
+    axios.get(URL_API + `api/getPostForMember/${localStorage.getItem('id')}`).then((res) => {
       this.setState({ dataPost: res.data })
     })
 

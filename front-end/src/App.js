@@ -29,7 +29,7 @@ class App extends Component {
             <Route path="/profile" component={Profile} exact />
             <Route path="/directmessage" component={DirrectMessage} exact />
             <Route path="/profile/:username" component={SearchAccount} exact />
-            <Route path="/forgotpassword" component={ForgotPassword} exact/>
+            <Route path="/forgotpassword" component={ForgotPassword} exact />
           </Switch>
         </main>
       </BrowserRouter>
