@@ -74,7 +74,7 @@ class profileComponent extends Component {
             page: "profile",
             dataBookmark: [],
             dataFollowing: [],
-            dataFollowers: []
+            dataFollowers: [],
         };
     }
 
