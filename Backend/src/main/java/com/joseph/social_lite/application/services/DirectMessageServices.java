@@ -8,6 +8,7 @@ import com.joseph.social_lite.domain.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,6 +39,23 @@ public class DirectMessageServices {
         this.to = memberRepository.getOne(to);
         return directMessageRepository.findDirectMessages(this.from, this.to, this.to, this.from);
     }
+
+    public ArrayList<Member> findAllChatMember(long from){
+        this.from = new Member();
+        this.from = memberRepository.getOne(from);
+
+        ArrayList<Member> listMember = new ArrayList<>();
+        ArrayList<DirectMessage> listDM = directMessageRepository.findAllByFrom(this.from);
+
+        for(DirectMessage dm : listDM){
+            if(!listMember.contains(dm.getTo())){
+                listMember.add(dm.getTo());
+            }
+        }
+
+        return listMember;
+    }
+
 
     public void sendMessage(DirectMessageDto directMessageDto){
         from = new Member();

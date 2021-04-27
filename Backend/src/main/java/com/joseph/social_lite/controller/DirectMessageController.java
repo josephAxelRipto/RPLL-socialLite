@@ -3,9 +3,11 @@ package com.joseph.social_lite.controller;
 import com.joseph.social_lite.application.services.DirectMessageServices;
 import com.joseph.social_lite.data.dto.DirectMessageDto;
 import com.joseph.social_lite.domain.entity.DirectMessage;
+import com.joseph.social_lite.domain.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -18,6 +20,11 @@ public class DirectMessageController {
     @GetMapping("findAllDM")
     public List<DirectMessage> getDirectMessage(){
         return this.directMessageServices.findAllDirectMessage();
+    }
+
+    @GetMapping("findAllChatMember/{idMember}")
+    public ArrayList<Member> findAllChatMember(@PathVariable("idMember") long idMember){
+        return directMessageServices.findAllChatMember(idMember);
     }
 
     @GetMapping("findAllDirectMessage/{from}/{to}")
