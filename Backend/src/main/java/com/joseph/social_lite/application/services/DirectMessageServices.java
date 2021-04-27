@@ -52,6 +52,12 @@ public class DirectMessageServices {
                 listMember.add(dm.getTo());
             }
         }
+        listDM = directMessageRepository.findAllByTo(this.from);
+        for(DirectMessage dm : listDM){
+            if(!listMember.contains(dm.getFrom())){
+                listMember.add(dm.getFrom());
+            }
+        }
 
         return listMember;
     }
