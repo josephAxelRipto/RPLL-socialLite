@@ -5,6 +5,9 @@ import StoryComponent from "../components/storyComponent";
 import PostComponent from "../components/postComponent";
 import SuggestComponent from "../components/suggestComponent";
 import PostGuestComponent from "../components/postGuestComponent";
+import axios from "axios";
+import { URL_API } from "../utils/constant.js";
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -18,8 +21,16 @@ class Home extends Component {
 
 
   componentDidMount = () => {
+    setInterval(this.removeStory, 5000);
     this.setState({
       id: localStorage.getItem('id')
+    })
+  }
+
+  removeStory(){
+    axios.delete(`${URL_API}api/RemoveStory`).then((res) => {
+    }).catch((error) => {
+      console.log("error remove")
     })
   }
 

@@ -6,18 +6,24 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import Profile from '../asset/account.svg';
+import axios from 'axios';
+import { URL_API } from '../utils/constant';
 
-import Model4 from "../asset/model4.jpg";
-import Model5 from "../asset/model5.jpg";
-import Model6 from "../asset/model6.jpg";
-import Model7 from "../asset/model7.jfif";
 class suggestComponent extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            dataAccount: []
         };
+    }
+
+    componentDidMount = () => {
+        axios.get(URL_API + `api/suggestedAccount/${localStorage.getItem('id')}`).then((res) => {
+            this.setState({ dataAccount: res.data})
+        })
     }
 
     search = (username) => {
@@ -60,38 +66,16 @@ class suggestComponent extends Component {
                 <Sticky>
                     <p className="text-muted">SUGGESTED ACCOUNT</p>
                     <List dense className={useStyles.root}>
-                        <ListItem key="1" button style={style.margin} onClick={() => this.search("sep")}>
-                            <ListItemAvatar>
-                                <Avatar
-                                    alt="story"
-                                    src={Model5} />
-                            </ListItemAvatar>
-                            <ListItemText primary={'Luna Maya'} />
-                        </ListItem>
-                        <ListItem key="2" button style={style.margin}>
-                            <ListItemAvatar>
-                                <Avatar
-                                    alt="story"
-                                    src={Model7} />
-                            </ListItemAvatar>
-                            <ListItemText primary={'Mamank'} />
-                        </ListItem>
-                        <ListItem key="3" button style={style.margin}>
-                            <ListItemAvatar>
-                                <Avatar
-                                    alt="story"
-                                    src={Model6} />
-                            </ListItemAvatar>
-                            <ListItemText primary={'Who Am I?'} />
-                        </ListItem>
-                        <ListItem key="0" button>
-                            <ListItemAvatar>
-                                <Avatar
-                                    alt="story"
-                                    src={Model4} />
-                            </ListItemAvatar>
-                            <ListItemText primary={'Budi'} />
-                        </ListItem>
+                        {this.state.dataAccount.map((data) => 
+                            <ListItem key={data.id} button style={style.margin} onClick={() => this.search(data.username)}>
+                                <ListItemAvatar>
+                                    <Avatar
+                                        alt="story"
+                                        src={data.profileImage !== null? `data:image/jpeg;base64,${data.profileImage}` : Profile} />
+                                </ListItemAvatar>
+                                <ListItemText primary={data.fullname} />
+                            </ListItem>
+                        )}
                     </List>
                 </Sticky>
             </div>

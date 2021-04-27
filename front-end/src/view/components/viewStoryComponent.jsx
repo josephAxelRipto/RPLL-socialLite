@@ -32,8 +32,8 @@ function ViewStoryComponent(props) {
                     <center>
                         <Row>
                             <Col>
-                                {/* <img src={`data:image/jpeg;base64,${props.image}`} alt="post" style={style.photo}></img> */}
-                                <img src={props.image} alt="post" style={style.photo}></img>
+                                <img src={`data:image/jpeg;base64,${props.image}`} alt="post" style={style.photo}></img>
+                                {/* <img src={props.image} alt="post" style={style.photo}></img> */}
                             </Col>
                         </Row>
                     </center>

@@ -14,6 +14,8 @@ class forgotpassword extends Component {
     this.state = {
       username: "",
       email: "",
+      newPassword: "",
+      reTypePassword: "",
       show: false
     };
   }
@@ -32,8 +34,8 @@ class forgotpassword extends Component {
     }).catch((error) => {
       const errorMessage = JSON.parse(error.request.response)
       swal({
-        title: "Gagal",
-        text: "Gagal, " + errorMessage.message,
+        title: "Failed",
+        text: "Failed, " + errorMessage.message,
         icon: "error",
         button: false,
         timer: 2500,
@@ -41,8 +43,39 @@ class forgotpassword extends Component {
     });
   }
 
-  handleClose = () => this.setState({ show: false })
+  handleClose = () => this.setState({ show: false, newPassword: "", reTypePassword: ""})
   handleShow = () => this.setState({ show: true });
+
+  handleSubmitNewPass = (event) => {
+    event.preventDefault();
+
+    const data = {
+      newPassword: this.state.newPassword,
+      reTypeNewPassword: this.state.reTypePassword
+    }
+
+    axios.post(URL_API + `api/ForgetPassword`, data).then((res) => {
+      swal({
+        title: "Success",
+        text: "Success, Change Password",
+        icon: "success",
+        button: false,
+        timer: 2500,
+      });
+      this.props.history.push("/login");
+    }).catch((error) => {
+      const errorMessage = JSON.parse(error.request.response)
+      swal({
+        title: "Failed",
+        text: "Failed, " + errorMessage.message,
+        icon: "error",
+        button: false,
+        timer: 2500,
+      });
+      this.setState({ newPassword: "", reTypePassword: ""})
+    });
+
+  }
 
   render() {
     const style = {
@@ -122,7 +155,13 @@ class forgotpassword extends Component {
             </Link>
           </Col>
         </Row>
-        <ModalForgotPassword onHide={this.handleClose} show={this.state.show}/>
+        <ModalForgotPassword 
+          onHide={this.handleClose} 
+          show={this.state.show} 
+          newPass={this.state.newPassword} 
+          reTypePass={this.state.reTypePassword} 
+          handleSubmit={this.handleSubmitNewPass}
+          handleChange={this.handleChange}/>
       </Container>
     );
   }

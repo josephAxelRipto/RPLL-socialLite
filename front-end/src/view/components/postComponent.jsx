@@ -200,6 +200,7 @@ class postComponent extends Component {
       },
       comment: {
         marginLeft: "-20px",
+        marginTop: "15px",
         width: "40px",
         height: "40px",
       },
@@ -301,10 +302,6 @@ class postComponent extends Component {
                           ></img>
                         </Button>
                       </Row>
-                      {/* disini buat angka like nya */}
-                      <Row style={style.jumlahLike}>
-                        <p>{data.countLike}</p>
-                      </Row>
                       <Row>
                         <Button variant="outline-light">
                           <img
@@ -325,10 +322,6 @@ class postComponent extends Component {
                           onHide={this.handleClose}
                           handleSubmit={this.handleSubmit}
                           handleChange={this.handleChange} />
-                      </Row>
-                      {/* disini buat angka comment nya */}
-                      <Row style={style.jumlahComment}>
-                        <p>{data.countComment}</p>
                       </Row>
                     </Col>
                   </Row>

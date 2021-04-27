@@ -1,69 +1,48 @@
-import React from 'react';
-import { Container, Modal, Button } from 'react-bootstrap';
+import React from "react";
+import { Container, Modal, Button, Form } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import Close from "../asset/close.svg"
 
 function ModalForgotPassword(props) {
-    const style = {
-        photo: {
-            width: "290px",
-            height: "300px"
-        },
-        icon: {
-            width: "50px",
-            heigth: "50px",
-            borderRadius: "20px",
-        },
-        sticky: {
-            height: '310px',
-            width: "440px",
-            overflow: 'scroll',
-            position: "fixed"
-        },
-        marginToast: {
-            marginLeft: "30px",
-            marginBottom: "10px"
-        },
-        form: {
-            borderRadius: "30px",
-            marginRight: "40px"
-        },
-        btn_send: {
-            width: "45px",
-            height: "45px",
-            borderRadius: "20px",
-            marginLeft: "10px"
-        },
-        btn_close: {
-            borderRadius: "20px",
-        },
-        rowComment: {
-            marginTop: "10px",
-            marginRight: "10px",
-            marginLeft: "-80px"
-        },
-        icon_comment: {
-            width: "45px",
-            height: "45px",
-            borderRadius: "20px",
-        }
-
-    }
-    return (
-        <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered>
-            <Modal.Body className="show-grid" closeButton>
-                <Container>
-                </Container>
-            </Modal.Body>
-            <Modal.Footer >
-                <Button variant="danger" onClick={props.onHide}><img src={Close} alt="close" style={style.btn_close}></img></Button>
-            </Modal.Footer>
-
-        </Modal>
-    )
+  return (
+    <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
+      <Modal.Header>
+        <h2>Insert New Password</h2>
+      </Modal.Header>
+      <Modal.Body className="show-grid" closeButton>
+        <Container>
+          <Form onSubmit={props.handleSubmit}>
+            <Form.Group controlId="formGroupNewPassword">
+              <Form.Control
+                type="password"
+                placeholder="New Password"
+                name="newPassword"
+                value={props.newPass}
+                onChange={props.handleChange}
+                autoComplete="off"
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="formGroupreTypePassword">
+              <Form.Control
+                type="password"
+                placeholder="ReType Password"
+                name="reTypePassword"
+                value={props.reTypePass}
+                onChange={props.handleChange}
+                autoComplete="off"
+                required
+              />
+            </Form.Group>
+            <Button variant="secondary" type="submit" size="lg" block>
+              Submit
+            </Button>
+            <Button variant="danger" onClick={props.onHide} size="lg" block>
+              Cancel
+            </Button>
+          </Form>
+        </Container>
+      </Modal.Body>
+    </Modal>
+  );
 }
-export default withRouter(ModalForgotPassword)
+export default withRouter(ModalForgotPassword);

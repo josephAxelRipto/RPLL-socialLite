@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import Logo from "../asset/logo.png";
 import Setting from "../asset/settings.svg";
 import LogoUpload from "../asset/file_upload.svg";
-// import PreviewPost from "../components/PreviewPost";
 import Dropzone from 'react-dropzone';
-
+import axios from 'axios';
+import swal from "sweetalert";
+import { URL_API } from "../utils/constant";
 
 const imageMaxSize = 1000000 //dalam bytes
 const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg, image/gif'
@@ -16,9 +17,10 @@ class newstory extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            previewImage: null,
             imageFile: null,
             id: "",
-            duration: ""
+            duration: 0
         }
     }
 
@@ -66,13 +68,58 @@ class newstory extends Component {
                 myFileItemReader.addEventListener("load", () => {
                     console.log(myFileItemReader.result)
                     this.setState({
-                        imageFile: myFileItemReader.result
+                        imageFile: currentFile,
+                        previewImage: myFileItemReader.result
                     })
                 }, false)
 
                 myFileItemReader.readAsDataURL(currentFile)
             }
         }
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+
+        var id = this.state.id
+        var bodyFormData = new FormData();
+        bodyFormData.append('duration', this.state.duration);
+        bodyFormData.append('file', this.state.imageFile);
+
+        axios({
+            method: "post",
+            url: URL_API + `api/AddStory/${id}`,
+            data: bodyFormData,
+            headers: { "Content-Type": "multipart/form-data" },
+        })
+            .then((res) => {
+                //handle success
+                swal({
+                    title: "Post",
+                    text: "Success Upload New Story!!! ",
+                    icon: "success",
+                    button: false,
+                    timer: 2500,
+                })
+                this.props.history.push("/");
+            })
+            .catch((error) => {
+                //handle error
+                swal({
+                    title: "Post",
+                    text: "Failed Upload New Story ",
+                    icon: "error",
+                    button: false,
+                    timer: 2500,
+                })
+                this.props.history.push("/story");
+            });
+
+        this.setState({
+            imageFile: null,
+            duration: 0,
+            previewFile: null
+        })
     }
 
     render() {
@@ -129,7 +176,6 @@ class newstory extends Component {
 
         };
 
-        const imgSrc = this.state.imageFile
         let body;
 
         if (this.state.id !== null) {
@@ -161,7 +207,7 @@ class newstory extends Component {
                             </Link>
                         </Col>
                         <Col sm>
-                            {imgSrc != null ?
+                            {this.state.previewImage != null ?
                                 <div>
                                     <Dropzone onDrop={this.handelOnDrop} accept='image/*' multiple={false} maxSize={this.imageMaxSize}>
                                         {({ getRootProps, getInputProps }) => (
@@ -174,7 +220,7 @@ class newstory extends Component {
                                         )}
                                     </Dropzone>
                                     <p>Preview Story</p>
-                                    <img src={imgSrc} alt="preview" style={style.previewImage}></img>
+                                    <img src={this.state.previewImage} alt="preview" style={style.previewImage}></img>
                                 </div>
 
                                 :
@@ -196,7 +242,7 @@ class newstory extends Component {
                                 <h5 style={style.text}>Setting</h5>
                             </Row>
                             <Row>
-                                <Form>
+                                <Form onSubmit={this.handleSubmit}>
                                     <Form.Control
                                         name="duration"
                                         type="number"

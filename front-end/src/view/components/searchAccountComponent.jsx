@@ -9,7 +9,8 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Profile from '../asset/account.svg'
+import Profile from '../asset/account.svg';
+import swal from "sweetalert";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -89,23 +90,33 @@ function SearchAccountComponent(props) {
     }, [username]);
 
     const follow = (id) => {
-        axios.post(URL_API +`api/follow/${localStorage.getItem('id')}/${id}`).then((res) => {
-            axios.get(URL_API + `api/GetFollowing/${id}`).then((res) => {
-                setDataFollowing(res.data)
-            })
+        if (localStorage.getItem('id') !== null) {
+            axios.post(URL_API + `api/follow/${localStorage.getItem('id')}/${id}`).then((res) => {
+                axios.get(URL_API + `api/GetFollowing/${id}`).then((res) => {
+                    setDataFollowing(res.data)
+                })
 
-            axios.get(URL_API + `api/GetFollower/${id}`).then((res) => {
-                setDataFollower(res.data)
-            })
+                axios.get(URL_API + `api/GetFollower/${id}`).then((res) => {
+                    setDataFollower(res.data)
+                })
 
-            axios.get(URL_API + `api/GetFollowing/${localStorage.getItem('id')}`).then((res) => {
-                setFollowMember(res.data)
+                axios.get(URL_API + `api/GetFollowing/${localStorage.getItem('id')}`).then((res) => {
+                    setFollowMember(res.data)
+                })
             })
-        })
+        } else {
+            swal({
+                title: "Failed",
+                text: "Failed, You Must Login Or SignUp",
+                icon: "error",
+                button: false,
+                timer: 2500,
+            });
+        }
     }
 
     const unfollow = (id) => {
-        axios.post(URL_API +`api/Unfollow/${localStorage.getItem('id')}/${id}`).then((res) => {
+        axios.post(URL_API + `api/Unfollow/${localStorage.getItem('id')}/${id}`).then((res) => {
             axios.get(URL_API + `api/GetFollowing/${id}`).then((res) => {
                 setDataFollowing(res.data)
             })
@@ -192,15 +203,18 @@ function SearchAccountComponent(props) {
                                 <p>@{data.username}</p>
                             </Col>
                             <Col xs={4}>
-                                <Row>
-                                    {followMember.find(f => f.id === data.id)
-                                        ? <Button variant="secondary" style={style.button_follow} size="sm" onClick={() => unfollow(data.id)}>
-                                            Unfollow
+                                {localStorage.getItem('id') !== null ?
+                                    <Row>
+                                        {followMember.find(f => f.id === data.id)
+                                            ? <Button variant="secondary" style={style.button_follow} size="sm" onClick={() => unfollow(data.id)}>
+                                                Unfollow
                                         </Button>
-                                        : <Button variant="secondary" style={style.button_follow} size="sm" onClick={() => follow(data.id)}>
-                                            Follow
+                                            : <Button variant="secondary" style={style.button_follow} size="sm" onClick={() => follow(data.id)}>
+                                                Follow
                                         </Button>}
-                                </Row>
+                                    </Row>
+                                    : ""
+                                }
                             </Col>
                         </Row>
                         <Row style={style.follow}>
