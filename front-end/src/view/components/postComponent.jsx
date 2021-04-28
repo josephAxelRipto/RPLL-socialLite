@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Card, Alert } from "react-bootstrap";
 import { URL_API } from "../utils/constant";
+import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Comment from "../asset/textsms-24px.svg";
 import Like from "../asset/heart-red.gif";
@@ -178,6 +179,10 @@ class postComponent extends Component {
       });
   };
 
+  search = (username) => {
+    this.props.history.push(`/profile/${username}`);
+  }
+
   render() {
     const style = {
       logo_home: {
@@ -284,15 +289,17 @@ class postComponent extends Component {
             <Row style={style.jarakPerPostingan}>
               <Card border="light" style={{ width: "35rem", height: "35rem" }}>
                 <Row style={style.marginIconPostingan}>
-                  <Card.Img
-                    src={
-                      data.owner.profileImage !== null
-                        ? `data:image/jpeg;base64,${data.owner.profileImage}`
-                        : Profile
-                    }
-                    style={style.iconPostingan}
-                    alt="icon"
-                  />
+                  <Button onClick={() => this.search(data.owner.username)}>
+                    <Card.Img
+                      src={
+                        data.owner.profileImage !== null
+                          ? `data:image/jpeg;base64,${data.owner.profileImage}`
+                          : Profile
+                      }
+                      style={style.iconPostingan}
+                      alt="icon"
+                    />
+                  </Button>
                   <b style={style.textNamaPost}>{data.owner.fullname}</b>
                   {this.state.dataFollow.find((f) => f.id === data.owner.id) ? (
                     ""
@@ -399,4 +406,4 @@ class postComponent extends Component {
     return <div>{body}</div>;
   }
 }
-export default postComponent;
+export default withRouter(postComponent);

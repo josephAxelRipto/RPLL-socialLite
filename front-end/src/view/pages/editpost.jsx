@@ -10,16 +10,18 @@ import swal from "sweetalert";
 
 function EditPost(props) {
   const { id } = props.match.params;
-  const [dataPost, setData] = useState([]);
+  const [dataPost, setData] = useState({});
   const [caption, setCaption] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(URL_API + `api/getPost/${id}`);
+        const response = await axios.get(URL_API + `api/getPostByIdPost/${id}`);
         setData(response.data);
-        setCaption(response.data[0].caption);
-      } catch (error) {}
+        setCaption(response.data.caption);
+      } catch (error) {
+        console.log("error");
+      }
     }
     fetchData();
   }, [id]);
@@ -107,86 +109,79 @@ function EditPost(props) {
 
   return (
     <Container>
-      {dataPost.map((data) => (
-        <div>
-          <Row>
-            <Col>
-              <Link to="/">
-                <img
-                  src={Logo}
-                  className="logo"
-                  style={style.logo}
-                  alt="Logo"
+      <div>
+        <Row>
+          <Col>
+            <Link to="/">
+              <img src={Logo} className="logo" style={style.logo} alt="Logo" />
+            </Link>
+          </Col>
+          <Col>
+            <b>
+              <h2 style={style.judul}>Edit Post</h2>
+            </b>
+          </Col>
+        </Row>
+        <hr style={style.hr} />
+        <Row style={style.body}>
+          <Col>
+            <h3>EDIT YOUR POST</h3>
+            <Link to="/profile">
+              <Button
+                variant="light"
+                type="submit"
+                size="lg"
+                style={style.buttonGoBack}
+              >
+                &#60; Back To Profile
+              </Button>
+            </Link>
+          </Col>
+          <Col>
+            <img
+              src={`data:image/jpeg;base64,${dataPost.image}`}
+              alt="post"
+              style={style.imagePost}
+            ></img>
+          </Col>
+          <Col>
+            <Row>
+              <img
+                src={
+                  localStorage.getItem("profileImage") ===
+                  `data:image/jpeg;base64,null`
+                    ? Profile
+                    : localStorage.getItem("profileImage")
+                }
+                alt="profile"
+                style={style.profile}
+              ></img>
+              <Form onSubmit={handleSubmit}>
+                <Form.Control
+                  name="caption"
+                  as="textarea"
+                  rows={3}
+                  defaultValue={caption}
+                  placeholder="Write Caption"
+                  onChange={(event) => handleChange(event)}
+                  required
                 />
-              </Link>
-            </Col>
-            <Col>
-              <b>
-                <h2 style={style.judul}>Edit Post</h2>
-              </b>
-            </Col>
-          </Row>
-          <hr style={style.hr} />
-          <Row style={style.body}>
-            <Col>
-              <h3>EDIT YOUR POST</h3>
-              <Link to="/profile">
+                <hr style={style.hr} />
                 <Button
-                  variant="light"
+                  variant="secondary"
                   type="submit"
                   size="lg"
-                  style={style.buttonGoBack}
+                  style={style.uploadButton}
+                  block
+                  rounded
                 >
-                  &#60; Back To Profile
+                  Save Changes
                 </Button>
-              </Link>
-            </Col>
-            <Col>
-              <img
-                src={`data:image/jpeg;base64,${data.image}`}
-                alt="post"
-                style={style.imagePost}
-              ></img>
-            </Col>
-            <Col>
-              <Row>
-                <img
-                  src={
-                    localStorage.getItem("profileImage") ===
-                    `data:image/jpeg;base64,null`
-                      ? Profile
-                      : localStorage.getItem("profileImage")
-                  }
-                  alt="profile"
-                  style={style.profile}
-                ></img>
-                <Form onSubmit={handleSubmit}>
-                  <Form.Control
-                    name="caption"
-                    as="textarea"
-                    rows={3}
-                    defaultValue={caption}
-                    placeholder="Write Caption"
-                    onChange={(event) => handleChange(event)}
-                    required
-                  />
-                  <hr style={style.hr} />
-                  <Button
-                    variant="secondary"
-                    type="submit"
-                    size="lg"
-                    style={style.uploadButton}
-                    block
-                    rounded
-                  >
-                    Save Changes
-                  </Button>
-                </Form>
-              </Row>
-            </Col>
-          </Row>
-        </div>
-      ))}
+              </Form>
+            </Row>
+          </Col>
+        </Row>
+      </div>
     </Container>
   );
 }
