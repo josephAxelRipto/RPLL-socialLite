@@ -125,4 +125,8 @@ public class PostServices {
         }
         return listPost;
     }
+
+    public Post getPostByIdPost(long idPost){
+        return postRepository.getOne(idPost);
+    }
 }

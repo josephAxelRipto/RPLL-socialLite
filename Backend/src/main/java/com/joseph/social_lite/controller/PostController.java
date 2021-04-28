@@ -26,13 +26,18 @@ public class PostController {
     }
 
     @GetMapping("getPostForUser")
-    public ArrayList<Post>getPostForUser(){
+    public ArrayList<Post> getPostForUser(){
         return postServices.getPostForUser();
     }
 
     @GetMapping("getPostForMember/{idMember}")
-    public ArrayList<Post>getPostForMember(@PathVariable("idMember") Long idMember){
+    public ArrayList<Post> getPostForMember(@PathVariable("idMember") Long idMember){
         return postServices.getPostForMember(idMember);
+    }
+
+    @GetMapping("getPostByIdPost/{idPost}")
+    public Post getPostByIdPost(@PathVariable("idPost") long idPost){
+        return postServices.getPostByIdPost(idPost);
     }
 
     @PostMapping("editCaption/{id}")
