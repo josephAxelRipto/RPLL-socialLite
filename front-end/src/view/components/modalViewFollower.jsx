@@ -8,7 +8,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Profile from "../asset/account.svg";
 
-function ModalViewFollowing(props) {
+function ModalViewFollower(props) {
   let history = useHistory();
 
   const search = (username) => {
@@ -46,11 +46,11 @@ function ModalViewFollowing(props) {
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header>
-        <h2>Following</h2>
+        <h2>Follower</h2>
       </Modal.Header>
       <Modal.Body className="show-grid" closeButton>
         <List dense className={useStyles.root}>
-          {props.dataFollowing.map((data) => (
+          {props.dataFollower.map((data) => (
             <ListItem
               key={data.id}
               button
@@ -81,4 +81,4 @@ function ModalViewFollowing(props) {
     </Modal>
   );
 }
-export default withRouter(ModalViewFollowing);
+export default withRouter(ModalViewFollower);

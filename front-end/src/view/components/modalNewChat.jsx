@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import { withRouter, useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -8,13 +8,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Profile from "../asset/account.svg";
 
-function ModalViewFollowing(props) {
-  let history = useHistory();
-
-  const search = (username) => {
-    history.push(`/profile/${username}`);
-  };
-
+function ModalNewChat(props) {
   const style = {
     storyIcon: {
       borderRadius: "55px",
@@ -46,7 +40,7 @@ function ModalViewFollowing(props) {
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header>
-        <h2>Following</h2>
+        <h2>New Chat</h2>
       </Modal.Header>
       <Modal.Body className="show-grid" closeButton>
         <List dense className={useStyles.root}>
@@ -55,7 +49,7 @@ function ModalViewFollowing(props) {
               key={data.id}
               button
               style={style.margin}
-              onClick={() => search(data.username)}
+              onClick={() => props.newChat(data.id, data.fullname)}
             >
               <ListItemAvatar>
                 <Avatar
@@ -81,4 +75,4 @@ function ModalViewFollowing(props) {
     </Modal>
   );
 }
-export default withRouter(ModalViewFollowing);
+export default withRouter(ModalNewChat);

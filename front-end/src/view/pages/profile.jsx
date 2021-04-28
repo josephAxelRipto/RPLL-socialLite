@@ -10,24 +10,24 @@ class Profile extends Component {
 
     this.state = {
       data: {
-        id: ""
-      }
+        id: "",
+      },
     };
   }
 
   componentDidMount = () => {
     this.setState({
       data: {
-        id: localStorage.getItem('id')
-      }
-    })
-  }
+        id: localStorage.getItem("id"),
+      },
+    });
+  };
   render() {
     const style = {
       margin: {
-        marginTop: "150px"
-      }
-    }
+        marginTop: "150px",
+      },
+    };
 
     let body;
 
@@ -44,20 +44,16 @@ class Profile extends Component {
             </Col>
           </Row>
         </Container>
-      )
+      );
     } else {
       body = (
         <div>
           <ProfileComponent />
         </div>
-      )
+      );
     }
 
-    return (
-      <div>
-        {body}
-      </div>
-    );
+    return <div>{body}</div>;
   }
 }
 export default Profile;

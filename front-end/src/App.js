@@ -1,10 +1,10 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./view/pages/login";
 import Register from "./view/pages/register";
 import Home from "./view/pages/home";
 import EditProfil from "./view/pages/editprofil";
-import { Component } from "react";
 import Newpost from "./view/pages/newpost";
 import newstory from "./view/pages/newstory";
 import EditPost from "./view/pages/editpost";

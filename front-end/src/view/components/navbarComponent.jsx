@@ -6,14 +6,14 @@ import {
   Navbar,
   Form,
   Tooltip,
-  OverlayTrigger
+  OverlayTrigger,
 } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import Logo from "../asset/logo.png";
 import Search from "../asset/search-24px.svg";
 import Upload from "../asset/upload.svg";
 import DM from "../asset/directMessage.svg";
-import Profile from "../asset/account.svg"
+import Profile from "../asset/account.svg";
 
 class navbarComponent extends Component {
   constructor(props) {
@@ -31,24 +31,24 @@ class navbarComponent extends Component {
         phoneNumber: "",
         profileImage: "",
       },
-      search: ""
+      search: "",
     };
   }
 
   componentDidMount() {
     this.setState({
       data: {
-        id: localStorage.getItem('id'),
-        fullname: localStorage.getItem('fullname'),
-        birth: localStorage.getItem('birth'),
-        bio: localStorage.getItem('bio'),
-        email: localStorage.getItem('email'),
-        username: localStorage.getItem('username'),
-        password: localStorage.getItem('password'),
-        phoneNumber: localStorage.getItem('phoneNumber'),
-        profileImage: localStorage.getItem('profileImage')
-      }
-    })
+        id: localStorage.getItem("id"),
+        fullname: localStorage.getItem("fullname"),
+        birth: localStorage.getItem("birth"),
+        bio: localStorage.getItem("bio"),
+        email: localStorage.getItem("email"),
+        username: localStorage.getItem("username"),
+        password: localStorage.getItem("password"),
+        phoneNumber: localStorage.getItem("phoneNumber"),
+        profileImage: localStorage.getItem("profileImage"),
+      },
+    });
   }
 
   handleChange = (event) => {
@@ -58,8 +58,8 @@ class navbarComponent extends Component {
   };
 
   handleSubmit = () => {
-    this.props.history.push(`/profile/${this.state.search}`)
-  }
+    this.props.history.push(`/profile/${this.state.search}`);
+  };
 
   render() {
     const style = {
@@ -82,7 +82,7 @@ class navbarComponent extends Component {
       },
       buttonSignup: {
         width: "140px",
-        marginRight: "50px"
+        marginRight: "50px",
       },
       buttonSearch: {
         width: "30px",
@@ -95,24 +95,24 @@ class navbarComponent extends Component {
         height: "7em",
       },
       brand: {
-        marginLeft: "60px"
+        marginLeft: "60px",
       },
       upload: {
         width: "40px",
         height: "40px",
-        marginRight: "20px"
+        marginRight: "20px",
       },
       DM: {
         width: "40px",
         height: "40px",
-        marginRight: "20px"
+        marginRight: "20px",
       },
       profile: {
         borderRadius: "70px",
         width: "40px",
         height: "40px",
-        marginRight: "40px"
-      }
+        marginRight: "40px",
+      },
     };
 
     const renderTooltip = (props) => (
@@ -131,33 +131,21 @@ class navbarComponent extends Component {
           style={style.profile}
           alt="direct profile"
         />
-      )
+      );
     } else {
       imageProfile = (
-        <img
-          src={Profile}
-          style={style.profile}
-          alt="direct default"
-        />
-      )
+        <img src={Profile} style={style.profile} alt="direct default" />
+      );
     }
 
     if (this.state.data.username !== null) {
       buttons = (
         <InputGroup className="justify-content-md-end">
           <Link to="/upload">
-            <img
-              src={Upload}
-              style={style.upload}
-              alt="upload"
-            />
+            <img src={Upload} style={style.upload} alt="upload" />
           </Link>
           <Link to="/directmessage">
-            <img
-              src={DM}
-              style={style.DM}
-              alt="direct message"
-            />
+            <img src={DM} style={style.DM} alt="direct message" />
           </Link>
           <Link to="/profile">
             <OverlayTrigger
@@ -169,7 +157,7 @@ class navbarComponent extends Component {
             </OverlayTrigger>
           </Link>
         </InputGroup>
-      )
+      );
     } else {
       buttons = (
         <InputGroup className="justify-content-md-end">
@@ -181,7 +169,7 @@ class navbarComponent extends Component {
               style={style.buttonLogin}
             >
               Login
-                </Button>
+            </Button>
           </Link>
           <Link to="/signup">
             <Button
@@ -191,10 +179,10 @@ class navbarComponent extends Component {
               style={style.buttonSignup}
             >
               Sign Up
-                </Button>
+            </Button>
           </Link>
         </InputGroup>
-      )
+      );
     }
     return (
       <Navbar bg="light" expand="lg" style={style.navbar} fixed="top">
@@ -211,7 +199,8 @@ class navbarComponent extends Component {
           <InputGroup
             className="justify-content-md-center"
             style={style.groupFromSearch}
-            xs lg="6"
+            xs
+            lg="6"
           >
             <Form onSubmit={this.handleSubmit} inline>
               <FormControl

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import Logo from "../asset/logo.png";
-import { Link, withRouter } from "react-router-dom";
-import axios from 'axios';
-import ModalForgotPassword from "../components/modalForgotPassword";
 import { URL_API } from "../utils/constant";
+import { Link, withRouter } from "react-router-dom";
+import Logo from "../asset/logo.png";
+import axios from "axios";
+import ModalForgotPassword from "../components/modalForgotPassword";
 import swal from "sweetalert";
 
 class forgotpassword extends Component {
@@ -16,7 +16,7 @@ class forgotpassword extends Component {
       email: "",
       newPassword: "",
       reTypePassword: "",
-      show: false
+      show: false,
     };
   }
 
@@ -29,21 +29,27 @@ class forgotpassword extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    axios.get(`${URL_API}api/CheckMemberByEmail?username=${this.state.username}&email=${this.state.email}`).then((res) => {
-      this.setState({ show: true })
-    }).catch((error) => {
-      const errorMessage = JSON.parse(error.request.response)
-      swal({
-        title: "Failed",
-        text: "Failed, " + errorMessage.message,
-        icon: "error",
-        button: false,
-        timer: 2500,
+    axios
+      .get(
+        `${URL_API}api/CheckMemberByEmail?username=${this.state.username}&email=${this.state.email}`
+      )
+      .then((res) => {
+        this.setState({ show: true });
+      })
+      .catch((error) => {
+        const errorMessage = JSON.parse(error.request.response);
+        swal({
+          title: "Failed",
+          text: "Failed, " + errorMessage.message,
+          icon: "error",
+          button: false,
+          timer: 2500,
+        });
       });
-    });
-  }
+  };
 
-  handleClose = () => this.setState({ show: false, newPassword: "", reTypePassword: ""})
+  handleClose = () =>
+    this.setState({ show: false, newPassword: "", reTypePassword: "" });
   handleShow = () => this.setState({ show: true });
 
   handleSubmitNewPass = (event) => {
@@ -51,31 +57,33 @@ class forgotpassword extends Component {
 
     const data = {
       newPassword: this.state.newPassword,
-      reTypeNewPassword: this.state.reTypePassword
-    }
+      reTypeNewPassword: this.state.reTypePassword,
+    };
 
-    axios.post(URL_API + `api/ForgetPassword`, data).then((res) => {
-      swal({
-        title: "Success",
-        text: "Success, Change Password",
-        icon: "success",
-        button: false,
-        timer: 2500,
+    axios
+      .post(URL_API + `api/ForgetPassword`, data)
+      .then((res) => {
+        swal({
+          title: "Success",
+          text: "Success, Change Password",
+          icon: "success",
+          button: false,
+          timer: 2500,
+        });
+        this.props.history.push("/login");
+      })
+      .catch((error) => {
+        const errorMessage = JSON.parse(error.request.response);
+        swal({
+          title: "Failed",
+          text: "Failed, " + errorMessage.message,
+          icon: "error",
+          button: false,
+          timer: 2500,
+        });
+        this.setState({ newPassword: "", reTypePassword: "" });
       });
-      this.props.history.push("/login");
-    }).catch((error) => {
-      const errorMessage = JSON.parse(error.request.response)
-      swal({
-        title: "Failed",
-        text: "Failed, " + errorMessage.message,
-        icon: "error",
-        button: false,
-        timer: 2500,
-      });
-      this.setState({ newPassword: "", reTypePassword: ""})
-    });
-
-  }
+  };
 
   render() {
     const style = {
@@ -95,8 +103,8 @@ class forgotpassword extends Component {
       goLogin: {
         marginTop: "50px",
         textDecoration: "none",
-        fontSize: "18px"
-      }
+        fontSize: "18px",
+      },
     };
     return (
       <Container>
@@ -155,13 +163,14 @@ class forgotpassword extends Component {
             </Link>
           </Col>
         </Row>
-        <ModalForgotPassword 
-          onHide={this.handleClose} 
-          show={this.state.show} 
-          newPass={this.state.newPassword} 
-          reTypePass={this.state.reTypePassword} 
+        <ModalForgotPassword
+          onHide={this.handleClose}
+          show={this.state.show}
+          newPass={this.state.newPassword}
+          reTypePass={this.state.reTypePassword}
           handleSubmit={this.handleSubmitNewPass}
-          handleChange={this.handleChange}/>
+          handleChange={this.handleChange}
+        />
       </Container>
     );
   }

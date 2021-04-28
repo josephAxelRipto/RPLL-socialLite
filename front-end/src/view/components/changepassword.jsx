@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link, Switch, withRouter } from "react-router-dom";
 import { Form, Container, Row, Col, Button } from "react-bootstrap";
+import { URL_API } from "../utils/constant";
 import NavbarComponent from "./navbarComponent";
-import axios from 'axios'
-import { URL_API } from '../utils/constant';
+import axios from "axios";
 import swal from "sweetalert";
 
 class ChangePassword extends Component {
@@ -11,10 +11,10 @@ class ChangePassword extends Component {
     super(props);
 
     this.state = {
-      id: localStorage.getItem('id'),
+      id: localStorage.getItem("id"),
       password: "",
       newPassword: "",
-      reTypePassword: ""
+      reTypePassword: "",
     };
   }
 
@@ -30,36 +30,37 @@ class ChangePassword extends Component {
     const data = {
       oldPassword: this.state.password,
       newPassword: this.state.newPassword,
-      reTypeNewPassword: this.state.reTypePassword
-    }
-    axios.post(URL_API + `api/ChangePassword/${this.state.id}`, data).then((res) => {
-      swal({
-        title: "Sukses Update Password",
-        text: "Sukses Update Password ",
-        icon: "success",
-        button: false,
-        timer: 2500,
-      });
-      localStorage.setItem('password', this.state.newPassword)
-      this.props.history.push("/profile");
-    }).catch((error) => {
-      const errorMessage = JSON.parse(error.request.response)
-      swal({
-        title: "Failed Update Password",
-        text: "Failed Update Password, " + errorMessage.message,
-        icon: "error",
-        button: true,
-        timer: 3500,
-      });
-      this.setState({
-        password: "",
-        newPassword: "",
-        reTypePassword: ""
+      reTypeNewPassword: this.state.reTypePassword,
+    };
+    axios
+      .post(URL_API + `api/ChangePassword/${this.state.id}`, data)
+      .then((res) => {
+        swal({
+          title: "Sukses Update Password",
+          text: "Sukses Update Password ",
+          icon: "success",
+          button: false,
+          timer: 2500,
+        });
+        localStorage.setItem("password", this.state.newPassword);
+        this.props.history.push("/profile");
       })
-    })
-
-  }
-
+      .catch((error) => {
+        const errorMessage = JSON.parse(error.request.response);
+        swal({
+          title: "Failed Update Password",
+          text: "Failed Update Password, " + errorMessage.message,
+          icon: "error",
+          button: true,
+          timer: 3500,
+        });
+        this.setState({
+          password: "",
+          newPassword: "",
+          reTypePassword: "",
+        });
+      });
+  };
 
   render() {
     const submit_button = {
@@ -70,9 +71,8 @@ class ChangePassword extends Component {
     };
     const h2 = {
       marginTop: "50px",
-      marginLeft: "100px"
-
-    }
+      marginLeft: "100px",
+    };
 
     const form_username = {
       marginTop: "27px",
@@ -84,8 +84,8 @@ class ChangePassword extends Component {
         borderRadius: "20px",
         width: "250px",
         marginLeft: "100px",
-      }
-    }
+      },
+    };
     return (
       <main>
         <Switch>
@@ -100,7 +100,6 @@ class ChangePassword extends Component {
                 </Col>
               </Row>
               <Form onSubmit={this.handleSubmit}>
-
                 <Form.Group
                   as={Row}
                   controlId="formHorizontalOld"
@@ -110,7 +109,13 @@ class ChangePassword extends Component {
                     <b>Old Password</b>
                   </Form.Label>
                   <Col sm={14}>
-                    <Form.Control name="password" type="password" value={this.state.password} onChange={(event) => this.handleChange(event)} placeholder="Current Password" />
+                    <Form.Control
+                      name="password"
+                      type="password"
+                      value={this.state.password}
+                      onChange={(event) => this.handleChange(event)}
+                      placeholder="Current Password"
+                    />
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -122,7 +127,13 @@ class ChangePassword extends Component {
                     <b>New Password</b>
                   </Form.Label>
                   <Col sm={14}>
-                    <Form.Control name="newPassword" type="password" value={this.state.newPassword} onChange={(event) => this.handleChange(event)} placeholder="Insert New Password" />
+                    <Form.Control
+                      name="newPassword"
+                      type="password"
+                      value={this.state.newPassword}
+                      onChange={(event) => this.handleChange(event)}
+                      placeholder="Insert New Password"
+                    />
                   </Col>
                 </Form.Group>
                 <Form.Group
@@ -134,7 +145,13 @@ class ChangePassword extends Component {
                     <b>Retype New Password</b>
                   </Form.Label>
                   <Col sm={14}>
-                    <Form.Control name="reTypePassword" type="password" value={this.state.reTypePassword} onChange={(event) => this.handleChange(event)} placeholder="Insert Retype Password" />
+                    <Form.Control
+                      name="reTypePassword"
+                      type="password"
+                      value={this.state.reTypePassword}
+                      onChange={(event) => this.handleChange(event)}
+                      placeholder="Insert Retype Password"
+                    />
                   </Col>
                 </Form.Group>
                 <Button
@@ -146,7 +163,7 @@ class ChangePassword extends Component {
                   rounded
                 >
                   Change Password
-                  </Button>
+                </Button>
               </Form>
               <Link to="/profile">
                 <Button
@@ -157,7 +174,7 @@ class ChangePassword extends Component {
                   rounded
                 >
                   Back
-                  </Button>
+                </Button>
               </Link>
             </Col>
           </Row>

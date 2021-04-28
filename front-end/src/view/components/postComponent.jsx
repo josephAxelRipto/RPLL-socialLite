@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import { Row, Col, Card, Alert } from "react-bootstrap";
-import Button from '@material-ui/core/Button';
+import { URL_API } from "../utils/constant";
+import Button from "@material-ui/core/Button";
 import Comment from "../asset/textsms-24px.svg";
 import Like from "../asset/heart-red.gif";
 import DefaultLike from "../asset/heart.png";
-import ModalComment from "./modalComment"
-import axios from 'axios'
-import { URL_API } from '../utils/constant';
-import Profile from '../asset/account.svg';
-import Bookmark from '../asset/bookmark.svg';
-import AddBookmark from '../asset/bookmark_add.svg';
+import ModalComment from "./modalComment";
+import axios from "axios";
+import Profile from "../asset/account.svg";
+import Bookmark from "../asset/bookmark.svg";
+import AddBookmark from "../asset/bookmark_add.svg";
 
 class postComponent extends Component {
   constructor(props) {
@@ -27,30 +27,38 @@ class postComponent extends Component {
       page: "post",
       dataBookmark: [],
       dataFollow: [],
-    }
+    };
   }
 
   componentDidMount = () => {
-    axios.get(URL_API + `api/getPostForMember/${localStorage.getItem('id')}`).then((res) => {
-      this.setState({ dataPost: res.data })
-    })
+    axios
+      .get(URL_API + `api/getPostForMember/${localStorage.getItem("id")}`)
+      .then((res) => {
+        this.setState({ dataPost: res.data });
+      });
 
     this.setState({
-      profile: localStorage.getItem('profileImage')
-    })
+      profile: localStorage.getItem("profileImage"),
+    });
 
-    axios.get(URL_API + `api/GetLikedPost/${localStorage.getItem('id')}`).then((res) => {
-      this.setState({ like: res.data })
-    })
+    axios
+      .get(URL_API + `api/GetLikedPost/${localStorage.getItem("id")}`)
+      .then((res) => {
+        this.setState({ like: res.data });
+      });
 
-    axios.get(URL_API + `api/GetBookmarkedPost/${localStorage.getItem('id')}`).then((res) => {
-      this.setState({ dataBookmark: res.data })
-    })
+    axios
+      .get(URL_API + `api/GetBookmarkedPost/${localStorage.getItem("id")}`)
+      .then((res) => {
+        this.setState({ dataBookmark: res.data });
+      });
 
-    axios.get(URL_API + `api/GetFollowing/${localStorage.getItem('id')}`).then((res) => {
-      this.setState({ dataFollow : res.data })
-    })
-  }
+    axios
+      .get(URL_API + `api/GetFollowing/${localStorage.getItem("id")}`)
+      .then((res) => {
+        this.setState({ dataFollow: res.data });
+      });
+  };
 
   handleChange = (event) => {
     this.setState({
@@ -58,91 +66,117 @@ class postComponent extends Component {
     });
   };
 
-  handleClose = () => this.setState({ show: false, postImage: null, dataComment: [], dataModal: [] })
+  handleClose = () =>
+    this.setState({
+      show: false,
+      postImage: null,
+      dataComment: [],
+      dataModal: [],
+    });
   handleShow = () => this.setState({ show: true });
 
   handleSubmit = (event) => {
     event.preventDefault();
 
-    axios.post(URL_API + `api/CommentPost/${this.state.id}/${localStorage.getItem('id')}?comment=${this.state.comment}`).then((res) => {
-      axios.get(URL_API + `api/GetCommentForPost/${this.state.id}`).then((res) => {
-        this.setState({ dataComment: res.data, postImage: this.state.postImage, show: true, id: this.state.id, comment: "" })
-      })
-    })
-
-  }
+    axios
+      .post(URL_API + `api/CommentPost/${this.state.id}/${localStorage.getItem("id")}?comment=${this.state.comment}`)
+      .then((res) => {
+        axios
+          .get(URL_API + `api/GetCommentForPost/${this.state.id}`)
+          .then((res) => {
+            this.setState({
+              dataComment: res.data,
+              postImage: this.state.postImage,
+              show: true,
+              id: this.state.id,
+              comment: "",
+            });
+          });
+      });
+  };
 
   likePost = (idPost, idMember) => {
-
-    if (this.state.like.find(v => v === idPost) === idPost) {
-      this.unlike(idPost, idMember)
+    if (this.state.like.find((v) => v === idPost) === idPost) {
+      this.unlike(idPost, idMember);
     } else {
-      this.like(idPost, idMember)
+      this.like(idPost, idMember);
     }
-
-  }
+  };
 
   like = (idPost, idMember) => {
     axios.post(URL_API + `api/LikePost/${idPost}/${idMember}`).then((res) => {
-      axios.get(URL_API + `api/GetLikedPost/${localStorage.getItem('id')}`).then((res) => {
-        this.setState({ like: res.data })
-      })
-    })
-  }
+      axios
+        .get(URL_API + `api/GetLikedPost/${localStorage.getItem("id")}`)
+        .then((res) => {
+          this.setState({ like: res.data });
+        });
+    });
+  };
 
   unlike = (idPost, idMember) => {
     axios.post(URL_API + `api/UnlikePost/${idPost}/${idMember}`).then((res) => {
-      axios.get(URL_API + `api/GetLikedPost/${localStorage.getItem('id')}`).then((res) => {
-        this.setState({ like: res.data })
-      })
-    })
-  }
+      axios
+        .get(URL_API + `api/GetLikedPost/${localStorage.getItem("id")}`)
+        .then((res) => {
+          this.setState({ like: res.data });
+        });
+    });
+  };
 
   comment = (data) => {
     axios.get(URL_API + `api/GetCommentForPost/${data.id}`).then((res) => {
-      this.setState({ dataComment: res.data, postImage: data.image, show: true, id: data.id })
-    })
-  }
+      this.setState({
+        dataComment: res.data,
+        postImage: data.image,
+        show: true,
+        id: data.id,
+      });
+    });
+  };
 
   actionBookmark = (idPost, idMember) => {
-    if (this.state.dataBookmark.find(v => v.id === idPost)) {
-      this.removeBookmark(idPost, idMember)
+    if (this.state.dataBookmark.find((v) => v.id === idPost)) {
+      this.removeBookmark(idPost, idMember);
     } else {
-      this.addBookmark(idPost, idMember)
+      this.addBookmark(idPost, idMember);
     }
-  }
+  };
 
   removeBookmark = (idPost, idMember) => {
     const data = {
       idPost: idPost,
-      idMember: idMember
-    }
+      idMember: idMember,
+    };
     axios.post(URL_API + `api/RemoveBookmark`, data).then((res) => {
       axios.get(URL_API + `api/GetBookmarkedPost/${idMember}`).then((res) => {
-        this.setState({ dataBookmark: res.data })
-      })
-    })
-  }
+        this.setState({ dataBookmark: res.data });
+      });
+    });
+  };
 
   addBookmark = (idPost, idMember) => {
     const data = {
       idPost: idPost,
-      idMember: idMember
-    }
+      idMember: idMember,
+    };
     axios.post(URL_API + `api/AddBookmark`, data).then((res) => {
       axios.get(URL_API + `api/GetBookmarkedPost/${idMember}`).then((res) => {
-        this.setState({ dataBookmark: res.data })
-      })
-    })
-  }
+        this.setState({ dataBookmark: res.data });
+      });
+    });
+  };
 
   follow = (id) => {
-    axios.post(URL_API + `api/follow/${localStorage.getItem('id')}/${id}`).then((res) => {
-      axios.get(URL_API + `api/GetFollowing/${localStorage.getItem('id')}`).then((res) => {
-        this.setState({ dataFollow : res.data })
-      })
-    })
-  }
+    axios
+      .post(URL_API + `api/follow/${localStorage.getItem("id")}/${id}`)
+      .then((res) => {
+        axios
+          .get(URL_API + `api/GetFollowing/${localStorage.getItem("id")}`)
+          .then((res) => {
+            this.setState({ dataFollow: res.data });
+          });
+      });
+  };
 
   render() {
     const style = {
@@ -154,7 +188,7 @@ class postComponent extends Component {
       column_kiri: {
         marginTop: "150px",
         marginRight: "90px",
-        fixed: "top"
+        fixed: "top",
       },
       tulisanHOME: {
         marginTop: "10px",
@@ -234,50 +268,52 @@ class postComponent extends Component {
       },
       username: {
         marginLeft: "80px",
-        marginTop: "-20px"
+        marginTop: "-20px",
       },
       alert: {
         marginTop: "100px",
-      }
+      },
     };
 
-    let body
+    let body;
 
     if (this.state.dataPost !== null) {
       body = (
         <div>
-          {this.state.dataPost.map((data) =>
+          {this.state.dataPost.map((data) => (
             <Row style={style.jarakPerPostingan}>
-              <Card
-                border="light"
-                style={{ width: "35rem", height: "35rem" }}
-              >
+              <Card border="light" style={{ width: "35rem", height: "35rem" }}>
                 <Row style={style.marginIconPostingan}>
                   <Card.Img
-                    src={data.owner.profileImage !== null ? `data:image/jpeg;base64,${data.owner.profileImage}` : Profile}
+                    src={
+                      data.owner.profileImage !== null
+                        ? `data:image/jpeg;base64,${data.owner.profileImage}`
+                        : Profile
+                    }
                     style={style.iconPostingan}
                     alt="icon"
                   />
                   <b style={style.textNamaPost}>{data.owner.fullname}</b>
-                  {this.state.dataFollow.find(f => f.id === data.owner.id) 
-                  ? 
-                  "" : <Button onClick={() => this.follow(data.owner.id)}
-                  style={style.buttonFollow}
-                >
-                  FOLLOW
-                </Button>}
-                  
+                  {this.state.dataFollow.find((f) => f.id === data.owner.id) ? (
+                    ""
+                  ) : (
+                    <Button
+                      onClick={() => this.follow(data.owner.id)}
+                      style={style.buttonFollow}
+                    >
+                      FOLLOW
+                    </Button>
+                  )}
                 </Row>
-                <Row style={style.username}>
-                  @{data.owner.username}
-                </Row>
+                <Row style={style.username}>@{data.owner.username}</Row>
                 <Card.Body>
-                  <Card.Text className="text-muted">
-                    {data.caption}
-                  </Card.Text>
+                  <Card.Text className="text-muted">{data.caption}</Card.Text>
                   <Row>
                     <Col>
-                      <Card.Img src={`data:image/jpeg;base64,${data.image}`} style={style.ukuranFoto} />
+                      <Card.Img
+                        src={`data:image/jpeg;base64,${data.image}`}
+                        style={style.ukuranFoto}
+                      />
                     </Col>
 
                     {/* action dari gambar postingannya */}
@@ -285,8 +321,19 @@ class postComponent extends Component {
                       <Row>
                         <Button>
                           <img
-                            onClick={() => this.actionBookmark(data.id, localStorage.getItem('id'))}
-                            src={this.state.dataBookmark.find(b => b.id === data.id) ? Bookmark : AddBookmark}
+                            onClick={() =>
+                              this.actionBookmark(
+                                data.id,
+                                localStorage.getItem("id")
+                              )
+                            }
+                            src={
+                              this.state.dataBookmark.find(
+                                (b) => b.id === data.id
+                              )
+                                ? Bookmark
+                                : AddBookmark
+                            }
                             alt="story"
                             style={style.bookmark}
                           ></img>
@@ -295,8 +342,14 @@ class postComponent extends Component {
                       <Row style={style.goBottom}>
                         <Button variant="outline-light">
                           <img
-                            onClick={() => this.likePost(data.id, localStorage.getItem('id'))}
-                            src={this.state.like.find(v => v === data.id) ? Like : DefaultLike}
+                            onClick={() =>
+                              this.likePost(data.id, localStorage.getItem("id"))
+                            }
+                            src={
+                              this.state.like.find((v) => v === data.id)
+                                ? Like
+                                : DefaultLike
+                            }
                             alt="like"
                             style={style.like}
                           ></img>
@@ -321,31 +374,29 @@ class postComponent extends Component {
                           page={this.state.page}
                           onHide={this.handleClose}
                           handleSubmit={this.handleSubmit}
-                          handleChange={this.handleChange} />
+                          handleChange={this.handleChange}
+                        />
                       </Row>
                     </Col>
                   </Row>
                 </Card.Body>
               </Card>
             </Row>
-          )}
+          ))}
         </div>
-      )
+      );
     } else {
       body = (
         <Col className="justify-content-md-center" style={style.alert}>
           <h2>Tidak Ada Post</h2>
           <Alert key="2" variant="success">
-            Silahkan {' '} <Alert.Link href="/signup">Signup</Alert.Link> Atau {' '} <Alert.Link href="/login">Login</Alert.Link>
+            Silahkan <Alert.Link href="/signup">Signup</Alert.Link> Atau{" "}
+            <Alert.Link href="/login">Login</Alert.Link>
           </Alert>
         </Col>
       );
     }
-    return (
-      <div>
-        {body}
-      </div >
-    )
+    return <div>{body}</div>;
   }
 }
 export default postComponent;

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Form, Container, Row, Col, Button, Alert } from "react-bootstrap";
-import Logo from "../asset/logo.png";
+import { URL_API } from "../utils/constant.js";
 import { Link, withRouter } from "react-router-dom";
+import Logo from "../asset/logo.png";
 import axios from "axios";
 import swal from "sweetalert";
-import { URL_API } from "../utils/constant.js";
 
 class Login extends Component {
   constructor(props) {
@@ -28,8 +28,8 @@ class Login extends Component {
 
     const dataLogin = {
       username: this.state.username,
-      password: this.state.password
-    }
+      password: this.state.password,
+    };
 
     axios
       .post(URL_API + "api/Login", dataLogin)
@@ -41,18 +41,20 @@ class Login extends Component {
           button: false,
           timer: 2500,
         });
-        localStorage.setItem('id', res.data.id)
-        localStorage.setItem('fullname', res.data.fullname)
-        localStorage.setItem('birth', res.data.birth)
-        localStorage.setItem('bio', res.data.bio)
-        localStorage.setItem('email', res.data.email)
-        localStorage.setItem('username', res.data.username)
-        localStorage.setItem('password', res.data.password)
-        localStorage.setItem('phoneNumber', res.data.phoneNumber)
-        localStorage.setItem('profileImage', `data:image/jpeg;base64,${res.data.profileImage}`)
+        localStorage.setItem("id", res.data.id);
+        localStorage.setItem("fullname", res.data.fullname);
+        localStorage.setItem("birth", res.data.birth);
+        localStorage.setItem("bio", res.data.bio);
+        localStorage.setItem("email", res.data.email);
+        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("password", res.data.password);
+        localStorage.setItem("phoneNumber", res.data.phoneNumber);
+        localStorage.setItem("profileImage",`data:image/jpeg;base64,${res.data.profileImage}`
+        );
         this.props.history.push("/");
-      }).catch((error) => {
-        const errorMessage = JSON.parse(error.request.response)
+      })
+      .catch((error) => {
+        const errorMessage = JSON.parse(error.request.response);
         swal({
           title: "Gagal Login",
           text: "Gagal Login " + errorMessage.message,
@@ -82,7 +84,7 @@ class Login extends Component {
       goHome: {
         marginTop: "50px",
         textDecoration: "none",
-        fontSize: "18px"
+        fontSize: "18px",
       },
       form: {
         marginTop: "50px",
@@ -93,28 +95,25 @@ class Login extends Component {
         marginBottom: "20px",
       },
       margin: {
-        marginTop: "150px"
-      }
+        marginTop: "150px",
+      },
     };
 
     let bodyLogin;
 
-    if (localStorage.getItem('username') === null) {
+    if (localStorage.getItem("username") === null) {
       bodyLogin = (
         <Container>
           <Row>
             <Col>
-              <img
-                src={Logo}
-                className="logo"
-                style={style.logo}
-                alt="Logo"
-              />
+              <img src={Logo} className="logo" style={style.logo} alt="Logo" />
             </Col>
           </Row>
           <Row>
             <Col>
-              <h2 className="justify-content-md-between" style={style.login}>Log In</h2>
+              <h2 className="justify-content-md-between" style={style.login}>
+                Log In
+              </h2>
             </Col>
           </Row>
           <Row className="justify-content-md-center" style={style.form}>
@@ -127,7 +126,8 @@ class Login extends Component {
                     name="username"
                     value={this.state.username}
                     onChange={(event) => this.handleChange(event)}
-                    autoComplete="off" required
+                    autoComplete="off"
+                    required
                   />
                 </Form.Group>
                 <Form.Group controlId="formGroupPassword">
@@ -147,20 +147,16 @@ class Login extends Component {
                 </Form.Group>
                 <Button variant="secondary" type="submit" size="lg" block>
                   Log In
-              </Button>
+                </Button>
               </Form>
             </Col>
           </Row>
           <Row className="justify-content-md-center" style={style.goHome}>
             <Col xs lg="2">
               <Link to="/">
-                <Button
-                  variant="light"
-                  type="submit"
-                  size="lg"
-                >
+                <Button variant="light" type="submit" size="lg">
                   &#60; Go Home
-              </Button>
+                </Button>
               </Link>
             </Col>
           </Row>
@@ -173,29 +169,26 @@ class Login extends Component {
             <Row>
               <Col>
                 <center>
-                  Don't have an account? <a href="/signup" >sign up</a>
+                  Don't have an account? <a href="/signup">sign up</a>
                 </center>
               </Col>
             </Row>
           </footer>
         </Container>
-      )
+      );
     } else {
       bodyLogin = (
         <Col className="justify-content-md-center" style={style.margin}>
           <h2>Kamu Sudah Login !!!</h2>
           <Alert key="2" variant="success">
-            Silahkan kembali ke beranda{' '} <Alert.Link href="/">klik disini</Alert.Link>
+            Silahkan kembali ke beranda{" "}
+            <Alert.Link href="/">klik disini</Alert.Link>
           </Alert>
         </Col>
-      )
+      );
     }
 
-    return (
-      <div>
-        {bodyLogin}
-      </div>
-    );
+    return <div>{bodyLogin}</div>;
   }
 }
 export default withRouter(Login);

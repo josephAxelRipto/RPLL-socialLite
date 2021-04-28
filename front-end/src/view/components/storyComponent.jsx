@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { URL_API } from "../utils/constant";
+import { Row } from "react-bootstrap";
 import Homelogo from "../asset/home-24px.svg";
 import AddStory from "../asset/add_circle-24px.svg";
-import { Row } from "react-bootstrap";
 import Sticky from "react-sticky-el";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -12,7 +13,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Profile from '../asset/account.svg';
 import ViewStoryComponent from "./viewStoryComponent";
 import axios from "axios";
-import { URL_API } from "../utils/constant";
 
 class storyComponent extends Component {
     constructor(props) {

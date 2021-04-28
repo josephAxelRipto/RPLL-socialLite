@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Container, Row } from "react-bootstrap";
 import FormEditProfile from "../components/formEditProfile";
 import NavbarComponent from "../components/navbarComponent";
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 import ChangePassword from "../components/changepassword";
 
 function TabPanel(props) {
@@ -40,7 +40,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
 
@@ -49,28 +49,28 @@ class Editprofil extends Component {
     super(props);
 
     this.state = {
-      value: 0
+      value: 0,
     };
   }
   render() {
     const style = {
       margin: {
-        marginTop: "150px"
+        marginTop: "150px",
       },
       style_hr: {
         marginTop: "50px",
-      }
+      },
     };
 
-    const useStyles = theme => ({
+    const useStyles = (theme) => ({
       root: {
         flexGrow: 1,
-        width: '100%',
+        width: "100%",
         backgroundColor: theme.palette.background.paper,
       },
     });
 
-    const change = (event, newValue) => this.setState({ value: newValue })
+    const change = (event, newValue) => this.setState({ value: newValue });
 
     return (
       <Container>
@@ -78,7 +78,8 @@ class Editprofil extends Component {
         <Row style={style.margin}>
           <div className={useStyles.root}>
             <Paper position="fixed" color="default">
-              <Tabs value={this.state.value}
+              <Tabs
+                value={this.state.value}
                 onChange={change}
                 indicatorColor="primary"
                 textColor="primary"
@@ -88,16 +89,15 @@ class Editprofil extends Component {
                 <Tab label="Change Password" {...a11yProps(1)}></Tab>
               </Tabs>
               <TabPanel value={this.state.value} index={0}>
-                <FormEditProfile/>
+                <FormEditProfile />
               </TabPanel>
               <TabPanel value={this.state.value} index={1}>
-                <ChangePassword/>
+                <ChangePassword />
               </TabPanel>
             </Paper>
           </div>
         </Row>
       </Container>
-
     );
   }
 }
