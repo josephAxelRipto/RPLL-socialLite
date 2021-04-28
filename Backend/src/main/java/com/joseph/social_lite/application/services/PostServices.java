@@ -68,20 +68,18 @@ public class PostServices {
 
     public ArrayList<Post> getPostForUser(){
         long countPost = postRepository.count();
-        ArrayList<Post> post = new ArrayList<>();
+        ArrayList<Post> listPost = new ArrayList<>();
         ArrayList<Long> showed = new ArrayList<>();
 
-        for(int i = 0; i <= 100; i++){
-            long random_id = (long)Math.floor(Math.random()*(countPost-1+1)+1);
-            if(postRepository.findById(random_id).isPresent() && !showed.contains(random_id)){
-                System.out.println("tes");
-                tempPost = postRepository.getOne(random_id);
-                post.add(tempPost);
-                showed.add(random_id);
-                System.out.println(post.size());
-            }
+        List<Post> tempListPost = postRepository.findAll();
+
+        listPost.addAll(tempListPost);
+        if(listPost == null){
+            return null;
         }
-        return post;
+        Collections.shuffle(listPost);
+
+        return listPost;
     }
 
     @Transactional
@@ -117,7 +115,8 @@ public class PostServices {
     public ArrayList<Post> getPostForMember(long idMember) {
         ArrayList<Member> listFollowing = followServices.getFollowing(idMember);
         ArrayList<Post> listPost = new ArrayList<>();
-        if(listFollowing == null){
+        if(listFollowing.size() == 0 || listFollowing == null){
+            System.out.println("masuk");
             return getPostForUser();
         }
         for(Member member: listFollowing){

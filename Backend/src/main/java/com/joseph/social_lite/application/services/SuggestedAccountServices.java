@@ -17,11 +17,9 @@ public class SuggestedAccountServices {
     private FollowServices followServices;
 
     public ArrayList<Member> getSugestedAccount(long idMember){
-        long countMember = memberRepository.count();
         ArrayList<Member> listMember = new ArrayList<>();
         ArrayList<Member> listFollowingMember = followServices.getFollowing(idMember);
         Member self = memberRepository.getOne(idMember);
-        Member randomMember = new Member();
 
         List<Member> allMember = memberRepository.findAll();
 
