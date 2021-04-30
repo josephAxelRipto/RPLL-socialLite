@@ -16,6 +16,9 @@ public class EditProfileServices {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private AuthServices authServices;
+
     @Transactional
     public void changePassword(Long memberId, String oldPassword, String newPassword, String reTypeNewPassword){
         Member member = this.memberRepository.findById(memberId)
@@ -38,7 +41,7 @@ public class EditProfileServices {
         }else if(oldPassword.equals(newPassword)){
             throw new IllegalStateException("the old password and the new password are the same");
         }else{
-            member.setPassword(newPassword);
+            member.setPassword(authServices.passwordToMD5(newPassword));
         }
     }
 
