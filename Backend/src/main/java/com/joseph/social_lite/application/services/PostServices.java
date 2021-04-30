@@ -26,7 +26,6 @@ public class PostServices {
     private FollowServices followServices;
 
     private Post post;
-    private Post tempPost;
     private Member member;
     public final int COMMENT = 0;
     public final int LIKE = 1;

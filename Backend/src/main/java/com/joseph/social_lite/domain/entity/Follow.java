@@ -20,7 +20,7 @@ public class Follow {
             strategy = GenerationType.SEQUENCE,
             generator = "post_id_seq"
     )
-    private int id;
+    private long id;
     private boolean status;
     @Column(columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime dateFollow;
