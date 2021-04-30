@@ -135,6 +135,7 @@ class profileComponent extends Component {
       postImage: null,
       dataComment: [],
       dataModal: [],
+      page: "profile",
     });
   handleShow = () => this.setState({ show: true });
 
@@ -219,6 +220,7 @@ class profileComponent extends Component {
             postImage: null,
             dataComment: [],
             dataModal: [],
+            page: "profile",
           });
         });
     });

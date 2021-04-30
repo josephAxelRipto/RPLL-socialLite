@@ -46,7 +46,6 @@ function a11yProps(index) {
 }
 
 function SearchAccountComponent(props) {
-
   const { username } = props.match.params;
   const [dataUser, setData] = useState([]);
   const [dataPhoto, setDataPhoto] = useState([]);
@@ -118,6 +117,16 @@ function SearchAccountComponent(props) {
             .then((res) => {
               setFollowMember(res.data);
             });
+        })
+        .catch((error) => {
+          const errorMessage = JSON.parse(error.request.response);
+          swal({
+            title: "Gagal",
+            text: "Gagal, " + errorMessage.message,
+            icon: "error",
+            button: false,
+            timer: 2500,
+          });
         });
     } else {
       swal({
@@ -215,27 +224,31 @@ function SearchAccountComponent(props) {
               </Col>
               <Col xs={4}>
                 {localStorage.getItem("id") !== null ? (
-                  <Row>
-                    {followMember.find((f) => f.id === data.id) ? (
-                      <Button
-                        variant="secondary"
-                        style={style.button_follow}
-                        size="sm"
-                        onClick={() => unfollow(data.id)}
-                      >
-                        Unfollow
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="secondary"
-                        style={style.button_follow}
-                        size="sm"
-                        onClick={() => follow(data.id)}
-                      >
-                        Follow
-                      </Button>
-                    )}
-                  </Row>
+                  localStorage.getItem("id") != data.id ? (
+                    <Row>
+                      {followMember.find((f) => f.id === data.id) ? (
+                        <Button
+                          variant="secondary"
+                          style={style.button_follow}
+                          size="sm"
+                          onClick={() => unfollow(data.id)}
+                        >
+                          Unfollow
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="secondary"
+                          style={style.button_follow}
+                          size="sm"
+                          onClick={() => follow(data.id)}
+                        >
+                          Follow
+                        </Button>
+                      )}
+                    </Row>
+                  ) : (
+                    ""
+                  )
                 ) : (
                   ""
                 )}
