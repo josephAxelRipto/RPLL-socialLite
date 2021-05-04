@@ -89,12 +89,6 @@ function ModalComment(props) {
               ></img>
             </Col>
             <Col>
-              {/* <Toast style={style.marginToastCaption}>
-                <Toast.Header closeButton={false}>
-                  <strong className="mr-auto">{props.username}</strong>
-                </Toast.Header>
-                <Toast.Body>{props.caption}</Toast.Body>
-              </Toast> */}
               <b style={style.username}>{props.username}</b>
               <p style={style.caption}><i>{props.caption}</i></p>
               <div className="scrollarea" style={style.sticky}>
