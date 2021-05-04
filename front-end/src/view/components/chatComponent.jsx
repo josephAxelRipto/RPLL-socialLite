@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Toast, Button, Form } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, useHistory } from "react-router-dom";
 import { URL_API } from "../utils/constant";
 import Profile from "../asset/account.svg";
 import Sticky from "react-sticky-el";
@@ -13,18 +13,20 @@ function ChatComponent(props) {
   const [dataChat, setData] = useState([]);
   const [chat, setChat] = useState("");
 
+  let history = useHistory();
+
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(
           URL_API +
-            `api/findAllDirectMessage/${localStorage.getItem("id")}/${props.id}`
+          `api/findAllDirectMessage/${localStorage.getItem("id")}/${props.id}`
         );
         setData(response.data);
         setName(props.fullname);
         setId(localStorage.getItem("id"));
 
-      } catch (error) {}
+      } catch (error) { }
     }
     fetchData();
   }, [props.id, props.fullname]);
@@ -34,7 +36,7 @@ function ChatComponent(props) {
       axios
         .get(
           URL_API +
-            `api/findAllDirectMessage/${localStorage.getItem("id")}/${props.id}`
+          `api/findAllDirectMessage/${localStorage.getItem("id")}/${props.id}`
         )
         .then((res) => {
           setData(res.data);
@@ -58,7 +60,7 @@ function ChatComponent(props) {
       axios
         .get(
           URL_API +
-            `api/findAllDirectMessage/${localStorage.getItem("id")}/${props.id}`
+          `api/findAllDirectMessage/${localStorage.getItem("id")}/${props.id}`
         )
         .then((res) => {
           setData(res.data);
@@ -66,6 +68,10 @@ function ChatComponent(props) {
         });
     });
   };
+
+  const search = (username) => {
+    history.push(`/profile/${username}`);
+  }
 
   const style = {
     margin: {
@@ -79,6 +85,8 @@ function ChatComponent(props) {
     textNama: {
       marginLeft: "20px",
       marginTop: "5px",
+      textDecoration: "none",
+      color: "black"
     },
     sticky: {
       height: "400px",
@@ -120,12 +128,15 @@ function ChatComponent(props) {
     body = (
       <Container>
         <Row>
-          <h2 style={style.textNama}>{name}</h2>
+          <Button variant="link" style={style.textNama} onClick={() => search(props.username)}>
+            <h3>{name}</h3>
+          </Button>
         </Row>
         <Row style={style.margin}>
           <div className="scrollarea" style={style.sticky}>
             <Sticky>
               {dataChat.map((data) =>
+                // eslint-disable-next-line
                 data.from.id == id ? (
                   <div>
                     <Row style={style.toRight}>

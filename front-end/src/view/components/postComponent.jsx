@@ -26,6 +26,8 @@ class postComponent extends Component {
       like: [],
       comment: "",
       page: "post",
+      caption: "",
+      username: "",
       dataBookmark: [],
       dataFollow: [],
     };
@@ -73,6 +75,9 @@ class postComponent extends Component {
       postImage: null,
       dataComment: [],
       dataModal: [],
+      caption: "",
+      username: "",
+      comment: ""
     });
   handleShow = () => this.setState({ show: true });
 
@@ -131,6 +136,8 @@ class postComponent extends Component {
         postImage: data.image,
         show: true,
         id: data.id,
+        caption: data.caption,
+        username: data.owner.username
       });
     });
   };
@@ -232,7 +239,7 @@ class postComponent extends Component {
       textNamaPost: {
         marginTop: "10px",
         marginLeft: "15px",
-        fontSize: "25px",
+        fontSize: "22px",
       },
       jarakPerPostingan: {
         marginBottom: "30px",
@@ -268,16 +275,20 @@ class postComponent extends Component {
         marginTop: "200px",
       },
       buttonFollow: {
-        marginTop: "20px",
-        marginLeft: "200px",
+        marginLeft: "30px",
       },
       username: {
-        marginLeft: "80px",
-        marginTop: "-20px",
+        marginLeft: "100px",
+        marginTop: "-35px",
       },
       alert: {
         marginTop: "100px",
       },
+      caption: {
+        marginTop: "-10px",
+        fontSize: "15px",
+        marginLeft: "80px"
+      }
     };
 
     let body;
@@ -304,17 +315,21 @@ class postComponent extends Component {
                   {this.state.dataFollow.find((f) => f.id === data.owner.id) ? (
                     ""
                   ) : (
-                    <Button
-                      onClick={() => this.follow(data.owner.id)}
-                      style={style.buttonFollow}
-                    >
-                      FOLLOW
+                    // eslint-disable-next-line
+                    data.owner.id == localStorage.getItem('id') ?
+                      ""
+                      :
+                      <Button
+                        onClick={() => this.follow(data.owner.id)}
+                        style={style.buttonFollow}
+                      >
+                        FOLLOW
                     </Button>
                   )}
                 </Row>
                 <Row style={style.username}>@{data.owner.username}</Row>
                 <Card.Body>
-                  <Card.Text className="text-muted">{data.caption}</Card.Text>
+                  <Card.Text className="text-muted" style={style.caption}>{data.caption}</Card.Text>
                   <Row>
                     <Col>
                       <Card.Img
@@ -328,16 +343,10 @@ class postComponent extends Component {
                       <Row>
                         <Button>
                           <img
-                            onClick={() =>
-                              this.actionBookmark(
-                                data.id,
-                                localStorage.getItem("id")
-                              )
-                            }
+                            onClick={() => this.actionBookmark(data.id, localStorage.getItem("id"))}
                             src={
                               this.state.dataBookmark.find(
-                                (b) => b.id === data.id
-                              )
+                                (b) => b.id === data.id)
                                 ? Bookmark
                                 : AddBookmark
                             }
@@ -379,6 +388,8 @@ class postComponent extends Component {
                           value={this.state.comment}
                           post={this.state.id}
                           page={this.state.page}
+                          caption={this.state.caption}
+                          username={this.state.username}
                           onHide={this.handleClose}
                           handleSubmit={this.handleSubmit}
                           handleChange={this.handleChange}

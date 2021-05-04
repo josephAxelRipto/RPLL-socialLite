@@ -9,7 +9,7 @@ import Dropzone from "react-dropzone";
 import axios from "axios";
 import swal from "sweetalert";
 
-const imageMaxSize = 1000000; //dalam bytes
+const imageMaxSize = 10000000; //dalam bytes
 const acceptedFileTypes ="image/x-png, image/png, image/jpg, image/jpeg, image/gif";
 const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {
   return item.trim();
@@ -286,6 +286,9 @@ class newstory extends Component {
                     placeholder="duration"
                     required
                   />
+                  <Form.Text id="description form username" muted>
+                    Input Duration in Minute
+                  </Form.Text>
                   <hr style={style.hr} />
                   <Row>
                     <img

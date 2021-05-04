@@ -73,6 +73,8 @@ class profileComponent extends Component {
       postImage: null,
       id: "",
       page: "profile",
+      username: "",
+      caption: "",
       dataBookmark: [],
       dataFollowing: [],
       dataFollowers: [],
@@ -127,8 +129,8 @@ class profileComponent extends Component {
     });
   };
 
-  closeModal = () =>
-    this.setState({ showFollowing: false, showFollower: false });
+  closeModal = () => this.setState({ showFollowing: false, showFollower: false });
+
   handleClose = () =>
     this.setState({
       show: false,
@@ -137,6 +139,7 @@ class profileComponent extends Component {
       dataModal: [],
       page: "profile",
     });
+
   handleShow = () => this.setState({ show: true });
 
   handleSubmit = (event) => {
@@ -145,10 +148,7 @@ class profileComponent extends Component {
     axios
       .post(
         URL_API +
-          `api/CommentPost/${this.state.id}/${localStorage.getItem(
-            "id"
-          )}?comment=${this.state.comment}`
-      )
+        `api/CommentPost/${this.state.id}/${localStorage.getItem("id")}?comment=${this.state.comment}`)
       .then((res) => {
         axios
           .get(URL_API + `api/GetCommentForPost/${this.state.id}`)
@@ -184,6 +184,8 @@ class profileComponent extends Component {
         dataComment: res.data,
         postImage: data.image,
         show: true,
+        username: data.owner.username,
+        caption: data.caption,
         id: data.id,
       });
     });
@@ -196,6 +198,8 @@ class profileComponent extends Component {
         postImage: data.image,
         show: true,
         id: data.id,
+        username: data.owner.username,
+        caption: data.caption,
         page: "bookmark",
       });
     });
@@ -434,6 +438,8 @@ class profileComponent extends Component {
               value={this.state.comment}
               post={this.state.id}
               page={this.state.page}
+              username={this.state.username}
+              caption={this.state.caption}
               removeBookmark={this.removeBookmark}
               showEdit={this.edit}
               onHide={this.handleClose}

@@ -73,7 +73,7 @@ class postGuestComponent extends Component {
       textNamaPost: {
         marginTop: "10px",
         marginLeft: "15px",
-        fontSize: "25px",
+        fontSize: "22px",
       },
       jarakPerPostingan: {
         marginBottom: "30px",
@@ -107,17 +107,18 @@ class postGuestComponent extends Component {
       goBottom: {
         marginTop: "200px",
       },
-      buttonFollow: {
-        marginTop: "20px",
-        marginLeft: "200px",
-      },
       username: {
-        marginLeft: "80px",
-        marginTop: "-20px",
+        marginLeft: "85px",
+        marginTop: "-35px",
       },
       alert: {
         marginTopt: "100px",
       },
+      caption: {
+        marginTop: "-10px",
+        fontSize: "15px",
+        marginLeft: "65px"
+      }
     };
 
     let body;
@@ -140,7 +141,7 @@ class postGuestComponent extends Component {
             </Row>
             <Row style={style.username}>@{data.owner.username}</Row>
             <Card.Body>
-              <Card.Text className="text-muted">{data.caption}</Card.Text>
+              <Card.Text className="text-muted" style={style.caption}>{data.caption}</Card.Text>
               <Row>
                 <Col>
                   <Card.Img

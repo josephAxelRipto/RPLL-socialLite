@@ -11,6 +11,9 @@ import Profile from "../asset/account.svg";
 import swal from "sweetalert";
 import PropTypes from "prop-types";
 import axios from "axios";
+import ModalComment from "../components/modalComment";
+import ModalViewFollowing from "../components/modalViewFollowing";
+import ModalViewFollower from "../components/modalViewFollower";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,6 +58,17 @@ function SearchAccountComponent(props) {
   const [dataFollowing, setDataFollowing] = useState([]);
   const [dataFollower, setDataFollower] = useState([]);
   const [followMember, setFollowMember] = useState([]);
+  const [listFollowing, setListFollowing] = useState([]);
+  const [listFollower, setListFollower] = useState([]);
+  const [showModalFollowing, setShowModalFollowing] = useState(false);
+  const [showModalFollower, setShowModalFollower] = useState(false);
+  const [showComment, setShowComment] = useState(false);
+  const [dataComment, setDataComment] = useState([]);
+  const [postImage, setPostImage] = useState(null);
+  const [usernamePost, setUsernamePost] = useState("");
+  const [caption, setCaption] = useState("");
+  const [comment, setComment] = useState("");
+  const [id, setId] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -94,7 +108,7 @@ function SearchAccountComponent(props) {
             : Profile
         );
         setFoundAccount(true);
-      } catch (error) {}
+      } catch (error) { }
     }
     fetchData();
   }, [username]);
@@ -159,6 +173,67 @@ function SearchAccountComponent(props) {
       });
   };
 
+  const handleChange = (event) => {
+    setComment(event.target.value)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    axios
+      .post(
+        URL_API +
+        `api/CommentPost/${id}/${localStorage.getItem("id")}?comment=${comment}`)
+      .then((res) => {
+        axios
+          .get(URL_API + `api/GetCommentForPost/${id}`)
+          .then((res) => {
+            setDataComment(res.data)
+            setPostImage(postImage)
+            setShowComment(true)
+            setUsernamePost(usernamePost)
+            setCaption(caption)
+            setComment("")
+            setId(id)
+          });
+      });
+  }
+
+  const handleClose = () => {
+    setShowModalFollower(false)
+    setShowModalFollowing(false)
+    setShowComment(false)
+    setUsernamePost("")
+    setCaption("")
+    setId("")
+    setComment("")
+    setPostImage(null)
+    setListFollower([])
+    setListFollowing([])
+    setDataComment([])
+  }
+
+  const modalFollower = () => {
+    setShowModalFollower(true)
+    setListFollower(dataFollower)
+  }
+
+  const modalFollowing = () => {
+    setShowModalFollowing(true)
+    setListFollowing(dataFollowing)
+  }
+
+  const modalComment = (data) => {
+    axios.get(URL_API + `api/GetCommentForPost/${data.id}`).then((res) => {
+      setDataComment(res.data)
+      setPostImage(data.image)
+      setShowComment(true)
+      setUsernamePost(data.owner.username)
+      setCaption(data.caption)
+      setId(data.id)
+    })
+  }
+
   const style = {
     icon: {
       borderRadius: "55px",
@@ -177,7 +252,6 @@ function SearchAccountComponent(props) {
     post: {
       width: "200px",
       height: "300px",
-      marginRight: "20px",
       marginBottom: "10px",
     },
     margin: {
@@ -224,6 +298,7 @@ function SearchAccountComponent(props) {
               </Col>
               <Col xs={4}>
                 {localStorage.getItem("id") !== null ? (
+                  // eslint-disable-next-line
                   localStorage.getItem("id") != data.id ? (
                     <Row>
                       {followMember.find((f) => f.id === data.id) ? (
@@ -256,10 +331,22 @@ function SearchAccountComponent(props) {
             </Row>
             <Row style={style.follow}>
               <Col>
-                <p>{countFollowing} Following</p>
+                <Button variant="light" onClick={modalFollowing}>
+                  <p>{countFollowing} Following</p>
+                </Button>
+                <ModalViewFollowing
+                  show={showModalFollowing}
+                  dataFollowing={listFollowing}
+                  onHide={handleClose} />
               </Col>
               <Col>
-                <p>{countFollower} Follower</p>
+                <Button variant="light" onClick={modalFollower}>
+                  <p>{countFollower} Follower</p>
+                </Button>
+                <ModalViewFollower
+                  show={showModalFollower}
+                  dataFollower={listFollower}
+                  onHide={handleClose} />
               </Col>
               <Col>
                 <p>{countLike} Like</p>
@@ -284,14 +371,30 @@ function SearchAccountComponent(props) {
             </Tabs>
             <TabPanel value={value} index={0}>
               {dataPhoto.map((photo) => (
-                <img
-                  src={`data:image/jpeg;base64,${photo.image}`}
-                  alt="post"
-                  style={style.post}
-                ></img>
+                <Button variant="outline-light" onClick={() => modalComment(photo)}>
+                  <img
+                    src={`data:image/jpeg;base64,${photo.image}`}
+                    alt="post"
+                    style={style.post}
+                  ></img>
+                </Button>
               ))}
             </TabPanel>
           </Paper>
+          <ModalComment
+            show={showComment}
+            profile={localStorage.getItem('profileImage')}
+            image={postImage}
+            comment={dataComment}
+            value={comment}
+            post={id}
+            page={"search"}
+            username={usernamePost}
+            caption={caption}
+            onHide={handleClose}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+          />
         </div>
       </div>
     );

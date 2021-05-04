@@ -28,7 +28,7 @@ function ModalComment(props) {
       borderRadius: "20px",
     },
     sticky: {
-      height: "310px",
+      height: "210px",
       width: "440px",
       overflow: "scroll",
       position: "fixed",
@@ -60,6 +60,10 @@ function ModalComment(props) {
       height: "45px",
       borderRadius: "20px",
     },
+    marginToastCaption: {
+      marginLeft: "15px",
+      borderRadius: "20px"
+    }
   };
   return (
     <Modal
@@ -79,6 +83,12 @@ function ModalComment(props) {
               ></img>
             </Col>
             <Col>
+              <Toast style={style.marginToastCaption}>
+                <Toast.Header closeButton={false}>
+                  <strong className="mr-auto">{props.username}</strong>
+                </Toast.Header>
+                <Toast.Body>{props.caption}</Toast.Body>
+              </Toast>
               <div className="scrollarea" style={style.sticky}>
                 <Sticky>
                   {props.comment.map((data) => (

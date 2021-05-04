@@ -22,6 +22,7 @@ class DirectMessage extends Component {
       listDM: [],
       id: "",
       fullname: "",
+      username: "",
       show: false,
       dataFollow: [],
     };
@@ -47,14 +48,12 @@ class DirectMessage extends Component {
   handleClose = () => this.setState({ show: false });
   handleOpen = () => this.setState({ show: true });
 
-  openChat = (id, fullname) => {
-    this.setState({ id: "", fullname: "" });
-    this.setState({ id: id, fullname: fullname });
+  openChat = (id, fullname, username) => {
+    this.setState({ id: id, fullname: fullname, username: username });
   };
 
-  newChat = (id, fullname) => {
-    this.setState({ id: "", fullname: "" });
-    this.setState({ show: false, id: id, fullname: fullname });
+  newChat = (id, fullname, username) => {
+    this.setState({ show: false, id: id, fullname: fullname, username: username });
   };
 
   render() {
@@ -104,7 +103,7 @@ class DirectMessage extends Component {
                         key={data.id}
                         button
                         style={style.margin}
-                        onClick={() => this.openChat(data.id, data.fullname)}
+                        onClick={() => this.openChat(data.id, data.fullname, data.username)}
                       >
                         <ListItemAvatar>
                           <Avatar
@@ -140,7 +139,7 @@ class DirectMessage extends Component {
               </div>
             </Col>
             <Col sm={8}>
-              <ChatComponent id={this.state.id} fullname={this.state.fullname} />
+              <ChatComponent id={this.state.id} fullname={this.state.fullname} username={this.state.username} />
             </Col>
           </Row>
         </Container>
