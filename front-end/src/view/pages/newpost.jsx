@@ -10,7 +10,7 @@ import axios from "axios";
 import swal from "sweetalert";
 import Profile from "../asset/account.svg";
 
-const imageMaxSize = 1000000; //dalam bytes
+const imageMaxSize = 10000000; //dalam bytes
 const acceptedFileTypes ="image/x-png, image/png, image/jpg, image/jpeg, image/gif";
 const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {
   return item.trim();

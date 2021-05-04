@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Optional;
 
 @Service
 public class EditProfileServices {
@@ -51,12 +52,19 @@ public class EditProfileServices {
                 .orElseThrow(() -> new IllegalStateException(
                         "Member with id " + memberId + " does not exist"
                 ));
+        String tempUsername = member.getUsername();
 
         if(name != null && !name.equals("")){
             member.setFullname(name);
         }
-        if(username != null && !username.equals("")){
-            member.setUsername(username);
+
+        if(username != null && !username.equals("") && !username.equals(tempUsername)){
+            Optional<Member> memberUsername = this.memberRepository.findMemberByUsername(member.getUsername());
+            if (memberUsername.isPresent()){
+                throw new IllegalStateException("Username is already exist");
+            }else {
+                member.setUsername(username);
+            }
         }
         if(bio != null && !bio.equals("")){
             member.setBio(bio);

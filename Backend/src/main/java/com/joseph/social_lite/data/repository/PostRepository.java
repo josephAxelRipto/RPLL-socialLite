@@ -9,5 +9,5 @@ import java.util.ArrayList;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    ArrayList<Post> findAllByOwnerOrderByDatePost(Member owner);
+    ArrayList<Post> findAllByOwnerOrderByDatePostDesc(Member owner);
 }

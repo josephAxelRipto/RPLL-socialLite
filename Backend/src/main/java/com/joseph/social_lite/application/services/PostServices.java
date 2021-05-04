@@ -62,7 +62,7 @@ public class PostServices {
     public ArrayList<Post> getPostByIdMember(long id){
         member = new Member();
         member = memberRepository.getOne(id);
-        return postRepository.findAllByOwnerOrderByDatePost(member);
+        return postRepository.findAllByOwnerOrderByDatePostDesc(member);
     }
 
     public ArrayList<Post> getPostForUser(){
@@ -113,14 +113,21 @@ public class PostServices {
 
     public ArrayList<Post> getPostForMember(long idMember) {
         ArrayList<Member> listFollowing = followServices.getFollowing(idMember);
+        List<Post> allPost = postRepository.findAll();
         ArrayList<Post> listPost = new ArrayList<>();
         if(listFollowing.size() == 0 || listFollowing == null){
             System.out.println("masuk");
             return getPostForUser();
         }
-        for(Member member: listFollowing){
-            listPost.addAll(postRepository.findAllByOwnerOrderByDatePost(member));
+        for(Post post: allPost){
+            if(listFollowing.contains(post.getOwner())){
+                listPost.add(post);
+            }
         }
+//        for(Member member: listFollowing){
+//            listPost.addAll(postRepository.findAllByOwnerOrderByDatePostDesc(member));
+//        }
+        Collections.reverse(listPost);
         return listPost;
     }
 
