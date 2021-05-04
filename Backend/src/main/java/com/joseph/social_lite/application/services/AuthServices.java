@@ -84,7 +84,7 @@ public class AuthServices {
         }else if(!newPassword.equals(reTypeNewPassword)){
             throw new IllegalStateException("NewPassword is not the same as retypeNewPassword");
         }else{
-            member.setPassword(newPassword);
+            member.setPassword(passwordToMD5(newPassword));
         }
     }
 
