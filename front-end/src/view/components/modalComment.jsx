@@ -63,6 +63,12 @@ function ModalComment(props) {
     marginToastCaption: {
       marginLeft: "15px",
       borderRadius: "20px"
+    },
+    caption: {
+      marginLeft: "10px"
+    },
+    username: {
+      fontSize: "18px"
     }
   };
   return (
@@ -83,12 +89,14 @@ function ModalComment(props) {
               ></img>
             </Col>
             <Col>
-              <Toast style={style.marginToastCaption}>
+              {/* <Toast style={style.marginToastCaption}>
                 <Toast.Header closeButton={false}>
                   <strong className="mr-auto">{props.username}</strong>
                 </Toast.Header>
                 <Toast.Body>{props.caption}</Toast.Body>
-              </Toast>
+              </Toast> */}
+              <b style={style.username}>{props.username}</b>
+              <p style={style.caption}><i>{props.caption}</i></p>
               <div className="scrollarea" style={style.sticky}>
                 <Sticky>
                   {props.comment.map((data) => (
